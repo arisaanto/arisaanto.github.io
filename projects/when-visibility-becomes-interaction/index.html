@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A spatial agent-based study of visibility, workflow, and heterogeneous fit in an emergency department.">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+    <title>When Visibility Becomes Interaction — Aris Antoniadis</title>
+    <link rel="preconnect" href="https://rsms.me">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/contact.js?v=20260810-2" defer></script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20260810-10">
+  </head>
+  <body class="research-paper">
+    <a class="skip-link" href="#article">Skip to paper</a>
+    <nav class="article-nav shell shell--article" aria-label="Primary navigation">
+      <a href="/">Aris Antoniadis</a>
+      <span>Project</span>
+    </nav>
+    <main id="article" class="article shell shell--article">
+      <header class="article__header article__header--research">
+        <h1>When Visibility Becomes Interaction: Modeling Spatial Coordination and Heterogeneous Fit in an Emergency Department</h1>
+        <p class="article__authors">Aris Antoniadis · <a href="https://cog.ethz.ch/people/dr--leonel_aguilar.html">Leonel Aguilar Melgar</a> · <a href="https://cog.ethz.ch/people/prof--dr--christoph-hoelscher.html">Christoph Hölscher</a></p>
+        <p class="article__lede">A spatial agent-based study of how visibility, workflow, and different cognitive orientations turn emergency-department space into interaction.</p>
+        <p class="article__meta"><time datetime="2026-07">July 2026</time> · Research manuscript · ETH Zürich</p>
+        <div class="article-actions">
+          <a class="icon-button" href="/assets/documents/projects/when-visibility-becomes-interaction.pdf" aria-label="Download paper as PDF" title="PDF">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg>
+          </a>
+          <a class="icon-button" href="https://github.com/arisaanto/ed-abm" aria-label="View code on GitHub" title="GitHub">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg>
+          </a>
+          <button class="icon-button icon-button--plain theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <svg class="icon theme-icon--moon" aria-hidden="true"><use href="/assets/icons.svg#moon"></use></svg>
+            <svg class="icon theme-icon--sun" aria-hidden="true"><use href="/assets/icons.svg#sun"></use></svg>
+          </button>
+        </div>
+      </header>
+      <div class="article__body research-paper__body">
+<section class="article__abstract"><h2 class="unnumbered" id="abstract">Abstract</h2>
+<p>This project examined how emergency-department space becomes consequential through perception, workflow, and selective interaction. A spatially explicit agent-based model was anchored to 359 located face-to-face events from a shadowing study at the University Hospital Zurich Emergency Department and developed in three stages. Part 1 tested baseline resemblance to the observed interaction ecology. Part 2 compared transparent partitions around the central COCPIT coordination station, relocation of the satellite NURSTA staff station, and their combination. Part 3 compared trace-grounded baseline appraisals with observed end-of-shift ratings, then introduced five designed workplace orientations that made constrained language-model decisions while movement, workflow, and feasible action remained under model control.</p>
+<p>The baseline reproduced the observed overall interaction rate closely (22.14 versus 22.78 events/hour) and generated a spatial pattern closer to the observed pattern than either global or zone-preserving random placement, while retaining visible role, topic, and zone errors. COCPIT transparency increased staff contact by 9.25 events/hour under normal load and 6.95 under high load. It also shifted interaction toward circulation space, increased total movement, and concentrated 62–68% of the added mobility in the coordination nurse. NURSTA relocation changed spatial measures without comparable behavioral uptake. In a post hoc normal-load audit, synthetic and observed means differed by 0.25 points on average across six independently comparable 1–7 items, and five of six fell within a prespecified half-point margin. Part 3 then showed that a near-common visibility gain produced divergent orientation-conditioned engagement; under high load, the combined condition raised average synthetic fit by 0.5 points, raised the least-served fit by 0.8, and reduced between-orientation disparity.</p>
+<p>Together, the results support a qualified relational account of spatial effect. Configuration makes possibilities available, workflow brings some of them within operational reach, and users selectively convert them into action. Clinical benefit, individual-level prediction, and staff preference remain beyond the evidence. Within that boundary, the model traces how a spatial alteration changes coordination, where its burdens accumulate, and whether its modeled value extends across more than one user policy.</p>
+</section>
+<h2 id="sec:introduction">Introduction</h2>
+<p>Emergency departments coordinate care through a dense ecology of movement, visibility, interruption, conversation, and task handoff. Much of this coordination is face-to-face, yet the same contact that supports awareness can also interrupt concentrated work or expose sensitive communication <span class="citation" data-cites="coiera2002 kosits2011 walter2017">(Coiera et al. 2002; Kosits and Jones 2011; Walter et al. 2017)</span>. The built environment participates in this coordination by distributing who can see whom, which colleagues become available, how far staff must move, and where communication can occur.</p>
+<p>In this literal and material sense, an emergency department is an interactive system at architectural scale. Human–Building Interaction extends HCI beyond discrete screens and devices to experiences formed through and within buildings <span class="citation" data-cites="alavi2019">(Alavi et al. 2019)</span>. Distributed and ecological accounts of cognition make a related claim: cognitive work is accomplished through relations among people, artifacts, bodies, and environments rather than inside an isolated individual <span class="citation" data-cites="hollan2000 hutchins2010">(Hollan, Hutchins, and Kirsh 2000; Hutchins 2010)</span>. Partitions, stations, corridors, patient rooms, and sightlines configure a field of attention: they determine where colleagues enter perceptual reach, when those colleagues become relevant to ongoing work, and where coordination can be completed.</p>
+<p>Methodologically, this project also joins a longer spatial lineage. Direct observation records how social life appropriates designed settings beyond the view offered by a plan <span class="citation" data-cites="whyte1980">(Whyte 1980)</span>. Configurational analysis describes how the same layout distributes depth, visibility, and access <span class="citation" data-cites="hillier1996 turner2001">(Hillier 1996; Turner et al. 2001)</span>. A layout contains several potentials at once. Their functional meaning changes with the representation used to describe the space and with the activity that occupies it.</p>
+<p>Evidence from emergency departments and other healthcare settings links visibility, connectedness, workstation placement, and accessibility with communication and teamwork <span class="citation" data-cites="naccarella2019 gharaveis2019 ransolin2026">(Naccarella, Raggatt, and Redley 2019; Gharaveis et al. 2019; Ransolin et al. 2026)</span>. These relations carry competing consequences. Greater visibility may support supervision, help-seeking, and coordination while also increasing distraction, exposure, and demands on attention. A useful spatial analysis must therefore distinguish what a configuration makes visible or reachable, which possibilities are encountered during work, which encountered possibilities become interaction, and whether the resulting arrangement supports different users equally.</p>
+<p>That distinction is easily lost when geometry is treated as an outcome. Isovists and visibility graphs describe properties of a visual field, not the quality of communication or care <span class="citation" data-cites="benedikt1979 turner2001">(Benedikt 1979; Turner et al. 2001)</span>. In this study, spatial configuration is treated as an opportunity structure. A sightline supplies perceptual access; relevance, timeliness, and desirability arise when that access meets ongoing work.</p>
+<p>Existing methods illuminate different portions of this process. Spatial analysis quantifies visibility, accessibility, and configurational relations. Behavioral observation records where interaction occurs. Agent-based models can connect local rules to system-level patterns and test design counterfactuals before construction. Hospital simulations have represented process-driven narratives and empirically grounded staff activity <span class="citation" data-cites="schaumann2017 liu2024">(Schaumann et al. 2017; Liu et al. 2024)</span>; parametric studies can then separate spatial from operational effects <span class="citation" data-cites="pan2026">(Pan et al. 2026)</span>. HCI research has likewise argued that simulation can make assumptions about users inspectable and comparisons repeatable <span class="citation" data-cites="murraysmith2022">(Murray-Smith et al. 2022)</span>. The credibility of such models remains purpose-specific: one reproduced aggregate rate leaves the surrounding interaction ecology unresolved <span class="citation" data-cites="windrum2007 sargent2013">(Windrum, Fagiolo, and Moneta 2007; Sargent 2013)</span>. Synthetic-user methods introduce a second risk, because fluent output can appear human long before human validity has been established <span class="citation" data-cites="hamalainen2023 aher2023 bisbee2024">(Hämäläinen, Tavast, and Kunnari 2023; Aher, Arriaga, and Kalai 2023; Bisbee et al. 2024)</span>. Recent environments have begun to combine language-model social dynamics with physically grounded indoor tasks <span class="citation" data-cites="wu2025indoorworld">(Wu et al. 2025)</span>. The present study takes a narrower route: it sacrifices open-ended autonomy in order to preserve an empirical ED anchor, controlled spatial contrasts, and inspectable causal authority.</p>
+<p>The present study joins these levels through a three-part design (Figure <a href="#fig:study-overview" data-reference-type="ref" data-reference="fig:study-overview">1</a>). Part 1 anchors a workflow-constrained spatial ABM to timestamped and located face-to-face interactions from a study at the University Hospital Zurich Emergency Department (hereafter, Zurich ED). Part 2 alters two features of the modeled environment: the visual permeability of the COCPIT partition and the position of the NURSTA workstation. Part 3 rotates five designed workplace-interaction orientations across every staff position. Before their intervention appraisals are interpreted, a separate audit asks whether completed normal-load baseline traces recover the center of seven observed end-of-shift ratings. A language model makes constrained discretionary interaction choices and generates the trace-grounded appraisals, while movement, patient state, mandatory workflow, and feasible actions remain under ABM control.</p>
+<figure class="research-figure research-figure--color-safe article__figure--wide" id="fig:study-overview">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/study-overview.webp" alt="The study moves from bounded empirical resemblance, through controlled spatial intervention, to heterogeneous uptake and synthetic appraisal. Each part inherits the spatial and workflow constraints of the part before it." loading="lazy" decoding="async">
+<figcaption>The study moves from bounded empirical resemblance, through controlled spatial intervention, to heterogeneous uptake and synthetic appraisal. Each part inherits the spatial and workflow constraints of the part before it.</figcaption>
+</figure>
+<p>The governing question is:</p>
+<blockquote class="governing-question">
+<p><strong>To what extent can a spatially explicit, workflow-constrained ABM reproduce an observed emergency-department interaction ecology, estimate how targeted spatial interventions reorganize it, and reveal heterogeneous uptake and appraisal across designed synthetic cognitive orientations?</strong></p>
+</blockquote>
+<p>The claim is deliberately narrow. “Resemblance” denotes agreement on specified empirical measures rather than a recreation of the ED or its workers. “Synthetic appraisal” denotes a model output grounded in completed traces. The orientations are declared experimental policies whose human prevalence and psychometric status remain unknown.</p>
+<p>The study makes three contributions, aligned with its three parts. First, it evaluates a spatial ABM through rate, composition, and spatial-pattern resemblance, placing several empirical tests around a calibrated aggregate. Second, it decomposes intervention effects into visibility, encountered opportunity, realized interaction, location, movement, and role burden. Third, it measures whether near-common environmental availability is taken up consistently across a balanced ensemble of designed user policies and evaluates synthetic person–space fit through both its average and its least-served orientation. The paired fit measures keep concentrated losses visible when the ensemble mean rises.</p>
+<p>Across the three parts, the baseline reproduced selected features of the observed interaction ecology and exceeded spatially randomized negative controls while preserving identifiable model error. COCPIT transparency then increased staff interaction and reduced movement per contact, but also shifted contact toward circulation space, increased total movement, and concentrated added mobility in the coordination nurse. NURSTA relocation changed geometry without comparable behavioral uptake. Normal-load synthetic appraisals then recovered observed end-of-shift means with an average error of 0.25 points across six comparable 1–7 items. In the cognitive extension, a near-common visibility gain produced divergent orientation-conditioned engagement, while the combined condition improved both average and least-served synthetic fit under high load.</p>
+<p>The ED is the design case; the larger proposition concerns material interfaces. Spatial consequence begins where configuration is encountered through work and selectively taken up by a user.</p>
+<h2 id="sec:methods">Methods</h2>
+<h3 id="study-design">Study design</h3>
+<p>The study used a spatially explicit, workflow-constrained ABM of a defined emergency-department care area. Part 1 tested whether the baseline reproduced selected properties of an observed face-to-face interaction ecology. Part 2 held the behavioral architecture fixed and used the model as a counterfactual test bed for two spatial interventions. Part 3 retained the same physical, workflow, and task architecture while introducing five designed cognitive-policy orientations at discretionary interaction opportunities. Each layer inherited the verified constraints and documented errors of the layer before it.</p>
+<p>The model represented communication as a staged process. Configuration changed perception and proximity; workflow made a subset of those encounters operationally relevant; policy selected among feasible actions; and embodied contact produced a recorded interaction (Figure <a href="#fig:interaction-pipeline" data-reference-type="ref" data-reference="fig:interaction-pipeline">2</a>). Each stage could change without guaranteeing a corresponding change at the next.</p>
+<figure class="research-figure article__figure--wide" id="fig:interaction-pipeline">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/interaction-pipeline.webp" alt="Interaction-generation pipeline. Physical and visual access, workflow relevance, and action feasibility are evaluated before a policy can select contact. A face-to-face event is recorded only after the agents reach embodied proximity." loading="lazy" decoding="async">
+<figcaption>Interaction-generation pipeline. Physical and visual access, workflow relevance, and action feasibility are evaluated before a policy can select contact. A face-to-face event is recorded only after the agents reach embodied proximity.</figcaption>
+</figure>
+<h3 id="observed-interaction-data">Observed interaction data</h3>
+<p>The empirical reference was an event-level extract from December 2023 shadowing at the University Hospital Zurich Emergency Department, associated with the EVIDENT research programme and the study described by <span class="citation" data-cites="gathmorad2024">Gath-Morad et al. (2024)</span>. Participants in the parent study gave informed consent and the study received ETH Zurich ethics approval (EK 2023-N-31). The extract contained coded identifiers rather than names.</p>
+<p>The supplied file contained 610 records across six observation dates. The analysis retained face-to-face events that identified another person and had coordinates within the modeled care area, producing 359 spatially located events over 15.76 hours of within-day observation. Observed roles were mapped to three modeled classes: coordination nurse, nurse, and doctor. Partner roles, interaction topics, and broad zones were harmonized through fixed mappings. Low-information topics and unmatched locations remained explicit rather than being assigned to a substantive category. Questionnaire and demographic fields entered only the post hoc appraisal audit; the ABM and orientations were constructed independently of them. The followed staff also completed an end-of-shift questionnaire covering workload, concentration, communication, teamwork, helpfulness, information sufficiency, and noise. A separate post hoc audit compared aggregate synthetic appraisals with the seven constructs the model could support. Event-field exclusions are documented in Appendix <a href="#app:empirical" data-reference-type="ref" data-reference="app:empirical">10</a>; questionnaire wording, scales, and synthetic crosswalks appear in Appendix <a href="#app:questionnaire-audit" data-reference-type="ref" data-reference="app:questionnaire-audit">17</a>.</p>
+<h3 id="spatial-and-operational-model">Spatial and operational model</h3>
+<p>The two-dimensional environment encoded patient rooms, circulation space, staff stations, walls, and work areas. Physical walls governed collision and routing; visibility walls governed line of sight. Shortest wall-respecting routes followed a waypoint graph. This separation permitted a partition to become visually transparent without becoming physically traversable.</p>
+<p>Each run contained one coordination nurse, five nurses, three doctors, and ten beds. One bed was reserved for ESI 1–2 patients; ESI 3–5 patients could occupy only the remaining nine. This reserved capacity allowed rare urgent arrivals to enter the modeled care stream and generate immediate escalation and staff-priority demands. Patients progressed through placement, nursing assessment, medical evaluation, diagnostics, treatment, reassessment, disposition, and discharge or admission. Role permissions constrained each task. Task execution and communication were logged separately; only explicitly logged communication counted toward the face-to-face measure.</p>
+<p>Staff perception combined line of sight, field of view, range, salience, limited attention, role and zone relevance, and workflow state. Every ten seconds, a visible colleague could become an actionable opportunity only when the encounter had an operational reason and both agents had a feasible discretionary action. Reasons included handoff, post-task update, bed-flow coordination, and brief station check-in. Cooldowns, interruption constraints, pressure, and attention further filtered candidates. A selected opportunity was counted as face-to-face interaction only when the agents reached a separation of at most 1.5 m. The record retained time, coordinates, zone, participants, roles, reason, topic, perceptual state, and source lineage.</p>
+<p>Runs represented 12 hours in one-second steps. Event-derived outcomes used the final ten hours after a two-hour warm-up; complete-run counters were used for movement, visibility, and zone transitions. Acuity followed the five-level Emergency Severity Index, with lower values indicating greater urgency. Relative to normal load, the high-load/high-acuity scenario applied a stronger time-varying arrival stream, increased the ESI 1–3 share from 55.0% to 64.8%, lowered the pressure threshold for suppressing discretionary contact, and strengthened that suppression. ESI 1–2 cases could also preempt eligible lower-priority staff activity. The resulting scenario represents sustained demand and urgent interruptions within the regular workflow. The pressure index was an internal control variable, not a validated measure of clinical workload. An ODD-style model description, state variables, routing rules, patient process, parameters, and pressure equation are provided in Appendix <a href="#app:model" data-reference-type="ref" data-reference="app:model">11</a> <span class="citation" data-cites="grimm2010">(Grimm et al. 2010)</span>.</p>
+<p>The agent architecture was deliberately narrower than a general model of clinical cognition. Role permissions, patient stages, routing, and feasible communication reasons represented the operational dependencies needed for the study question; perceptual and interruption filters represented the visibility and attention mechanisms identified in ED communication research <span class="citation" data-cites="coiera2002 kosits2011 walter2017">(Coiera et al. 2002; Kosits and Jones 2011; Walter et al. 2017)</span>. This parsimony kept emergent interaction attributable to declared spatial and workflow mechanisms rather than to unrestricted agent autonomy. The model was documented with the ODD protocol because ABM interpretation depends on making entities, schedules, processes, and stochasticity inspectable <span class="citation" data-cites="grimm2010">(Grimm et al. 2010)</span>.</p>
+<h3 id="part-1-baseline-resemblance">Part 1: baseline resemblance</h3>
+<p>Part 1 evaluated 100 independent normal-load baseline seeds. This replication count was fixed before the intervention experiment and was sufficient for the cumulative mean interaction rate to stabilize (Appendix Figure <a href="#fig:part1-convergence" data-reference-type="ref" data-reference="fig:part1-convergence">12</a>). It was not treated as universally adequate for ABMs. Observed and simulated events were processed through the same rate, role-pair, topic, zone, duration, and spatial-density definitions. Hard gates separately verified workflow progression, wall-respecting routes, proximity-valid interaction logs, and complete coordinates.</p>
+<p>Two complementary comparisons were used. For categorical distributions such as role pairs, topics, and zones, Jensen–Shannon divergence summarized how different the observed and simulated category shares were on a bounded, symmetric scale <span class="citation" data-cites="lin1991">(Lin 1991)</span>. For coordinates, Gaussian kernel-density estimation (KDE) converted each point cloud into a smooth map of where interactions concentrated; spatial discrepancy was one minus the cosine similarity between the empirical and simulated KDE surfaces over a common floorplan extent and bandwidth. An auxiliary negative-control test compared the pooled simulated point cloud with two Monte Carlo nulls: global random placement within the care area and zone-preserving random placement retaining observed broad-zone counts. The test asked whether the ABM generated meaningful within-zone spatial organization, not whether it reconstructed each observed coordinate. Complete estimands and diagnostics appear in Appendices <a href="#app:measures" data-reference-type="ref" data-reference="app:measures">12</a> and <a href="#app:validation" data-reference-type="ref" data-reference="app:validation">13</a>.</p>
+<h3 id="part-2-spatial-intervention-experiment">Part 2: spatial intervention experiment</h3>
+<p>Part 2 crossed two binary interventions. <strong>COCPIT transparency</strong> removed designated partition segments from the visibility layer while preserving physical collision and route geometry. <strong>NURSTA relocation</strong> moved the satellite station, its enclosing geometry, zone semantics, workstation attractor, and route waypoints. Their factorial combination produced Baseline, COCPIT only, NURSTA only, and Both.</p>
+<p>Intervention selection preceded inspection of the simulation effects. The manipulations represented changes planned in the project context by the hospital in Zurich and were encoded as faithfully as the available floorplan and operational information allowed. Retaining NURSTA relocation even when its isolated effect proved weak was therefore methodologically important: removing it would have selected the design question on its outcome, whereas the factorial experiment could test whether a plausible physical change was sufficient to alter behavior.</p>
+<p>Each condition was run under normal and high load for 100 seeds (800 runs). The Part 1 convergence audit supported retaining 100 replications per cell. Seed numbers were reused across conditions to reduce stochastic noise in comparisons through common random numbers <span class="citation" data-cites="kleijnen1988">(Kleijnen 1988)</span>. Part 2 predated the condition-invariant arrival stream later introduced in Part 3; pairing therefore fixed random initialization but did not guarantee identical downstream draws once condition-specific trajectories diverged.</p>
+<p>The geometric audit measured targeted isovists, visible beds, route distance, inter-station visibility, and whole-space visibility-graph proxies. A separate local sensitivity design varied four active parameters: response probability, pressure threshold, repeat-contact delay, and station-return probability. Crossing parameter levels with scenario, condition, and 20 seeds produced 1,280 integrity-clean runs. Full settings and secondary outcomes are reported in Appendix <a href="#app:part2" data-reference-type="ref" data-reference="app:part2">14</a>. The extended one-factor-at-a-time design was a local mechanism audit with a deliberately local estimand; it tests how active mechanisms respond near the calibrated operating point <span class="citation" data-cites="tenbroeke2016">(Broeke, Voorn, and Ligtenberg 2016)</span>.</p>
+<h3 id="part-3-bounded-cognitive-extension">Part 3: bounded cognitive extension</h3>
+<h4 id="aggregate-questionnaire-convergence-audit">Aggregate questionnaire convergence audit</h4>
+<p>Before intervention-specific synthetic appraisals were interpreted, a post hoc audit asked whether completed normal-load baseline trajectories could recover the center of the observed end-of-shift ratings. Q1 measured maximum workload; Q2 the share of the shift at critically high workload; Q3 concentration; Q4 communication satisfaction; Q5 teamwork; Q6 helpfulness to patients; Q7 information sufficiency; and Q8 noise. Q1 and Q3–Q8 used 1–7 scales; Q2 used 0, 25, 50, 75, or 100%. Because the simulation contained no acoustic model, Q8 was retained as an evidence-withheld negative control and was not compared.</p>
+<p>The audit selected one baseline staff shift per scenario–seed–orientation–role stratum. Qwen rated the seven supported constructs from completed experience traces; observed answers and clinical text remained withheld from the model. The final set comprised 300 full-trace packets across both workload scenarios and 90 matched neutral or evidence-withheld controls. Normal-load synthetic ratings were standardized to the observed role mix and compared with 14 complete observed shifts for Q1–Q2 and 13 for Q3–Q7. Mean convergence used a prespecified 0.5-point margin on the six independently comparable 1–7 items. Q2 was analyzed separately: critical workload was operationalized as the most demanding quarter of each simulated shift, so its aggregate mean was partly fixed by that definition. Secondary diagnostics compared response-distribution compatibility and inter-item correlation profiles. Because the benchmark informed this post hoc audit rather than remaining held out, the result is descriptive convergence evidence rather than independent validation. High-load outputs served only as a directional stress check. Full construct mappings and diagnostics appear in Appendix <a href="#app:questionnaire-audit" data-reference-type="ref" data-reference="app:questionnaire-audit">17</a>.</p>
+<h4 id="orientations-and-closed-loop-decisions">Orientations and closed-loop decisions</h4>
+<p>Part 3 introduced five designed workplace-interaction orientations: Team Connector, Focus Protector, Patient Advocate, Vigilant Monitor, and Adaptive Generalist. They encoded contrasting priorities in coordination, interruption protection, patient advocacy, vigilance, adaptation, privacy/control, and interaction initiative. They were neither discovered types nor psychometric profiles. For visual explanation, each orientation was translated after its design into a synthetic OCEAN profile. The familiar personality vocabulary makes each orientation legible as a plausible kind of person rather than only as a list of parameter differences. These profiles describe the designed orientations; they are not psychometric measurements, claims about any particular individual, or prevalence estimates, and they did not enter prompts or analyses.</p>
+<p>The orientations were designed as a stress-test ensemble, not as claims about five natural kinds of clinician. Their priority contrasts were drawn from the coordination–interruption tension documented in ED work and from the relational premise of person–environment fit <span class="citation" data-cites="coiera2002 walter2017 edwards1998">(Coiera et al. 2002; Walter et al. 2017; Edwards, Caplan, and Harrison 1998)</span>. The experiment asked whether a design conclusion remained stable when the same feasible opportunities were interpreted through declared, contrasting user policies. It did not estimate the prevalence of those policies in Zurich staff.</p>
+<p>The experiment crossed two scenarios, four spatial conditions, ten seeds, and five assignment rounds (400 runs). Within each scenario–condition–seed block, every staff identity received every orientation once. Every orientation therefore occupied every staff position; role was a blocking factor rather than a persona definition. A dedicated scenario–seed random stream supplied the same exogenous patient arrivals to all four spatial conditions. Ten seeds were a compute-bounded matched design, not a population-sized sample: exact balancing across roles and common exogenous streams increased contrast precision, while uncertainty intervals and directional consistency kept the smaller inferential base visible.</p>
+<p>The ABM retained authority over movement, geometry, visibility, workflow, patient state, task allocation, interruptibility, and feasible actions. At a deterministic 10% sample of eligible discretionary staff-interaction opportunities, Qwen3.6-35B-A3B selected only among supplied categorical actions (<code>engage</code>, <code>defer</code>, or <code>decline</code>), reasons, and canonical topics. Unsampled opportunities followed the frozen rule policy. Free-form prose never entered the causal simulation. Inputs and structured outputs were schema-validated and source-hashed.</p>
+<p>The policy could retrieve at most five source-linked realized interactions from the preceding two hours when they matched colleague, patient context, operational reason, interaction context, or a recent zone. Missed opportunities, prior model labels, and generated reflections were not causal memory. This architecture retains the separation between identity, event memory, retrieval, and reflection used in generative-agent work, while excluding autonomous planning, unrestricted conversation, and LLM-controlled movement <span class="citation" data-cites="park2023">(Park et al. 2023)</span> (Figure <a href="#fig:cognitive-architecture" data-reference-type="ref" data-reference="fig:cognitive-architecture">3</a>).</p>
+<figure class="research-figure article__figure--wide" id="fig:cognitive-architecture">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/cognitive-architecture.webp" alt="Bounded cognitive architecture. During the shift, source-linked context and retrieved realized interactions condition a choice among ABM-feasible discretionary actions. After the shift, a read-only appraisal layer interprets the completed trajectory without changing it." loading="lazy" decoding="async">
+<figcaption>Bounded cognitive architecture. During the shift, source-linked context and retrieved realized interactions condition a choice among ABM-feasible discretionary actions. After the shift, a read-only appraisal layer interprets the completed trajectory without changing it.</figcaption>
+</figure>
+<h4 id="post-run-appraisals-and-ablation">Post-run appraisals and ablation</h4>
+<p>One staff unit was selected in every scenario–orientation–seed stratum and followed across all four conditions, producing 100 paired units and 400 staff-shift appraisals. Each completed shift generated one structured survey and one six-question interview packet (800 verified responses). Packets compressed source-linked events from early, middle, and late shift phases, place exposure, movement, mutual visibility, opportunities, realized and missed contact, workflow context, and retrieved memory.</p>
+<p>The survey rated team awareness, interruption burden, task continuity, patient accessibility, privacy/control, spatial legibility, and overall person–space fit on anchored 1–7 scales, with <code>null</code> required when evidence was insufficient. Interviews asked about the overall shift, critical incidents, coordination and focus, supportive and difficult spatial features, and one counterfactual design change. Outputs were required to distinguish grounded observation, orientation-conditioned interpretation, latent need, and design hypothesis. All were labeled synthetic.</p>
+<p>A matched <span class="math inline">2 × 2</span> prompt-level ablation crossed full versus neutral orientation conditioning with retained versus removed memory across 120 fixed opportunities (480 packets). This isolated immediate decision sensitivity; it did not replay recursive trajectories.</p>
+<h3 id="outcomes-and-statistical-analysis">Outcomes and statistical analysis</h3>
+<p>Primary Part 1 outcomes were interaction rate and role-pair, topic, zone, and spatial-density resemblance. Primary Part 2 outcomes were actionable opportunities, face-to-face interactions per hour, staff–staff and patient-facing shares, corridor and bedside shares, total movement, movement per staff contact, mean interaction separation, role–location segregation, mutual staff visibility, and role-specific movement and contact participation. Primary Part 3 outcomes were matched engagement rate and synthetic overall fit. Inclusive fit was summarized as the mean of the five orientation means, the least-served mean (the fit floor), and their standard deviation. Privacy and control were not estimated because only 27 of 400 appraisal packets contained sufficient evidence. Formal definitions and denominator rules are provided in Appendix <a href="#app:measures" data-reference-type="ref" data-reference="app:measures">12</a>.</p>
+<p>Part 1 reported seed-level means, uncertainty, component discrepancies, and Monte Carlo negative-control comparisons. Part 2 used seed-paired intervention-minus-baseline contrasts and Student-<span class="math inline"><em>t</em></span> 95% confidence intervals in original units. Part 3 fixed scenario, seed, assignment round, orientation, role, and staff identity across conditions; staff-shift differences sharing an exogenous stream were first averaged within seed, and the seed remained the inferential unit (<span class="math inline"><em>n</em> = 10</span>). Magnitude, uncertainty, and directional consistency were primary; no post hoc family of binary significance claims was constructed.</p>
+<h3 id="synthetic-interview-audit-and-reproducibility">Synthetic interview audit and reproducibility</h3>
+<p>Forty interview bundles were selected before review, one for each scenario–condition–orientation cell (240 answers). OpenAI’s Codex performed a separate post hoc audit for source grounding, claim-layer separation, score–prose coherence, directness, and counterfactual tradeoffs. No human rater independently reviewed or coded the answers. The audit retained 184 answers, excluded 56, and selected 107 possible display excerpts. An earlier regular-expression dictionary was withdrawn after inadequate agreement with the audit (macro <span class="math inline"><em>F</em><sub>1</sub> = 0.69</span>; minimum category <span class="math inline"><em>F</em><sub>1</sub> = 0.36</span>). Recurrent design suggestions were therefore counted only among 30 retained counterfactual answers and remain exploratory synthetic hypotheses.</p>
+<p>Code, frozen manifests, model revision, source hashes, structured responses, verification summaries, and figure/table builders are preserved in the project repository.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Main runs were accepted only when workflow, routing, embodied-contact, schema, grounding, and expected-count gates passed. Detailed integrity and appraisal audits are reported in Appendices <a href="#app:architecture" data-reference-type="ref" data-reference="app:architecture">15</a> and <a href="#app:appraisal" data-reference-type="ref" data-reference="app:appraisal">16</a>.</p>
+<h2 id="sec:results">Results</h2>
+<h3 class="unnumbered" id="part-1-validate">Part 1: Validate</h3>
+<h3 id="sec:baseline-resemblance">Bounded baseline resemblance</h3>
+<p>Across 100 baseline runs, the model produced 22.14 face-to-face interactions per hour (95% CI [21.85, 22.43]), compared with 22.78 interactions per hour in the observed shadowing extract. The absolute difference was 0.64 interactions per hour, or 2.8% of the observed rate. The cumulative mean stabilized as seeds accumulated (Appendix Figure <a href="#fig:part1-convergence" data-reference-type="ref" data-reference="fig:part1-convergence">12</a>), and every run passed the prespecified workflow, routing, proximity, and coordinate-integrity gates.</p>
+<p>Agreement in rate coexisted with component-level discrepancies in the interaction ecology. The model overrepresented doctor–nurse (+5.8 percentage points), doctor–patient (+4.7), next-steps and planning (+12.6), and bedside events (+7.0). It underrepresented coordination nurse–nurse (-3.9), patient-status updates (-8.1), informal or relational communication (-5.5), and corridor events (-2.9). These discrepancies delimit the model’s interpretive scope: it more closely reproduced the broad frequency and organization of interaction than its fine semantic composition (Figure <a href="#fig:part1-fingerprint" data-reference-type="ref" data-reference="fig:part1-fingerprint">4</a>).</p>
+<figure class="research-figure article__figure--wide" id="fig:part1-fingerprint">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/interaction-fingerprint.webp" alt="Observed and simulated interaction fingerprints under the normal-load baseline. Aggregate rate agreement coexists with role-pair, topic, and zone discrepancies." loading="lazy" decoding="async">
+<figcaption>Observed and simulated interaction fingerprints under the normal-load baseline. Aggregate rate agreement coexists with role-pair, topic, and zone discrepancies.</figcaption>
+</figure>
+<p>The spatial pattern nevertheless contained structure that could not be reduced to the number of events or their broad zone counts. The simulated interaction cloud had a distance of 0.557 from the observed density surface, compared with 0.656 under globally random placement and 0.592 under zone-preserving random placement. It was closer to the observed pattern than every sampled realization from either null (Monte Carlo <span class="math inline"><em>p</em> &lt; .002</span>; Figure <a href="#fig:part1-spatial" data-reference-type="ref" data-reference="fig:part1-spatial">5</a>; Appendix Table <a href="#tab:app-spatial-null" data-reference-type="ref" data-reference="tab:app-spatial-null">9</a>). This result does not establish pointwise spatial accuracy. It shows that the model generated non-random within-zone organization that resembled the observed interaction cloud more closely than the two prespecified controls.</p>
+<p>Taken together, Part 1 supports a bounded adequacy claim. The model captured the observed interaction rate, broad compositional structure, and a non-random spatial pattern while retaining visible errors in role, topic, and zone composition. It was therefore used as a controlled experimental system for within-model spatial contrasts, not as a surrogate for all behavior or outcomes in the Zurich ED.</p>
+<figure class="research-figure article__figure--wide" id="fig:part1-spatial">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/spatial-similarity.webp" alt="Distance from the observed interaction-density surface for the ABM and two negative-control distributions. Lower values indicate greater resemblance." loading="lazy" decoding="async">
+<figcaption>Distance from the observed interaction-density surface for the ABM and two negative-control distributions. Lower values indicate greater resemblance.</figcaption>
+</figure>
+<h3 class="unnumbered" id="part-2-intervene">Part 2: Intervene</h3>
+<h3 id="sec:permeability-results">Visual permeability reorganized interaction</h3>
+<p>The intervention first altered what could be seen. Making the COCPIT partitions visually transparent increased targeted local isovist area from 37.78 to 224.10 m<sup>2</sup> and brought seven beds into direct view, while route distance to those beds remained 12.83 m. At the whole-space level, transparency increased connectivity, isovist area, visual integration, and intelligibility. NURSTA relocation, by contrast, left those measures near baseline (Table <a href="#tab:vga" data-reference-type="ref" data-reference="tab:vga">1</a>; Figure <a href="#fig:part2-layout" data-reference-type="ref" data-reference="fig:part2-layout">6</a>).</p>
+<div id="tab:vga">
+<div class="research-table" tabindex="0"><table>
+<caption>Whole-space VGA-style metrics by spatial condition.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Metric</strong></th>
+<th style="text-align: left;"><strong>Baseline</strong></th>
+<th style="text-align: left;"><strong>COCPIT only</strong></th>
+<th style="text-align: left;"><strong>NURSTA only</strong></th>
+<th style="text-align: left;"><strong>Both</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Connectivity (visible points)</td>
+<td style="text-align: left;">50.9</td>
+<td style="text-align: left;">81.6</td>
+<td style="text-align: left;">50.9</td>
+<td style="text-align: left;">81.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Isovist area (m<sup>2</sup>)</td>
+<td style="text-align: left;">103.1</td>
+<td style="text-align: left;">158.4</td>
+<td style="text-align: left;">104.3</td>
+<td style="text-align: left;">159.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Visual integration (0–1)</td>
+<td style="text-align: left;">0.404</td>
+<td style="text-align: left;">0.534</td>
+<td style="text-align: left;">0.404</td>
+<td style="text-align: left;">0.532</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Visual intelligibility (r)</td>
+<td style="text-align: left;">0.763</td>
+<td style="text-align: left;">0.953</td>
+<td style="text-align: left;">0.766</td>
+<td style="text-align: left;">0.953</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<figure class="research-figure article__figure--wide" id="fig:part2-layout">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/intervention-layout.webp" alt="The 2 × 2 intervention design. COCPIT transparency altered visual permeability while preserving collision geometry; NURSTA relocation moved the workstation and its associated spatial semantics." loading="lazy" decoding="async">
+<figcaption>The <span class="math inline">2 × 2</span> intervention design. COCPIT transparency altered visual permeability while preserving collision geometry; NURSTA relocation moved the workstation and its associated spatial semantics.</figcaption>
+</figure>
+<p>These geometric changes propagated into behavior. COCPIT transparency increased actionable staff opportunities by 692.7 per run under normal load and 523.1 under high load; realized face-to-face interaction increased by 9.25 and 6.95 events per hour, respectively. The combined condition produced changes of similar magnitude, whereas NURSTA relocation remained near zero. Exact paired contrasts are reported in Table <a href="#tab:part2-effects" data-reference-type="ref" data-reference="tab:part2-effects">2</a> and Appendix Table <a href="#tab:app-part2-opportunities" data-reference-type="ref" data-reference="tab:app-part2-opportunities">11</a>.</p>
+<p>Quantity, however, was only the first change. The new contacts also occurred differently. In the combined condition, staff–staff share rose by 11.0 percentage points under normal load and 12.7 under high load, while corridor share rose by 10.3 and 7.5 points. The patient-facing <em>share</em> fell by 12.8 and 14.7 points. Because these are compositional effects, the absolute number and quality of patient contacts remain unresolved. The intervention redistributed the interaction ecology toward staff coordination; clinical outcomes remained unmeasured (Figure <a href="#fig:part2-redistribution" data-reference-type="ref" data-reference="fig:part2-redistribution">7</a>).</p>
+<figure class="research-figure article__figure--wide" id="fig:part2-redistribution">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/interaction-redistribution.webp" alt="Redistribution of modeled face-to-face interaction relative to Baseline. COCPIT transparency increased staff contact and corridor use while reducing the compositional share of patient-facing interaction." loading="lazy" decoding="async">
+<figcaption>Redistribution of modeled face-to-face interaction relative to Baseline. COCPIT transparency increased staff contact and corridor use while reducing the compositional share of patient-facing interaction.</figcaption>
+</figure>
+<div id="tab:part2-effects">
+<div class="research-table" tabindex="0"><table>
+<caption>Principal paired intervention effects relative to Baseline.</caption>
+<thead><tr><th scope="col">Scenario</th><th scope="col">Contrast</th><th scope="col">Δ F2F/h<br><span>[95% CI]</span></th><th scope="col">Δ staff–staff<br><span>pp [95% CI]</span></th><th scope="col">Δ patient-facing<br><span>pp [95% CI]</span></th><th scope="col">Δ corridor<br><span>pp [95% CI]</span></th></tr></thead>
+<tbody><tr><td class="research-table__stub">Normal</td><td>COCPIT</td><td><strong>+9.25 [8.81, 9.70]</strong></td><td><strong>+11.1 [10.3, 11.9]</strong></td><td><strong>-12.7 [-13.6, -11.8]</strong></td><td><strong>+10.7 [10.0, 11.5]</strong></td></tr>
+<tr><td class="research-table__stub">Normal</td><td>NURSTA</td><td>+0.07 [-0.36, 0.50]</td><td>-0.1 [-0.9, 0.8]</td><td>-0.1 [-1.0, 0.9]</td><td>+0.1 [-0.6, 0.9]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>Both</td><td><strong>+8.96 [8.53, 9.38]</strong></td><td><strong>+11.0 [10.3, 11.7]</strong></td><td><strong>-12.8 [-13.6, -12.0]</strong></td><td><strong>+10.3 [9.5, 11.1]</strong></td></tr>
+<tr><td class="research-table__stub">High</td><td>COCPIT</td><td><strong>+6.95 [6.51, 7.39]</strong></td><td><strong>+12.1 [11.3, 12.9]</strong></td><td><strong>-13.9 [-14.9, -12.9]</strong></td><td><strong>+7.6 [6.8, 8.3]</strong></td></tr>
+<tr><td class="research-table__stub">High</td><td>NURSTA</td><td>+0.23 [-0.13, 0.60]</td><td>+0.7 [-0.3, 1.6]</td><td>-0.8 [-1.8, 0.3]</td><td>+0.1 [-0.7, 0.9]</td></tr>
+<tr><td class="research-table__stub">High</td><td>Both</td><td><strong>+7.67 [7.23, 8.11]</strong></td><td><strong>+12.7 [11.8, 13.6]</strong></td><td><strong>-14.7 [-15.7, -13.7]</strong></td><td><strong>+7.5 [6.5, 8.4]</strong></td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Paired seeds, <span class="math inline"><em>n</em> = 100</span> per scenario and contrast. Percentage-point effects are compositional. Bold estimates have 95% confidence intervals excluding zero.</p>
+<h3 id="sec:coordination-burden">Greater coordination was purchased with movement and concentrated burden</h3>
+<p>The coordination gain carried a measurable locomotor price. Under the combined condition, staff movement rose by 1.3 km per normal-load run and 1.0 km per high-load run, even as movement per staff contact fell from 75.9 to 51.8 m under normal load and from 100.6 to 64.5 m under high load. Mean interaction separation and role–location segregation also fell, while mutually visible staff time rose. The intervention therefore increased total movement while producing more staff contact per meter traveled (Figure <a href="#fig:part2-ecology" data-reference-type="ref" data-reference="fig:part2-ecology">8</a>; Appendix Tables <a href="#tab:app-movement" data-reference-type="ref" data-reference="tab:app-movement">10</a>, <a href="#tab:app-friction-efficiency" data-reference-type="ref" data-reference="tab:app-friction-efficiency">12</a>, and <a href="#tab:app-friction-distribution" data-reference-type="ref" data-reference="tab:app-friction-distribution">13</a>).</p>
+<figure class="research-figure article__figure--wide" id="fig:part2-ecology">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/spatial-coordination-ecology.webp" alt="The combined intervention moved the interaction ecology toward lower mean separation and lower role–location segregation. Points show condition means; arrows connect Baseline with Both." loading="lazy" decoding="async">
+<figcaption>The combined intervention moved the interaction ecology toward lower mean separation and lower role–location segregation. Points show condition means; arrows connect Baseline with Both.</figcaption>
+</figure>
+<p>This gain was unevenly produced. The coordination nurse supplied 62.4% of the added movement under normal load and 68.2% under high load. The same intervention that reduced movement per staff contact thus intensified the modeled mobility and contact burden of the role already responsible for bed-flow coordination (Table <a href="#tab:role-burden" data-reference-type="ref" data-reference="tab:role-burden">3</a>).</p>
+<div id="tab:role-burden">
+<div class="research-table" tabindex="0"><table>
+<caption>Role-specific decomposition of the combined intervention’s added movement and staff contact.</caption>
+<thead><tr><th scope="col">Scenario</th><th scope="col">Role</th><th scope="col">Δ movement/person<br><span>km [95% CI]</span></th><th scope="col">Share of added<br><span>movement (%)</span></th><th scope="col">Δ contacts/person-hour<br><span>[95% CI]</span></th></tr></thead>
+<tbody><tr><td class="research-table__stub">Normal</td><td><strong>Coordination nurse</strong></td><td>+0.79 [0.74, 0.84]</td><td><strong>62.4</strong></td><td>+6.25 [6.00, 6.51]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>Doctor</td><td>+0.03 [0.01, 0.05]</td><td>7.4</td><td>+1.30 [1.15, 1.44]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>Nurse</td><td>+0.08 [0.06, 0.09]</td><td>30.3</td><td>+1.62 [1.53, 1.71]</td></tr>
+<tr><td class="research-table__stub">High</td><td><strong>Coordination nurse</strong></td><td>+0.70 [0.66, 0.74]</td><td><strong>68.2</strong></td><td>+5.61 [5.38, 5.83]</td></tr>
+<tr><td class="research-table__stub">High</td><td>Doctor</td><td>+0.01 [0.00, 0.03]</td><td>3.7</td><td>+0.98 [0.86, 1.10]</td></tr>
+<tr><td class="research-table__stub">High</td><td>Nurse</td><td>+0.06 [0.05, 0.07]</td><td>28.0</td><td>+1.36 [1.27, 1.44]</td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Both minus Baseline, paired by seed (<span class="math inline"><em>n</em> = 100</span> per scenario). Movement share decomposes the total added movement. Bold identifies the role supplying most of that increase.</p>
+<p>NURSTA relocation provides the complementary result. It changed a station’s position, geometry, semantics, and routing attraction, yet changed face-to-face interaction by only 0.07 events per hour under normal load and 0.23 under high load; both intervals included zero. Geometric modification therefore remained dormant where the modeled workflow rarely activated its new capacity. Across 1,280 integrity-clean sensitivity runs, this contrast survived local changes to response probability, crowding threshold, repeat-contact delay, and station-return tendency: COCPIT transparency continued to reorganize interaction, while the tested NURSTA relocation remained near zero (Appendix Figure <a href="#fig:part2-sensitivity" data-reference-type="ref" data-reference="fig:part2-sensitivity">13</a> and Table <a href="#tab:app-sensitivity-values" data-reference-type="ref" data-reference="tab:app-sensitivity-values">14</a>).</p>
+<h3 class="unnumbered" id="part-3-interpret">Part 3: Interpret</h3>
+<h3 id="sec:questionnaire-convergence">Aggregate synthetic ratings converged with observed shifts</h3>
+<p>Before the orientation-specific intervention results were interpreted, the normal-load baseline appraisals were compared with the observed end-of-shift questionnaire (Table <a href="#tab:questionnaire-convergence" data-reference-type="ref" data-reference="tab:questionnaire-convergence">4</a>). Across the six independently comparable 1–7 items, the mean absolute error was 0.25 scale points. Five of six means fell within the prespecified half-point margin; the remaining item, maximum workload, missed it by 0.06 points. The critical-workload estimate was 25.0%, compared with 28.6% in the observed shifts, and all seven empirical means lay inside the corresponding synthetic 95% ranges.</p>
+<div id="tab:questionnaire-convergence">
+<div class="research-table" tabindex="0"><table>
+<caption>Observed and synthetic end-of-shift questionnaire convergence under normal load.</caption>
+<thead><tr><th scope="col">End-of-shift construct</th><th scope="col">Empirical<br><span>mean (SD)</span></th><th scope="col">Synthetic<br><span>mean (SD)</span></th><th scope="col">|Δ|</th></tr></thead>
+<tbody><tr><td class="research-table__stub">Maximum workload</td><td>4.57 (1.55)</td><td>4.01 (1.88)</td><td>0.56</td></tr>
+<tr><td class="research-table__stub">Critically high workload (%)</td><td>28.57 (29.18)</td><td>25.00 (27.78)</td><td>3.57 pp<sup>†</sup></td></tr>
+<tr><td class="research-table__stub">Concentration</td><td>5.00 (1.15)</td><td>5.17 (1.54)</td><td><strong>0.17</strong></td></tr>
+<tr><td class="research-table__stub">Communication satisfaction</td><td>4.77 (1.42)</td><td>5.08 (0.67)</td><td><strong>0.31</strong></td></tr>
+<tr><td class="research-table__stub">Teamwork</td><td>5.15 (1.21)</td><td>5.03 (0.47)</td><td><strong>0.12</strong></td></tr>
+<tr><td class="research-table__stub">Helpfulness to patients</td><td>5.15 (0.80)</td><td>5.22 (0.67)</td><td><strong>0.07</strong></td></tr>
+<tr><td class="research-table__stub">Information sufficiency</td><td>5.31 (1.03)</td><td>5.04 (0.67)</td><td><strong>0.27</strong></td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Empirical <span class="math inline"><em>n</em> = 14</span> for the two workload items and <span class="math inline"><em>n</em> = 13</span> for the remaining items; synthetic estimates use 150 normal-load baseline staff shifts standardized to the observed role mix. Except where marked, scales run from 1 to 7; bold differences meet the 0.5-point margin. <span class="math inline"><sup>†</sup></span>The Q2 mean is partly fixed by defining critical workload as the most demanding quarter of each simulated shift and is excluded from the six-item convergence vote.</p>
+<p>Completed simulated shifts could be translated into aggregate ratings on the same scales as staff reports without exposing the model to the observed answers. Agreement was weaker beyond the means, with three synthetic response distributions too compressed; complete distributional and relationship diagnostics remain in Appendix <a href="#app:questionnaire-audit" data-reference-type="ref" data-reference="app:questionnaire-audit">17</a>.</p>
+<h3 id="sec:orientation-ensemble">Designed orientations formed a matched stress-test ensemble</h3>
+<p>Part 3 then asked whether the opportunity structure identified in Part 2 mattered uniformly when discretionary decisions were conditioned by five designed cognitive-policy orientations. Team Connector, Focus Protector, Patient Advocate, Vigilant Monitor, and Adaptive Generalist each occupied every staff position, allowing role, workload, demand, and spatial condition to remain fixed while the uptake policy changed (Figure <a href="#fig:persona-preview" data-reference-type="ref" data-reference="fig:persona-preview">9</a>). The OCEAN displays translate declared priorities into familiar synthetic personality profiles, making each policy more interpretable than a parameter set alone. Their psychometric validity and prevalence in any human population remain unmeasured.</p>
+<figure class="research-figure article__figure--wide" id="fig:persona-preview">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/persona-preview.png" alt="Five designed workplace-interaction cognitive orientations with explanatory OCEAN profiles." loading="lazy" decoding="async">
+<figcaption>Five designed workplace-interaction cognitive orientations used as a matched stress-test ensemble. The displayed OCEAN profiles are explanatory devices and did not enter the scientific analysis.</figcaption>
+</figure>
+<p><strong>Interactive companion.</strong> <a href="https://arisaanto.github.io/ed-abm/"><code>https://arisaanto.github.io/ed-abm/</code></a> presents scenario- and condition-specific quantitative profiles and audited synthetic excerpts for each orientation. The interface presents model-generated evidence and does not contain human testimony.</p>
+<h3 id="sec:common-visibility">Common visibility produced different uptake</h3>
+<p>The combined intervention produced similar visibility gains across the five orientations, ranging from 6.2 to 6.6 percentage points under normal load and from 4.0 to 4.6 under high load, while role-standardized LLM engagement moved in different directions. Under normal load, the Vigilant Monitor increased engagement by 13.1 points (95% CI [4.2, 22.1]), while the Adaptive Generalist decreased it by 10.7 points (95% CI [-21.2, -0.2]). Under high load, the largest declines occurred for Focus Protector (-27.7 points), Adaptive Generalist (-25.2), and Team Connector (-25.0); their intervals excluded zero (Figure <a href="#fig:part3-uptake" data-reference-type="ref" data-reference="fig:part3-uptake">10</a>).</p>
+<figure class="research-figure article__figure--wide" id="fig:part3-uptake">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/common-affordance-uptake.webp" alt="Near-common visibility gains and divergent role-standardized engagement changes. Bars show matched Both-minus-Baseline estimates; intervals are 95% confidence intervals." loading="lazy" decoding="async">
+<figcaption>Near-common visibility gains and divergent role-standardized engagement changes. Bars show matched Both-minus-Baseline estimates; intervals are 95% confidence intervals.</figcaption>
+</figure>
+<p>This finding concerns designed interaction policies whose relation to human personality remains unmeasured. Within that experimental system, near-common availability still yielded selective use: the space supplied a perceptual possibility, while policy and workload shaped whether it became an interaction.</p>
+<h3 id="sec:inclusive-fit-results">The combined condition improved inclusive synthetic fit</h3>
+<p>Post-run appraisals provided a second, non-causal view of the completed trajectories. Under high load, overall person–space fit increased from Baseline to Both for Team Connector (4.4 to 5.1), Patient Advocate (4.0 to 4.4), Vigilant Monitor (3.9 to 4.5), and Adaptive Generalist (4.0 to 4.6), while Focus Protector remained at 5.8. A stable overall score could still contain dimension-level changes (Table <a href="#tab:persona-profiles" data-reference-type="ref" data-reference="tab:persona-profiles">5</a>).</p>
+<div id="tab:persona-profiles">
+<div class="research-table research-table--persona" tabindex="0"><table>
+<caption>High-load synthetic appraisal profiles and selected grounded design responses. Scores show Baseline → Both on a 1–7 scale.</caption>
+<thead><tr><th scope="col">Cognitive orientation</th><th scope="col">Overall fit</th><th scope="col">Coordination</th><th scope="col">Focus</th><th scope="col">Legibility</th><th scope="col">Selected synthetic design response</th></tr></thead>
+<tbody><tr><td class="research-table__stub"><strong>Team Connector</strong></td><td><strong>4.4 → 5.1</strong></td><td>3.9 → 4.5</td><td>4.0 → 4.3</td><td>4.8 → 5.8</td><td><q>A semi-private, acoustically dampened huddle space near shared circulation, adjacent to COCPIT.</q></td></tr>
+<tr><td class="research-table__stub"><strong>Focus Protector</strong></td><td><strong>5.8 → 5.8</strong></td><td>3.7 → 4.2</td><td>5.7 → 5.7</td><td>5.0 → 5.8</td><td><q>A visual status indicator showing whether a nurse is in focus or available mode.</q></td></tr>
+<tr><td class="research-table__stub"><strong>Patient Advocate</strong></td><td><strong>4.0 → 4.4</strong></td><td>3.3 → 3.8</td><td>3.7 → 3.8</td><td>5.1 → 5.7</td><td><q>COCPIT offers colleague visibility, but travel to patient rooms breaks my focus.</q></td></tr>
+<tr><td class="research-table__stub"><strong>Vigilant Monitor</strong></td><td><strong>3.9 → 4.5</strong></td><td>3.4 → 3.4</td><td>3.7 → 3.7</td><td>5.0 → 5.4</td><td><q>A semi-transparent barrier near the COCPIT entrance could create a soft coordination zone.</q></td></tr>
+<tr><td class="research-table__stub"><strong>Adaptive Generalist</strong></td><td><strong>4.0 → 4.6</strong></td><td>3.3 → 3.5</td><td>3.6 → 3.9</td><td>5.0 → 5.7</td><td><q>A dedicated, semi-private huddle space near the right patient-room area.</q></td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Scores average ten paired seeds. Responses are synthetic outputs retained after an independent Codex grounding and claim-layer audit; they are not Zurich ED staff testimony.</p>
+<p>At the ensemble level, the combined condition raised high-load average fit by 0.5 points (95% CI [0.2, 0.7]), raised the within-seed fit floor by 0.8 (95% CI [0.3, 1.3]), and reduced between-orientation dispersion by 0.27 (95% CI [-0.44, -0.11]). Under normal load, the corresponding average and floor gains were 0.3 and 0.4 points. The combined condition therefore improved the mean without sacrificing the least-served designed orientation (Figure <a href="#fig:part3-inclusive-fit" data-reference-type="ref" data-reference="fig:part3-inclusive-fit">11</a>; Appendix Table <a href="#tab:app-inclusive-fit" data-reference-type="ref" data-reference="tab:app-inclusive-fit">17</a>).</p>
+<figure class="research-figure article__figure--wide" id="fig:part3-inclusive-fit">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/inclusive-fit.webp" alt="Inclusive synthetic person–space fit. Trajectories connect Baseline with each intervention and report changes in average fit and the fit floor." loading="lazy" decoding="async">
+<figcaption>Inclusive synthetic person–space fit. Trajectories connect Baseline with each intervention and report changes in average fit and the fit floor.</figcaption>
+</figure>
+<p>The fit floor is a distributional criterion within the designed ensemble. It describes the least favorable modeled appraisal among five equally weighted policies; human prevalence and an optimal human cognitive orientation remain unmeasured.</p>
+<h3 id="sec:ablation-results">Orientation and memory were complementary</h3>
+<p>The fixed-opportunity <span class="math inline">2 × 2</span> ablation isolated the contribution of the orientation and memory components. Replacing neutral conditioning with a designed orientation changed engagement probability by -15.0 percentage points on average (95% CI [-21.5, -8.5]). The memory main effect was smaller and uncertain (+2.5 points, 95% CI [-2.8, 7.8]), while the orientation-by-memory interaction was positive (+13.3 points, 95% CI [4.7, 22.0]). Memory therefore conditioned how orientation cues acted on the same opportunities rather than shifting engagement uniformly. The fixed-opportunity design supports a prompt-level contribution claim; closed-loop behavioral effects require recursive trajectory replay (Appendix Table <a href="#tab:app-ablation" data-reference-type="ref" data-reference="tab:app-ablation">15</a>).</p>
+<h3 id="sec:synthetic-design-hypotheses">Synthetic interviews yielded bounded design hypotheses</h3>
+<p>The audit covered 40 prespecified interview bundles and 240 answers, retained 184, excluded 56 for grounding or claim-layer failures, and selected 107 as possible explorer excerpts. Two display cells had no acceptable excerpt. That absence remained visible rather than being repaired with a more convenient quotation.</p>
+<p>Among 30 retained counterfactual answers, 17 proposed semi-private coordination space, 11 visual permeability, 10 distributed support points, nine availability or focus signals, and five acoustic control. Categories overlapped. Eight of the 17 semi-private proposals also located support near active work, while four paired semi-enclosure with acoustic control. Four of the 11 visual proposals also requested an availability signal. The answers therefore joined access to colleagues with ways to regulate exposure. Visibility was often valued, while unqualified openness repeatedly drew concern (Appendix Table <a href="#tab:design-suggestions" data-reference-type="ref" data-reference="tab:design-suggestions">16</a>).</p>
+<p>These responses remain model-generated hypotheses; staff preferences require direct human evidence. Privacy/control was rateable in only 27 of 400 appraisal packets because the traces rarely contained direct confidentiality or acoustic evidence; no privacy effect was therefore estimated. Exploratory trace-to-fit associations were weak and scenario-dependent and were not promoted to causal results. The retained answers translate completed trajectories into design propositions that ED workers can contradict, refine, or confirm.</p>
+<h2 id="sec:discussion">Discussion</h2>
+<p>This study examined spatial design at three progressively finer resolutions: whether an emergency-department model resembled an observed interaction ecology, how two spatial interventions redistributed that ecology, and whether the resulting opportunities acquired the same modeled value across different cognitive-policy orientations. Together, the findings specify a chain of spatial consequence. Configuration made colleagues perceptually available, workflow brought some encounters within operational reach, and a designed orientation influenced whether a feasible opportunity became action and how the completed trajectory was appraised. This chain isolates one tractable portion of the interdependence between cognition and space. At architectural scale, this is the HCI problem addressed here: the interface extends across the arrangement through which perception, work, and contact become possible <span class="citation" data-cites="alavi2019 hollan2000">(Alavi et al. 2019; Hollan, Hutchins, and Kirsh 2000)</span>.</p>
+<h3 id="from-spatial-possibility-to-selective-uptake">From spatial possibility to selective uptake</h3>
+<p>Part 1 established the epistemic boundary for the later experiments. The baseline reproduced the observed interaction rate and several features of the role, zone, and spatial pattern, and it outperformed two spatial negative controls. It also retained visible errors in topic composition, role-pair frequency, and zone assignment. The baseline therefore earned a narrower status: sufficient resemblance for controlled comparisons within the modeled system. Its remaining errors exclude a digital-twin claim and keep each counterfactual conditional on the model that produced it.</p>
+<p>Within that boundary, Part 2 showed that visual permeability can reorganize an interaction ecology without relocating rooms or shortening the route to patients. Making the COCPIT partition transparent increased mutually visible copresence, feasible interaction opportunities, and realized staff contact. This agrees with healthcare and workplace evidence linking layout, visibility, movement, and copresence to face-to-face communication <span class="citation" data-cites="gharaveis2018 gharaveis2019 naccarella2019">(Gharaveis, Hamilton, and Pati 2018; Gharaveis et al. 2019; Naccarella, Raggatt, and Redley 2019)</span>. The present study adds a mechanistic decomposition. COCPIT transparency first enlarged the perceptual opportunity structure; the existing workflow and interaction policy then converted some of those opportunities into encounters.</p>
+<p>The near-null response to the NURSTA relocation sharpens that interpretation. The relocation changed station position and several geometric measures while leaving total interaction materially unchanged. It rearranged a work resource inside an existing visual compartment; COCPIT transparency, by comparison, connected staff across a boundary that had previously divided their visual fields. In this model, behavioral leverage followed the change in workflow-accessible relations, while a coordinate shift inside a largely unchanged relational field carried little force. This contrast supplies a bounded design hypothesis for other layouts: interventions that alter who can become perceptually and operationally relevant have greater behavioral reach than local repositioning within the same enclosure.</p>
+<p>This separation also clarifies what the space-syntax measures contribute. Hillier’s account treats a layout as containing several configurational potentials, each becoming informative under a representation suited to a particular function <span class="citation" data-cites="hillier1996">(Hillier 1996)</span>. Here, visual integration described one such potential, interaction density described its behavioral occupation, and appraisal described the completed shift at a different scale. Keeping these measures separate establishes the sequence from spatial potential to behavioral occupation and, finally, to whole-shift appraisal.</p>
+<p>Part 3 extended this distinction from ecological uptake to orientation-conditioned uptake. All five orientations received a near-common increase in mutual visibility under the combined intervention, but their engagement changes diverged. The modeled opportunity emerged from the joint action of environmental availability, workload, feasible action, and policy.</p>
+<p>This interpretation is consonant with ecological accounts of affordance, which join environmental features to an actor’s abilities <span class="citation" data-cites="gibson1979 chemero2003">(Gibson 1979; Chemero 2003)</span>. Situated practice further narrows a field of available possibilities into those that become salient <span class="citation" data-cites="rietveld2014">(Rietveld and Kiverstein 2014)</span>. The simulation operationalizes a small fragment of this process through mutual visibility and operational feasibility. Clinical skill, social normativity, affect, and lived perception remain outside its scope. The resulting computational claim is correspondingly narrow: availability can exceed solicitation.</p>
+<h3 id="redistribution-burden-and-selective-permeability">Redistribution, burden, and selective permeability</h3>
+<p>The intervention results caution against treating more interaction as an unqualified design objective. COCPIT transparency increased staff contact and reduced movement per realized contact, mean interaction separation, and role–location segregation. At the same time, it shifted interaction toward circulation space, reduced the <em>share</em> of patient-facing contact, increased total movement, and concentrated much of the added movement in the coordination nurse. The same reorganization therefore appeared efficient at the level of each contact and burdensome at the level of aggregate movement and role distribution.</p>
+<p>The distinction between total movement and movement per contact is especially important. The intervention made each realized staff contact less costly in locomotor terms, yet generated enough additional activity that aggregate movement still rose. Describing the result only as improved coordination efficiency would therefore conceal who supplied the additional mobility. Similarly, the lower patient-facing share establishes a compositional redistribution. Absolute patient-contact counts and any consequences for care require clinical and organizational evidence beyond the present model.</p>
+<p>The results favor <em>selective permeability</em>: visual access where coordination requires it, paired with mechanisms that regulate when and how that access becomes a demand for attention. The synthetic interviews converged on the same tension. Semi-private coordination space was the most recurrent counterfactual suggestion, followed by visual permeability, distributed support points, availability signalling, and acoustic control. Their provenance in simulated traces gives them an abductive role: they translate a measured tradeoff into propositions for human testing. Staff preferences await that evidence.</p>
+<p>This places the burden of adaptation on the environment as well as the user. Design can absorb part of that burden by reorganizing the resources through which action is coordinated <span class="citation" data-cites="kirsh1996">(Kirsh 1996)</span>. An adjustable environment may support coordination while allowing staff to modulate exposure <span class="citation" data-cites="rietveld2022">(Rietveld 2022)</span>. One concrete proposal follows from the recurrent interview responses. The relocated nurse station could become a small standing huddle space immediately below the central coordination hub, where the main circulation routes meet. A wide opening toward the hub would preserve visual awareness and allow staff to enter briefly without leaving the surrounding workflow. Short side screens and an acoustically absorbent rear surface would soften overheard speech, while a shared standing counter and an inward-facing monitor would support brief handoffs between two or three colleagues. The occupation of the space and the orientation of staff would remain legible from the surrounding circulation. The proposal materializes the interviews’ recurring request for selective permeability: enough openness to preserve coordination, enough enclosure to protect attention and speech (Figure <a href="#fig:part3-huddle-concept" data-reference-type="ref" data-reference="fig:part3-huddle-concept">12</a>).</p>
+<figure class="research-figure research-figure--photo article__figure--wide" id="fig:part3-huddle-concept">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/huddle-space-concept.webp" alt="Concept visualization of a semi-private standing huddle space below the central coordination hub." loading="lazy" decoding="async">
+<figcaption>Concept visualization of a possible standing huddle space looking toward the transparent COCPIT. The proposal gives synthetic form to recurring requests for selective permeability.</figcaption>
+</figure>
+<h3 id="empirical-bridge-to-synthetic-appraisal">Empirical bridge to synthetic appraisal</h3>
+<p>The questionnaire audit provides the empirical bridge into Part 3. At normal load, synthetic means differed from observed staff means by 0.25 points on average across six comparable 1–7 items, and five of six met the prespecified half-point margin. Completed simulated shifts could therefore be translated into aggregate ratings on the same scales as staff reports without supplying the observed answers to the model. Because the same trace-grounded architecture generated the spatial counterfactual appraisals, the result gives those appraisals qualified credibility as design predictions.</p>
+<p>That credibility reaches the aggregate appraisal mechanism at baseline. The empirical questionnaire contained no staff-orientation labels or observations under the modeled interventions, and several synthetic distributions were too narrow. Person-matched prediction and the size of each counterfactual effect remain unvalidated.</p>
+<h3 id="personspace-heterogeneity-and-inclusive-fit">Person–space heterogeneity and inclusive fit</h3>
+<p>Part 2 evaluated interventions at the level of the interaction ecology. That resolution leaves the distribution of benefit unresolved. An aggregate improvement can conceal whether one modeled user benefits greatly while another is left unchanged or made worse. Part 3 therefore evaluated average synthetic fit, the fit of the least-served orientation, and dispersion between orientations.</p>
+<p>Under high load, the combined condition improved both the average and the within-seed fit floor while reducing between-orientation dispersion. This is a stronger result than an increase in the mean alone. Within the designed ensemble, aggregate improvement coincided with a higher minimum rather than a loss concentrated in its least favorable orientation. The same conclusion was weaker under normal load, suggesting that the value of added visual access depended partly on operational demand.</p>
+<p>This distributional view extends person–environment fit theory, which treats compatibility as a relation between characteristics of a person and the supplies or demands of an environment <span class="citation" data-cites="edwards1998">(Edwards, Caplan, and Harrison 1998)</span>. The scores operate as ensemble diagnostics; human accessibility and occupational fit would require validated human measures. Their methodological contribution is to place the breadth of a modeled benefit beside its average size.</p>
+<p>The available evidence supports a defensible criterion for subsequent computational design: prefer conditions that improve system-level coordination while raising, or at least preserving, the least-served modeled fit. An optimal human cognitive orientation and a universal cognitive environment remain beyond the data because human traits and their prevalence were never measured. Future work can enlarge and empirically anchor the orientation set, assign prevalence weights derived from staff data, and test whether the same intervention remains favorable. Until then, the five orientations remain a stress-test ensemble.</p>
+<h3 id="what-the-cognitive-extension-establishes">What the cognitive extension establishes</h3>
+<p>The central threat to Part 3 is circularity. The five orientations were specified to prioritize different forms of interaction, interruption management, vigilance, patient advocacy, and adaptation. Their programmed average differences therefore carry no independent discovery about cognition; obedience to an instruction cannot explain human variation.</p>
+<p>The informative evidence lies in the interaction between policy and environment. Every orientation was rotated across the same staff roles, scenarios, assignment rounds, and spatial conditions. This balanced rotation shifts the object of analysis from programmed average differences to condition-specific response functions. Near-common exposure produced divergent uptake; the fixed-opportunity ablation showed that orientation conditioning altered decisions and that grounded memory modified the size of this effect; appraisal changes also varied across orientation and workload.</p>
+<p>These results establish the designed policies as a consequential experimental factor inside the model. Their status remains synthetic: the study contains no evidence that they are latent types in real ED staff. Part 3 is therefore a computational design probe in which one aggregate agent is replaced by a bounded ensemble of different uptake policies.</p>
+<p>Generative-agent architectures can produce coherent memory, reflection, and behavior over time <span class="citation" data-cites="park2023">(Park et al. 2023)</span>. Such coherence supplies continuity; psychological validity still requires human evidence. Artificial societies can exhibit unprompted group-level patterns, and physically grounded environments can couple social decisions to indoor tasks <span class="citation" data-cites="he2026 wu2025indoorworld">(He et al. 2026; Wu et al. 2025)</span>. Synthetic HCI and social-science studies likewise report useful replications alongside compressed variation, prompt sensitivity, and uneven representation <span class="citation" data-cites="hamalainen2023 aher2023 santurkar2023 bisbee2024">(Hämäläinen, Tavast, and Kunnari 2023; Aher, Arriaga, and Kalai 2023; Santurkar et al. 2023; Bisbee et al. 2024)</span>. For that reason, movement, workflow, patient state, and feasible actions remained under the empirically anchored ABM; the language model was restricted to bounded discretionary choices; post-run appraisals were grounded in trace evidence; and generated prose remained outside the causal loop. This preserved interpretability while narrowing the cognitive claim.</p>
+<h3 id="limitations">Limitations</h3>
+<p>The empirical anchor represented one ED context and one observation period, and its coded topics and zones contained missingness and transmission ambiguity. Calibration may partly explain the close aggregate rate, while resemblance remained uneven across role pairs, topics, and zones. The spatial negative controls strengthen the bounded resemblance claim. External validity across hospitals, shifts, and organizational cultures awaits replication.</p>
+<p>The workflow architecture represented the regular interaction ecology of the modeled ED. The high-load scenario increased demand and acuity within that architecture. Deaths, severe behavioral emergencies, security events, abrupt workflow breakdowns, and the open-ended casual conversation through which staff also coordinate and sustain relationships remained outside it. These events reorganize work in ways that exceed a heavier version of the regular workflow.</p>
+<p>The model omitted outcomes required to judge whether the observed redistribution would be desirable in practice: clinical quality, errors, waiting time, patient safety, staff fatigue, acoustic distraction, confidentiality, and perceived workload. Part 2 also paired seed numbers across conditions before the condition-invariant arrival stream used in Part 3 was introduced. Fixed initialization left downstream random draws free to diverge after condition-specific trajectories separated.</p>
+<p>The interventions were configuration-specific. COCPIT transparency was a perceptual change, whereas NURSTA relocation altered station position and associated geometry. Their contrast is mechanistically useful, but it does not prove that transparent partitions are generally effective or that relocated nursing stations are generally inert.</p>
+<p>The cognitive orientations were designed experimental policies. Their OCEAN displays were synthetic translations of declared priorities into a familiar personality vocabulary, not measured Big Five scores, and the language-model results remain specific to one model revision, prompt, sampling policy, and evidence-compression scheme. The ablation fixed opportunities rather than replaying complete recursive trajectories. Sparse confidentiality and acoustic evidence prevented a privacy/control estimate, while trace-to-fit associations identified no causal mediators. The daily questionnaire supplied an aggregate normal-load convergence check, but no ED worker was linked to a designed orientation or evaluated either modeled intervention. OpenAI’s Codex-assisted audit supports bounded illustrative use, not human thematic analysis.</p>
+<h2 id="sec:conclusions">Conclusions</h2>
+<p>This project asked whether a spatially explicit, workflow-constrained ABM could reproduce an observed emergency-department interaction ecology, estimate how targeted spatial interventions reorganize that ecology, and reveal heterogeneity in the uptake and appraisal of the resulting opportunities across designed synthetic orientations.</p>
+<p>The answer is qualified but affirmative within the declared model. The baseline reproduced selected observed rate, compositional, zonal, and spatial patterns closely enough to support controlled in-model comparisons, while retaining visible discrepancies. Increasing the visual permeability of the COCPIT partition then changed both feasible and realized coordination. Its gain was mixed: interaction shifted toward circulation space, total movement increased, and the coordination nurse bore most of the added mobility. Relocating NURSTA changed spatial measures without producing a comparable behavioral response, showing that geometric change became consequential only where workflow activated it.</p>
+<p>The cognitive extension added a further distinction. Near-common increases in visual availability yielded divergent discretionary uptake across the five designed orientations. Under high load, the combined condition also improved average synthetic person–space fit, raised the least-served fit, and reduced between-orientation disparity. The result concerns a declared ensemble of user policies; human personality types and staff preferences remain outside the evidence.</p>
+<p>A post hoc questionnaire audit provided an empirical bridge to staff experience. Under normal load, the six comparable 1–7 synthetic means were 0.25 points from the observed means on average, and five met the prespecified half-point margin. Several response distributions remained too compressed. The convergence supports aggregate baseline plausibility and lends qualified credibility to the modeled intervention appraisals. Person-matched prediction and the counterfactual effect sizes remain unvalidated.</p>
+<p>The study therefore supports a relational account of spatial consequence: configuration makes possibilities available, workflow brings some of them within operational reach, and users selectively convert them into action. Design evaluation must therefore track the average benefit together with the movement that purchases it, the roles that carry it, and the least-served modeled user.</p>
+<p>Clinical outcomes, privacy, and real staff appraisals of the interventions remain outside the study. The simulation supports conditional counterfactual comparison within the tested configuration, workflow, interventions, and synthetic architecture. Its evidentiary status remains below that of a digital twin. Its contribution is a reproducible and falsifiable way to connect empirical interaction traces, spatial counterfactuals, and heterogeneous modeled uptake without collapsing visibility into behavior or synthetic appraisal into human testimony.</p>
+<h2 id="sec:ethics">Ethical Considerations</h2>
+<p>The Three Tier Model distinguishes obligations to scientists, research participants, and society. In this project, all three depend on preventing simulated and generated outputs from being mistaken for observations of people.</p>
+<h3 id="scientists">Scientists</h3>
+<p>The report separates observed shadowing records, ABM-generated trajectories, and language-model interpretations of simulated experience. Validation is purpose-bounded; clinical benefit lies outside the Part 2 estimand, while Part 3 tests designed orientations whose status remains experimental rather than taxonomic. Frozen manifests, seeds, paired contrasts, negative controls, sensitivity analyses, source hashes, model revisions, and integrity gates make those boundaries inspectable. Insufficient evidence was retained rather than imputed, most visibly in the failure to estimate privacy/control.</p>
+<p>No human rater reviewed the synthetic interviews. A separate Codex audit applied explicit grounding and retention rules, but no independent human coding or inter-rater reliability assessment occurred. It is therefore reported as model-assisted quality control, not human qualitative validation.</p>
+<h3 id="research-participants">Research participants</h3>
+<p>No new participants were recruited and no workflow was altered. The empirical anchor was a secondary coded extract from a consented University Hospital Zurich study with ETH Zurich ethics approval (EK 2023-N-31). Fine-grained spatiotemporal traces can nevertheless remain indirectly identifying. Raw participant-linked data should remain under the source study’s access conditions; public materials should contain only authorized aggregates or derived data.</p>
+<p>The synthetic orientations create a separate risk of misrepresentation. First-person answers can resemble testimony even when no person spoke. The orientations were not derived from Zurich ED interviews, their OCEAN displays are not psychometric measurements, and their outputs cannot establish staff needs, emotions, or preferences. Quotations are therefore labeled synthetic, and implementation decisions still require consultation with affected staff.</p>
+<h3 id="society">Society</h3>
+<p>Simulation can compare expensive or disruptive spatial alternatives before construction and expose burdens hidden by aggregate averages. It can also acquire false authority. A narrow ABM may be called a digital twin, synthetic interviews may displace fieldwork, or visible coordination may be optimized while privacy, concentration, patient contact, and role equity are ignored. The same traces could support staff surveillance or individual performance ranking, uses for which the model was neither designed nor validated.</p>
+<p>The appropriate balance is to use the system as decision support rather than design authority: make code, assumptions, uncertainty, and failures open where confidentiality permits; report least-served as well as average outcomes; and subject modeled design hypotheses to participatory and post-occupancy evaluation. The project supports pre-deployment comparison and hypothesis generation, not autonomous spatial prescription or replacement of worker participation.</p>
+<h2 id="sec:recommendations">Recommendations</h2>
+<p>The study establishes a method for tracing how a spatial alteration passes through perception, workflow, discretionary uptake, and synthetic appraisal. The next stage should strengthen the correspondence between the modeled layers and the people, work, and environments they represent.</p>
+<h3 id="validate-mechanisms-with-ed-workers">Validate mechanisms with ED workers</h3>
+<p>The aggregate questionnaire check makes the next validation target more specific. A human study in the source ED should use critical-incident interviews, walkthroughs, or immersive mock-ups to test whether workers recognize the predicted changes in coordination, movement burden, visibility, interruption, and patient-facing contact. If either intervention is implemented, a prospective post-occupancy study should repeat the Part 1 measures while adding staff-reported, operational, and clinical outcomes.</p>
+<h3 id="measure-the-missing-mediators">Measure the missing mediators</h3>
+<p>Future observation should record interruption source, acceptance, duration, and resumption cost; visual and acoustic privacy exposure; perceived workload, control, and legibility; communication usefulness; and patient-process outcomes. Those mediators are required to distinguish productive coordination from contact that merely creates another interruption; privacy/control otherwise remains unestimable.</p>
+<h3 id="empirically-anchor-individual-differences">Empirically anchor individual differences</h3>
+<p>The five orientations should remain stress-test policies rather than harden into a taxonomy. Staff interviews and validated continuous constructs, including interruption susceptibility, attentional control, collaboration preference, patient orientation, sensory sensitivity, and spatial confidence, could calibrate future policy dimensions. Held-out observations should then test whether those dimensions predict uptake or appraisal. OCEAN should enter inference only after a separate psychometric mapping is validated.</p>
+<h3 id="replicate-and-optimize-distributionally">Replicate and optimize distributionally</h3>
+<p>External validation should include EDs with different plans, staffing, and organizational cultures, using a withheld site or observation period for prospective evaluation. Candidate designs should be compared on a compact vector of coordination, patient-facing contact, movement and role burden, interruption and privacy, average fit, and least-served fit rather than interaction volume alone. A design that improves the mean by imposing a large loss elsewhere should remain visibly disadvantaged.</p>
+<h3 id="build-toward-population-grounded-generative-spatial-design">Build toward population-grounded generative spatial design</h3>
+<p>The longer horizon joins three capabilities: a behavioral model conditioned on consented population data, a compiler that translates floorplans or building-information models into movement, visibility, task, and interaction representations, and a counterfactual engine that searches across design variants. A target population, spatial program, and outcome vector would define each study. Heterogeneous agents would then traverse candidate spaces, producing distributions of behavior, uncertainty, subgroup loss, and failure rather than a single forecast. Outcomes would remain specific to the domain: purchase, dwell, and staff–customer encounters in retail; coordination, patient access, movement, privacy, and least-served fit in emergency care.</p>
+<p>Generative optimization could propose subsequent layouts under geometric, regulatory, and operational constraints. Observation would constrain the agents, simulation would identify consequential spatial alternatives, and human evaluation would revise both model and design. An economical demonstration of this longer horizon would begin from the present model and add the missing scaling mechanism. This project already supplies an imported interior, task grammar, counterfactual layouts, and measurable outcomes. A next-stage demonstrator would introduce an empirically sampled user population, expose several design parameters to automatic search, and test whether the optimizer can propose a held-out layout whose predicted benefit survives observation or mock-up. Success at that scale would establish the logic needed for later expansion across populations and building types.</p>
+<h2 id="sec:data-availability">Data and Code Availability</h2>
+<p>Model code, frozen experiment plans, derived aggregate outputs, verification artifacts, and figure and table builders are available in the project repository.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The underlying hospital observations and questionnaire responses are confidential and are not publicly released. Access remains governed by the source study and its ethics and data-management conditions; public materials contain only authorized aggregates or derived artifacts.</p>
+<h2 id="sec:genai">GenAI Statement</h2>
+<p>OpenAI’s Codex supported software implementation, debugging, code review, analysis, verification design, visual production, repository organization, literature discovery, and the outlining and editing of this report. It also performed the reported post hoc audit of 40 prespecified synthetic interview bundles; this was model-assisted quality control, not human qualitative review. OpenAI image generation produced illustrative persona artwork and the speculative huddle-space visualization; neither entered analysis.</p>
+<p>Qwen3.6-35B-A3B, executed on Snellius through vLLM, formed part of the Part 3 experimental apparatus. Its bounded interaction decisions and trace-grounded synthetic appraisals were study data. Code and numerical claims were checked against preserved artifacts, references against original sources, and synthetic responses through schema, grounding, and provenance gates. Responsibility for all submitted claims remains with the student.</p>
+<h2 id="app:empirical">Empirical data and harmonization</h2>
+<p>The source extract contained event timestamps, coordinates, coded participant and sensor identifiers, observed staff role, interaction-partner detail, transmitted-information text, and location detail. Observation time was calculated by summing within-day windows; elapsed time between dates was excluded. Of 610 records, 359 met the face-to-face, partner, and modeled-area criteria used in Part 1.</p>
+<p>Observed roles were mapped to coordination nurse, nurse, and doctor. Partner roles were inferred from a frozen partner-detail mapping, and role pairs were stored without direction. Topic labels were assigned through a fixed rule-based crosswalk; ambiguous records remained low-information or unspecified. Spatial labels were mapped to broad bedside, station/desk, corridor, and other/uncoded groups using zone polygons, aliases, and a fixed fuzzy fallback. The complete role, topic, and zone comparisons are shown in Tables <a href="#tab:app-role" data-reference-type="ref" data-reference="tab:app-role">6</a>, <a href="#tab:app-topic" data-reference-type="ref" data-reference="tab:app-topic">7</a>, and <a href="#tab:app-zone" data-reference-type="ref" data-reference="tab:app-zone">8</a>.</p>
+<div id="tab:app-role">
+<div class="research-table" tabindex="0"><table>
+<caption>Observed and simulated role-pair distributions.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Role pair</strong></th>
+<th style="text-align: left;"><strong>Observed</strong></th>
+<th style="text-align: left;"><strong>Simulated</strong></th>
+<th style="text-align: left;"><strong>Difference</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Coordination nurse + Nurse</td>
+<td style="text-align: left;">23.4%</td>
+<td style="text-align: left;">19.5%</td>
+<td style="text-align: left;">-3.9 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nurse + Nurse</td>
+<td style="text-align: left;">20.9%</td>
+<td style="text-align: left;">18.3%</td>
+<td style="text-align: left;">-2.6 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nurse + Patient</td>
+<td style="text-align: left;">17.5%</td>
+<td style="text-align: left;">17.2%</td>
+<td style="text-align: left;">-0.3 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Doctor + Nurse</td>
+<td style="text-align: left;">7.2%</td>
+<td style="text-align: left;">13.1%</td>
+<td style="text-align: left;">+5.8 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coordination nurse + Patient</td>
+<td style="text-align: left;">10.6%</td>
+<td style="text-align: left;">11.2%</td>
+<td style="text-align: left;">+0.6 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Doctor + Patient</td>
+<td style="text-align: left;">4.7%</td>
+<td style="text-align: left;">9.4%</td>
+<td style="text-align: left;">+4.7 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Doctor + Doctor</td>
+<td style="text-align: left;">7.2%</td>
+<td style="text-align: left;">6.5%</td>
+<td style="text-align: left;">-0.7 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coordination nurse + Doctor</td>
+<td style="text-align: left;">3.3%</td>
+<td style="text-align: left;">4.8%</td>
+<td style="text-align: left;">+1.4 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coordination nurse + Support</td>
+<td style="text-align: left;">2.5%</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">-2.5 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nurse + Support</td>
+<td style="text-align: left;">0.6%</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">-0.6 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nurse + Unknown</td>
+<td style="text-align: left;">1.1%</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">-1.1 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Patient + Support</td>
+<td style="text-align: left;">0.8%</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">-0.8 pp</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="tab:app-topic">
+<div class="research-table" tabindex="0"><table>
+<caption>Observed and simulated topic distributions. Topic labels are approximate semantic classes rather than conversational-content validation.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Topic</strong></th>
+<th style="text-align: left;"><strong>Observed</strong></th>
+<th style="text-align: left;"><strong>Simulated</strong></th>
+<th style="text-align: left;"><strong>Difference</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Patient status update</td>
+<td style="text-align: left;">55.2%</td>
+<td style="text-align: left;">47.1%</td>
+<td style="text-align: left;">-8.1 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Next steps/planning</td>
+<td style="text-align: left;">1.9%</td>
+<td style="text-align: left;">14.6%</td>
+<td style="text-align: left;">+12.6 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Patient-facing care</td>
+<td style="text-align: left;">3.3%</td>
+<td style="text-align: left;">10.1%</td>
+<td style="text-align: left;">+6.8 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Treatment/orders</td>
+<td style="text-align: left;">5.3%</td>
+<td style="text-align: left;">7.8%</td>
+<td style="text-align: left;">+2.5 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bed/capacity management</td>
+<td style="text-align: left;">5.3%</td>
+<td style="text-align: left;">6.5%</td>
+<td style="text-align: left;">+1.2 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diagnostic findings</td>
+<td style="text-align: left;">3.6%</td>
+<td style="text-align: left;">6.0%</td>
+<td style="text-align: left;">+2.4 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Patient flow/transfer</td>
+<td style="text-align: left;">0.8%</td>
+<td style="text-align: left;">5.5%</td>
+<td style="text-align: left;">+4.6 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Administrative/logistics</td>
+<td style="text-align: left;">4.7%</td>
+<td style="text-align: left;">1.8%</td>
+<td style="text-align: left;">-3.0 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Informal/relational</td>
+<td style="text-align: left;">6.1%</td>
+<td style="text-align: left;">0.6%</td>
+<td style="text-align: left;">-5.5 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Unspecified/low-information</td>
+<td style="text-align: left;">13.6%</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">-13.6 pp</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="tab:app-zone">
+<div class="research-table" tabindex="0"><table>
+<caption>Observed and simulated broad-zone distributions.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Zone group</strong></th>
+<th style="text-align: left;"><strong>Observed</strong></th>
+<th style="text-align: left;"><strong>Simulated</strong></th>
+<th style="text-align: left;"><strong>Difference</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Station / desk</td>
+<td style="text-align: left;">41.2%</td>
+<td style="text-align: left;">44.7%</td>
+<td style="text-align: left;">+3.4 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bedside / patient room</td>
+<td style="text-align: left;">22.3%</td>
+<td style="text-align: left;">29.3%</td>
+<td style="text-align: left;">+7.0 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Corridor</td>
+<td style="text-align: left;">29.0%</td>
+<td style="text-align: left;">26.1%</td>
+<td style="text-align: left;">-2.9 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other / uncoded</td>
+<td style="text-align: left;">7.5%</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">-7.5 pp</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<h2 id="app:model">Agent-based model specification</h2>
+<p>The model contained nine staff agents, ten beds, patients, polygonal zones, physical and visual wall layers, and a waypoint routing graph. One bed was reserved for ESI 1–2 patients, while ESI 3–5 patients used the remaining nine. Staff moved at 1 m/s with 0.2 m wall clearance. Perception used a 210-degree field of view, 18 m range, line of sight, distance-sensitive salience, relevance, and bounded attention. Optional staff opportunities were evaluated every ten seconds and required operational reason, interruptibility, and feasible action. Recorded face-to-face contact required separation of at most 1.5 m.</p>
+<p>Patients progressed through placement, nursing assessment, medical evaluation, diagnostics, treatment, reassessment, disposition, and discharge or admission. The coordination nurse performed placement; nurses performed assessment, diagnostics, treatment, and discharge/admission; doctors performed evaluation, diagnostics, treatment, reassessment, and disposition. Under normal load, the ESI 1–5 probabilities were 0.010, 0.120, 0.420, 0.300, and 0.150. Under high load they were 0.008, 0.140, 0.500, 0.230, and 0.122, increasing the ESI 1–3 share from 55.0% to 64.8%. The high-load arrival multiplier was 1.15, compared with 0.76 under normal load. Its pressure threshold fell from 0.62 to 0.50 and low-priority suppression rose from 0.35 to 0.55. ESI 1–2 cases could preempt eligible lower-priority staff activity. These changes increased sustained demand and urgent interruption inside the regular workflow.</p>
+<p>The high-load pressure control was <span class="math display"><em>P</em> = min  (2, 0.34<em>O</em>+0.25<em>W</em>+0.15<em>T</em>+0.16<em>A</em>+0.10<em>D</em>),</span> where <span class="math inline"><em>O</em></span> is ordinary-bed occupancy relative to capacity, <span class="math inline"><em>W</em></span> is waiting count relative to three, <span class="math inline"><em>T</em></span> is oldest current wait in hours, <span class="math inline"><em>A</em></span> is active high-acuity load relative to two, and <span class="math inline"><em>D</em></span> is the number awaiting first doctor contact relative to three. Components other than <span class="math inline"><em>O</em></span> were capped at 1.5. This equation governed model behavior and served only as an internal pressure control, without clinical workload-scale status.</p>
+<p>The repository contains the executable specification, frozen configuration, floorplan geometry, workflow transitions, and validation gates. The principal modules are separated into reusable model code (<code>src</code>), executable study workflows (<code>scripts</code>), and frozen experiment plans (<code>manifests</code>).</p>
+<h2 id="app:measures">Measures and estimands</h2>
+<p>Categorical resemblance used Jensen–Shannon divergence, <span class="equation" role="img" aria-label="Jensen–Shannon divergence of P and Q equals one half KL divergence of P from M plus one half KL divergence of Q from M, where M is one half P plus Q">JS(P, Q) = ½ KL(P ∥ M) + ½ KL(Q ∥ M), &nbsp;M = ½(P + Q)</span> Spatial-density distance was one minus cosine similarity between empirical and simulated kernel-density surfaces. The pooled negative-control statistic and the seed-level spatial component used different aggregation and were analyzed as distinct estimands.</p>
+<p><strong>Visibility-graph measures</strong> were approximated on a 1.0 m regular grid over the largest connected walkable component, using the visibility walls defined for each condition. Connectivity was the mean number of directly visible grid points; isovist area was the mean 360-degree ray-cast visible area; visual integration was mean normalized closeness centrality on the visibility graph; and visual intelligibility was the Pearson correlation between local connectivity and global visual integration across grid points. The sample contained 250 grid points in Baseline and COCPIT only and 253 in NURSTA only and Both. These measures are study-specific approximations, not formal DepthmapX outputs.</p>
+<p><strong>Coordination cost</strong> was complete-run movement in meters divided by validation-counted staff–staff contacts in the ten-hour evaluation window. It is a descriptive movement-per-contact ratio, not clinical efficiency. <strong>Mean interaction separation</strong> was the mean Euclidean distance across all unordered pairs of interaction coordinates. <strong>Role–location segregation</strong> was normalized mutual information, <span class="equation" role="img" aria-label="S equals mutual information of R and Z divided by the minimum entropy of R or Z">S = I(R; Z) / min{H(R), H(Z)}</span> where <span class="math inline"><em>R</em></span> denotes role pair and <span class="math inline"><em>Z</em></span> broad interaction zone. Conditions were downsampled repeatedly to equal event counts within each scenario–seed quartet before estimation.</p>
+<p><strong>Mutual staff visibility</strong> was reciprocal-perception staff-pair seconds divided by all possible staff-pair seconds over the complete run. <strong>Engagement rate</strong> was sampled model-selected engage decisions divided by sampled eligible decisions within matched strata. <strong>Average fit</strong> was the mean of the five orientation-specific mean scores, <strong>fit floor</strong> the smallest of those five means, and <strong>orientation disparity</strong> their standard deviation. These are ensemble statistics over designed policies, not population accessibility measures.</p>
+<h2 id="app:validation">Baseline verification and convergence</h2>
+<p>All 100 baseline runs passed workflow, routing, embodied-contact, and coordinate-completeness gates. The cumulative interaction-rate mean stabilized as the 100 prespecified seeds accumulated (Figure <a href="#fig:part1-convergence" data-reference-type="ref" data-reference="fig:part1-convergence">12</a>). Spatial negative controls are reported with the primary Part 1 result in Figure <a href="#fig:part1-spatial" data-reference-type="ref" data-reference="fig:part1-spatial">5</a> and summarized numerically in Table <a href="#tab:app-spatial-null" data-reference-type="ref" data-reference="tab:app-spatial-null">9</a>.</p>
+<figure class="research-figure article__figure--wide" id="fig:part1-convergence">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/rate-convergence.webp" alt="Convergence of the simulated face-to-face interaction rate across baseline seeds." loading="lazy" decoding="async">
+<figcaption>Convergence of the simulated face-to-face interaction rate across baseline seeds.</figcaption>
+</figure>
+<div id="tab:app-spatial-null">
+<div class="research-table" tabindex="0"><table>
+<caption>Spatial negative-control comparison. Lower distance indicates greater similarity to the observed interaction-density surface.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Point-cloud comparison</strong></th>
+<th style="text-align: center;"><strong>Distance</strong></th>
+<th style="text-align: center;"><strong>95% null interval</strong></th>
+<th style="text-align: center;"><strong>Monte Carlo <span class="math inline"><em>p</em></span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>ABM reference</strong></td>
+<td style="text-align: center;"><strong>0.557</strong></td>
+<td style="text-align: center;">n/a</td>
+<td style="text-align: center;">n/a</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Global random placement</td>
+<td style="text-align: center;">0.656</td>
+<td style="text-align: center;">[0.643, 0.668]</td>
+<td style="text-align: center;"><span class="math inline"> &lt; .002</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Zone-preserving random placement</td>
+<td style="text-align: center;">0.592</td>
+<td style="text-align: center;">[0.580, 0.604]</td>
+<td style="text-align: center;"><span class="math inline"> &lt; .002</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> The ABM reference is the pooled simulated point cloud used only in this comparison. Conservative Monte Carlo <span class="math inline"><em>p</em></span>-values include the observed comparison in numerator and denominator.</p>
+<h2 id="app:part2">Spatial intervention robustness</h2>
+<p>The following tables report the paired secondary contrasts and the local sensitivity design used to test whether the principal Part 2 result survived changes in active behavioral parameters.</p>
+<div id="tab:app-movement">
+<div class="research-table" tabindex="0"><table>
+<caption>Paired movement and zone-transition effects.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Scenario</strong></th>
+<th style="text-align: left;"><strong>Contrast</strong></th>
+<th style="text-align: left;"><strong><span class="math inline"><em>Δ</em></span> movement (km/run) [95% CI]</strong></th>
+<th style="text-align: left;"><strong><span class="math inline"><em>Δ</em></span> movement (%)</strong></th>
+<th style="text-align: left;"><strong><span class="math inline"><em>Δ</em></span> zone transitions [95% CI]</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Normal load</td>
+<td style="text-align: left;">COCPIT only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>+1.5 [+1.4, +1.6]</strong></td>
+<td style="text-align: left;">+14.1</td>
+<td style="text-align: left;"><strong>+404.1 [+373.2, +435.0]</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Normal load</td>
+<td style="text-align: left;">NURSTA only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>-0.4 [-0.5, -0.2]</strong></td>
+<td style="text-align: left;">-3.3</td>
+<td style="text-align: left;"><strong>+74.2 [+39.6, +108.7]</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Normal load</td>
+<td style="text-align: left;">Both <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>+1.3 [+1.1, +1.4]</strong></td>
+<td style="text-align: left;">+11.7</td>
+<td style="text-align: left;"><strong>+504.3 [+472.7, +535.9]</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High load</td>
+<td style="text-align: left;">COCPIT only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>+1.2 [+1.1, +1.3]</strong></td>
+<td style="text-align: left;">+11.2</td>
+<td style="text-align: left;"><strong>+333.8 [+305.6, +362.1]</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">High load</td>
+<td style="text-align: left;">NURSTA only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>-0.3 [-0.4, -0.2]</strong></td>
+<td style="text-align: left;">-2.5</td>
+<td style="text-align: left;"><strong>+104.0 [+79.5, +128.4]</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High load</td>
+<td style="text-align: left;">Both <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>+1.0 [+0.9, +1.1]</strong></td>
+<td style="text-align: left;">+9.5</td>
+<td style="text-align: left;"><strong>+444.5 [+416.1, +472.9]</strong></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Both scenarios and contrasts use paired seeds (n=100). Values in brackets are 95% confidence intervals for paired mean differences. Percent change is relative to the same-scenario Baseline. Bold values have 95% confidence intervals that exclude zero.</p>
+<div id="tab:app-part2-opportunities">
+<div class="research-table" tabindex="0"><table>
+<caption>Paired intervention effects on actionable interaction opportunities.</caption>
+<thead><tr><th scope="col">Scenario</th><th scope="col">Contrast</th><th scope="col">Δ opportunities<br><span>[95% CI]</span></th></tr></thead>
+<tbody><tr><td class="research-table__stub">Normal load</td><td>COCPIT only − Baseline</td><td><strong>+692.7 [638.8, 746.6]</strong></td></tr>
+<tr><td class="research-table__stub">Normal load</td><td>NURSTA only − Baseline</td><td>+23.6 [-26.4, 73.5]</td></tr>
+<tr><td class="research-table__stub">Normal load</td><td>Both − Baseline</td><td><strong>+688.0 [641.1, 735.0]</strong></td></tr>
+<tr><td class="research-table__stub">High load</td><td>COCPIT only − Baseline</td><td><strong>+523.1 [495.1, 551.2]</strong></td></tr>
+<tr><td class="research-table__stub">High load</td><td>NURSTA only − Baseline</td><td>+1.1 [-21.6, 23.8]</td></tr>
+<tr><td class="research-table__stub">High load</td><td>Both − Baseline</td><td><strong>+538.0 [509.1, 566.8]</strong></td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Contrasts use paired seeds (<span class="math inline"><em>n</em> = 100</span>). Bold estimates have 95% confidence intervals excluding zero.</p>
+<div id="tab:app-friction-efficiency">
+<div class="research-table" tabindex="0"><table>
+<caption>Coordination-efficiency profile by condition and scenario.</caption>
+<thead><tr><th scope="col">Scenario</th><th scope="col">Condition</th><th scope="col">Movement per<br><span>staff contact (m)</span></th><th scope="col">Separation (m)<br><span>[95% CI]</span></th><th scope="col">Segregation<br><span>[95% CI]</span></th></tr></thead>
+<tbody><tr><td class="research-table__stub">Normal</td><td>Baseline</td><td>75.9</td><td>9.62 [9.57, 9.67]</td><td>0.638 [0.629, 0.647]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>COCPIT</td><td>52.3</td><td>8.17 [8.12, 8.23]</td><td>0.495 [0.488, 0.502]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>NURSTA</td><td>73.3</td><td>9.38 [9.33, 9.44]</td><td>0.625 [0.615, 0.634]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>Both</td><td><strong>51.8</strong></td><td><strong>8.03 [7.98, 8.08]</strong></td><td><strong>0.492 [0.485, 0.499]</strong></td></tr>
+<tr><td class="research-table__stub">High</td><td>Baseline</td><td>100.6</td><td>10.21 [10.16, 10.26]</td><td>0.715 [0.706, 0.723]</td></tr>
+<tr><td class="research-table__stub">High</td><td>COCPIT</td><td>67.8</td><td>8.85 [8.79, 8.91]</td><td>0.581 [0.574, 0.587]</td></tr>
+<tr><td class="research-table__stub">High</td><td>NURSTA</td><td>96.3</td><td>10.00 [9.94, 10.06]</td><td>0.688 [0.680, 0.696]</td></tr>
+<tr><td class="research-table__stub">High</td><td>Both</td><td><strong>64.5</strong></td><td><strong>8.64 [8.58, 8.71]</strong></td><td><strong>0.574 [0.567, 0.581]</strong></td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Bold identifies the lowest modeled coordination friction within each scenario, not a clinical optimum.</p>
+<div id="tab:app-friction-distribution">
+<div class="research-table" tabindex="0"><table>
+<caption>Visibility, participation, and spatial-footprint profile.</caption>
+<thead><tr><th scope="col">Scenario</th><th scope="col">Condition</th><th scope="col">Mutual staff<br><span>visibility (%)</span></th><th scope="col">Coordination-nurse<br><span>participation (%)</span></th><th scope="col">Δ 90% footprint<br><span>pp [95% CI]</span></th></tr></thead>
+<tbody><tr><td class="research-table__stub">Normal</td><td>Baseline</td><td>1.10</td><td>39.5</td><td>n/a</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>COCPIT</td><td><strong>2.83</strong></td><td>50.7</td><td>-1.8 [-2.3, -1.2]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>NURSTA</td><td>0.95</td><td>38.7</td><td>-0.6 [-1.1, -0.1]</td></tr>
+<tr><td class="research-table__stub">Normal</td><td>Both</td><td>2.41</td><td><strong>50.8</strong></td><td><strong>-2.3 [-2.8, -1.8]</strong></td></tr>
+<tr><td class="research-table__stub">High</td><td>Baseline</td><td>0.81</td><td>44.3</td><td>n/a</td></tr>
+<tr><td class="research-table__stub">High</td><td>COCPIT</td><td><strong>2.04</strong></td><td><strong>57.7</strong></td><td>-2.0 [-2.5, -1.6]</td></tr>
+<tr><td class="research-table__stub">High</td><td>NURSTA</td><td>0.69</td><td>43.8</td><td>-0.6 [-1.0, -0.2]</td></tr>
+<tr><td class="research-table__stub">High</td><td>Both</td><td>1.63</td><td>56.4</td><td><strong>-2.4 [-2.8, -1.9]</strong></td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Mutual visibility is reciprocal-perception staff-pair time. Coordination-nurse participation is the share of validation-counted staff contacts involving that role. Footprint change is relative to the same-scenario Baseline. Bold marks the scenario maximum for visibility or participation and the largest footprint contraction.</p>
+<div id="tab:app-sensitivity-values">
+<div class="research-table" tabindex="0"><table>
+<caption>Local sensitivity factors and levels.</caption>
+<thead><tr><th scope="col">Factor</th><th scope="col">Low</th><th scope="col">Default</th><th scope="col">High</th><th scope="col">Function</th></tr></thead>
+<tbody><tr><td class="research-table__stub">Visibility response</td><td>0.07</td><td><strong>0.14</strong></td><td>0.21</td><td>Uptake</td></tr>
+<tr><td class="research-table__stub">Crowding threshold</td><td>0.50 / 0.40</td><td><strong>0.62 / 0.50</strong></td><td>0.74 / 0.62</td><td>Suppression</td></tr>
+<tr><td class="research-table__stub">Repeat-contact delay</td><td>90 s</td><td><strong>180 s</strong></td><td>360 s</td><td>Recontact</td></tr>
+<tr><td class="research-table__stub">Station-return tendency</td><td>0.20</td><td><strong>0.42</strong></td><td>0.70</td><td>Return</td></tr></tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Crowding-threshold values are reported as normal load / high load. Bold values are the calibrated defaults.</p>
+<figure class="research-figure article__figure--wide" id="fig:part2-sensitivity">
+<img class="research-figure__image" src="/assets/images/projects/ed-abm/sensitivity-response.webp" alt="Local sensitivity response across four active behavioral parameters and two workloads." loading="lazy" decoding="async">
+<figcaption>Local sensitivity response across four active behavioral parameters and two workloads.</figcaption>
+</figure>
+<h2 id="app:architecture">Cognitive architecture and ablation</h2>
+<p>Every staff identity received each designed orientation once per scenario–condition–seed block. OCEAN displays were derived only for public explanation and were excluded from prompts and inference. LLM opportunities were sampled with a condition-blind deterministic hash and constrained by per-run, per-agent, and temporal-window budgets. The fixed model revision was <code>995ad96eacd98c81ed38be0c5b274b04031597b0</code>; inference used vLLM, schema-constrained JSON, non-thinking mode, greedy decoding, and temperature 0.0.</p>
+<p>Memory retrieval admitted at most five realized source-linked interactions from the previous two hours. Candidates required an explicit colleague, patient-context, reason, interaction-context, or recent-zone match. Generated prose, missed opportunities, and prior model action labels were excluded from causal memory.</p>
+<div id="tab:app-ablation">
+<div class="research-table" tabindex="0"><table>
+<caption>Matched <span class="math inline">2 × 2</span> cognitive-architecture ablation.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Orientation input</strong></th>
+<th style="text-align: left;"><strong>No memory</strong></th>
+<th style="text-align: left;"><strong>Grounded memory</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Generic</td>
+<td style="text-align: left;">90.0% [83.3, 94.2]</td>
+<td style="text-align: left;">85.8% [78.5, 91.0]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Persona-conditioned</td>
+<td style="text-align: left;">68.3% [59.6, 76.0]</td>
+<td style="text-align: left;">77.5% [69.2, 84.1]</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Engagement rate [95% Wilson CI] on the same 120 fixed observed opportunities per cell. Matched factorial effects (95% CI): persona conditioning: -15.0 pp [-21.5, -8.5]; grounded memory: +2.5 pp [-2.8, 7.8]; orientation <span class="math inline">×</span> memory: +13.3 pp [4.7, 22.0]. The fixed-opportunity ablation supports prompt-level inference; complete recursive closed-loop trajectories require a separate design.</p>
+<h2 id="app:appraisal">Synthetic appraisal audit</h2>
+<p>The appraisal sample comprised 100 paired staff units followed across four conditions. The final archive contained 800 of 800 expected responses with no schema, grounding, or evaluator-blinding errors. Semantic correction was required for 534 packets (677 retries), but no packet exhausted the retry allowance.</p>
+<p>The prespecified qualitative sample contained 40 bundles and 240 answers. The independent Codex audit retained 184 answers, excluded 56, and marked 107 as possible display excerpts. Two persona–condition cells had no retained display response and were left empty. No human review or inter-rater reliability assessment occurred. Privacy/control was rateable in only 27 of 400 survey packets and was therefore not estimated.</p>
+<div id="tab:design-suggestions">
+<div class="research-table" tabindex="0"><table>
+<caption>Recurrent design suggestions in retained synthetic counterfactual answers.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Synthetic design suggestion</strong></th>
+<th style="text-align: left;"><strong>Retained answers, n (%)</strong></th>
+<th style="text-align: left;"><strong>Orientations represented</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Semi-private coordination space</strong></td>
+<td style="text-align: left;"><strong>17/30 (56.7%)</strong></td>
+<td style="text-align: left;">5/5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Visual permeability or awareness</strong></td>
+<td style="text-align: left;"><strong>11/30 (36.7%)</strong></td>
+<td style="text-align: left;">5/5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Distributed support near active work</td>
+<td style="text-align: left;">10/30 (33.3%)</td>
+<td style="text-align: left;">4/5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Availability or focus signalling</td>
+<td style="text-align: left;">9/30 (30.0%)</td>
+<td style="text-align: left;">4/5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Acoustic control or quiet</td>
+<td style="text-align: left;">5/30 (16.7%)</td>
+<td style="text-align: left;">4/5</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> Independent Codex coding of 30 grounded counterfactual answers retained from the 40 prespecified bundles; ten were excluded for grounding or claim-layer failures. Categories overlap. The two most recurrent suggestions are bold. This is a post-hoc model-assisted audit, not human thematic analysis or Zurich ED staff preference evidence.</p>
+<p>The <a href="https://arisaanto.github.io/ed-abm/">interactive persona explorer</a> presents condition-specific quantitative profiles and only retained synthetic excerpts. Its characters and OCEAN displays are explanatory devices and do not enter the scientific analysis.</p>
+<div id="tab:app-inclusive-fit">
+<div class="research-table" tabindex="0"><table>
+<caption>Inclusive synthetic person–space fit contrasts.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Scenario</strong></th>
+<th style="text-align: left;"><strong>Contrast</strong></th>
+<th style="text-align: left;"><strong><span class="math inline"><em>Δ</em></span> average fit [95% CI]</strong></th>
+<th style="text-align: left;"><strong><span class="math inline"><em>Δ</em></span> fit floor [95% CI]</strong></th>
+<th style="text-align: left;"><strong><span class="math inline"><em>Δ</em></span> orientation SD [95% CI]</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Normal load</td>
+<td style="text-align: left;">COCPIT only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;">+0.2 [0.0, 0.5]</td>
+<td style="text-align: left;">+0.4 [0.0, 0.8]</td>
+<td style="text-align: left;">-0.09 [-0.27, 0.09]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Normal load</td>
+<td style="text-align: left;">NURSTA only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;">-0.1 [-0.4, 0.2]</td>
+<td style="text-align: left;">-0.1 [-0.5, 0.3]</td>
+<td style="text-align: left;">+0.07 [-0.10, 0.23]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Normal load</td>
+<td style="text-align: left;">Both <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>+0.3 [0.1, 0.5]</strong></td>
+<td style="text-align: left;">+0.4 [0.0, 0.8]</td>
+<td style="text-align: left;">-0.13 [-0.34, 0.08]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High load</td>
+<td style="text-align: left;">COCPIT only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>+0.4 [0.1, 0.7]</strong></td>
+<td style="text-align: left;">+0.7 [0.0, 1.4]</td>
+<td style="text-align: left;"><strong>-0.25 [-0.48, -0.01]</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">High load</td>
+<td style="text-align: left;">NURSTA only <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;">+0.0 [-0.3, 0.3]</td>
+<td style="text-align: left;">+0.2 [-0.4, 0.8]</td>
+<td style="text-align: left;"><strong>-0.22 [-0.43, -0.02]</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High load</td>
+<td style="text-align: left;">Both <span class="math inline">−</span> Baseline</td>
+<td style="text-align: left;"><strong>+0.5 [0.2, 0.7]</strong></td>
+<td style="text-align: left;"><strong>+0.8 [0.3, 1.3]</strong></td>
+<td style="text-align: left;"><strong>-0.27 [-0.44, -0.11]</strong></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="research-table-note"><em>Note.</em> The fit floor is the lowest of the five orientation scores within each seed. Orientation SD is the within-seed standard deviation across the five designed orientations; a negative change indicates less disparity. Confidence intervals use seed-paired means (n=10). These are synthetic-orientation ensemble metrics, not population accessibility estimates. Bold values have 95% confidence intervals that exclude zero.</p>
+<h2 id="app:questionnaire-audit">Aggregate questionnaire convergence audit</h2>
+<div id="tab:app-questionnaire-crosswalk">
+<div class="research-table" tabindex="0"><table>
+<caption>Observed end-of-shift questionnaire and synthetic construct crosswalk. English wording is a concise translation of the German form.</caption>
+<thead><tr><th scope="col">Item</th><th scope="col">Observed end-of-shift construct</th><th scope="col">Scale</th><th scope="col">Synthetic evidence mapping</th></tr></thead>
+<tbody><tr><td class="research-table__stub">Q1</td><td>Maximum workload relative to other days</td><td>1–7</td><td>Peak demand, occupancy, waiting, task, and interruption traces</td></tr>
+<tr><td class="research-table__stub">Q2</td><td>Shift share at critically high workload</td><td>0, 25, 50, 75, 100%</td><td>Critical-window share; the most demanding quarter anchored the aggregate</td></tr>
+<tr><td class="research-table__stub">Q3</td><td>Ability to concentrate</td><td>1–7</td><td>Task continuity, interruptions, deferred contact, and unfinished work</td></tr>
+<tr><td class="research-table__stub">Q4</td><td>Communication satisfaction across the ED team</td><td>1–7</td><td>Realized coordination, missed opportunities, updates, and handoffs</td></tr>
+<tr><td class="research-table__stub">Q5</td><td>How well the team worked hand in hand</td><td>1–7</td><td>Cross-role coordination, completed handoffs, and workflow continuity</td></tr>
+<tr><td class="research-table__stub">Q6</td><td>How well the ED helped patients</td><td>1–7</td><td>Completed patient-facing work and service progression; no patient-reported outcome</td></tr>
+<tr><td class="research-table__stub">Q7</td><td>Information availability for working well</td><td>1–7</td><td>Information-bearing updates, handoffs, retrieval, and unresolved needs</td></tr>
+<tr><td class="research-table__stub">Q8</td><td>Perceived noise</td><td>1–7</td><td>Unsupported: no acoustic state; refusal required</td></tr></tbody>
+</table></div>
+</div>
+<p>All 390 expected responses passed schema and completeness checks. Q1–Q7 were rateable from supported traces; Q8 and all evidence-withheld controls correctly refused unsupported ratings. High load increased maximum workload and critical-workload share, satisfying the directional stress check.</p>
+<p>Observed values were withheld from inference and compared locally afterward. Across the six independently comparable 1–7 items, mean absolute error was 0.25 points and five means met the prespecified half-point margin. Distributional compatibility passed for four of seven items. Relationship profiles correlated at 0.54, with a 0.30 correlation-matrix mean absolute difference and agreement on all five core signs, but the complete-case sample was only 13 shifts. These relational checks are therefore secondary. Because the benchmark informed audit development, the result is descriptive convergence rather than held-out validation. Q2 was excluded from mean convergence because its construction partly fixed the 25.0% mean. Shift-level variation and the high-load increase remained informative; its standard deviation is conventional across the allowed values.</p>
+<h2 id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-aher2023" class="csl-entry" role="doc-biblioentry">
+Aher, Gati V., Rosa I. Arriaga, and Adam Tauman Kalai. 2023. <span>“Using Large Language Models to Simulate Multiple Humans and Replicate Human Subject Studies.”</span> <em>Proceedings of Machine Learning Research</em> 202. <a href="https://proceedings.mlr.press/v202/aher23a.html">https://proceedings.mlr.press/v202/aher23a.html</a>.
+</div>
+<div id="ref-alavi2019" class="csl-entry" role="doc-biblioentry">
+Alavi, Hamed S., Elizabeth F. Churchill, Mikael Wiberg, Denis Lalanne, Peter Dalsgaard, Ava Fatah gen Schieck, and Yvonne Rogers. 2019. <span>“Introduction to Human–Building Interaction (<span>HBI</span>): Interfacing <span>HCI</span> with Architecture and Urban Design.”</span> <em>ACM Transactions on Computer-Human Interaction</em> 26 (2): 6:1–10. <a href="https://doi.org/10.1145/3309714">https://doi.org/10.1145/3309714</a>.
+</div>
+<div id="ref-benedikt1979" class="csl-entry" role="doc-biblioentry">
+Benedikt, Michael L. 1979. <span>“To Take Hold of Space: Isovists and Isovist Fields.”</span> <em>Environment and Planning B: Planning and Design</em> 6: 47–65. <a href="https://doi.org/10.1068/b060047">https://doi.org/10.1068/b060047</a>.
+</div>
+<div id="ref-bisbee2024" class="csl-entry" role="doc-biblioentry">
+Bisbee, James, Joshua D. Clinton, Cassy Dorff, Brenton Kenkel, and Jennifer M. Larson. 2024. <span>“Synthetic Replacements for Human Survey Data? The Perils of Large Language Models.”</span> <em>Political Analysis</em> 32 (4): 401–16. <a href="https://doi.org/10.1017/pan.2024.5">https://doi.org/10.1017/pan.2024.5</a>.
+</div>
+<div id="ref-tenbroeke2016" class="csl-entry" role="doc-biblioentry">
+Broeke, Guus ten, George van Voorn, and Arend Ligtenberg. 2016. <span>“Which Sensitivity Analysis Method Should i Use for My Agent-Based Model?”</span> <em>Journal of Artificial Societies and Social Simulation</em> 19 (1): 5. <a href="https://doi.org/10.18564/jasss.2857">https://doi.org/10.18564/jasss.2857</a>.
+</div>
+<div id="ref-chemero2003" class="csl-entry" role="doc-biblioentry">
+Chemero, Anthony. 2003. <span>“An Outline of a Theory of Affordances.”</span> <em>Ecological Psychology</em> 15 (2): 181–95. <a href="https://doi.org/10.1207/S15326969ECO1502_5">https://doi.org/10.1207/S15326969ECO1502_5</a>.
+</div>
+<div id="ref-coiera2002" class="csl-entry" role="doc-biblioentry">
+Coiera, Enrico W., Rohan A. Jayasuriya, Jennifer Hardy, Andrew Bannan, and Michael E. C. Thorpe. 2002. <span>“Communication Loads on Clinical Staff in the Emergency Department.”</span> <em>Medical Journal of Australia</em> 176: 415–18. <a href="https://doi.org/10.5694/j.1326-5377.2002.tb04482.x">https://doi.org/10.5694/j.1326-5377.2002.tb04482.x</a>.
+</div>
+<div id="ref-edwards1998" class="csl-entry" role="doc-biblioentry">
+Edwards, Jeffrey R., Robert D. Caplan, and R. Van Harrison. 1998. <span>“Person–Environment Fit Theory: Conceptual Foundations, Empirical Evidence, and Directions for Future Research.”</span> In <em>Theories of Organizational Stress</em>, edited by Cary L. Cooper, 28–67. Oxford: Oxford University Press.
+</div>
+<div id="ref-gathmorad2024" class="csl-entry" role="doc-biblioentry">
+Gath-Morad, Michal, Raphael Baur, Leonel E. Aguilar, Kerstin Sailer, Jan Schmutz, Kristian Slankamenac, Patrick Honegger, Ruth Dalton, Hugo Sax, and Christoph Hölscher. 2024. <span>“How the Spatial Design of Emergency Departments Affects Face-to-Face Interactions and Perceived Communication, Collaboration, and Care Outcomes.”</span>
+</div>
+<div id="ref-gharaveis2018" class="csl-entry" role="doc-biblioentry">
+Gharaveis, Arsalan, D. Kirk Hamilton, and Debajyoti Pati. 2018. <span>“The Impact of Environmental Design on Teamwork and Communication in Healthcare Facilities: A Systematic Literature Review.”</span> <em>HERD: Health Environments Research &amp; Design Journal</em> 11 (1). <a href="https://doi.org/10.1177/1937586717730333">https://doi.org/10.1177/1937586717730333</a>.
+</div>
+<div id="ref-gharaveis2019" class="csl-entry" role="doc-biblioentry">
+Gharaveis, Arsalan, Mardelle M. Shepley, D. Kirk Hamilton, Debajyoti Pati, and Susan Rodiek. 2019. <span>“The Influence of Visibility on Staff Face-to-Face Communication and Efficiency in Emergency Departments.”</span> <em>Facilities</em> 37 (5/6): 352–63. <a href="https://doi.org/10.1108/F-07-2018-0077">https://doi.org/10.1108/F-07-2018-0077</a>.
+</div>
+<div id="ref-gibson1979" class="csl-entry" role="doc-biblioentry">
+Gibson, James J. 1979. <em>The Ecological Approach to Visual Perception</em>. Boston: Houghton Mifflin.
+</div>
+<div id="ref-grimm2010" class="csl-entry" role="doc-biblioentry">
+Grimm, Volker, Uta Berger, Donald L. DeAngelis, J. Gary Polhill, Jarl Giske, and Steven F. Railsback. 2010. <span>“The <span>ODD</span> Protocol: A Review and First Update.”</span> <em>Ecological Modelling</em> 221: 2760–68. <a href="https://doi.org/10.1016/j.ecolmodel.2010.08.019">https://doi.org/10.1016/j.ecolmodel.2010.08.019</a>.
+</div>
+<div id="ref-hamalainen2023" class="csl-entry" role="doc-biblioentry">
+Hämäläinen, Perttu, Mikke Tavast, and Anton Kunnari. 2023. <span>“Evaluating Large Language Models in Generating Synthetic <span>HCI</span> Research Data: A Case Study.”</span> In <em>Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems</em>. ACM. <a href="https://doi.org/10.1145/3544548.3580688">https://doi.org/10.1145/3544548.3580688</a>.
+</div>
+<div id="ref-he2026" class="csl-entry" role="doc-biblioentry">
+He, James K., Felix P. S. Wallis, Andrés Gvirtz, and Steve Rathje. 2026. <span>“Artificial Intelligence Chatbots Mimic Human Collective Behaviour.”</span> <em>British Journal of Psychology</em> 117 (2): 761–76. <a href="https://doi.org/10.1111/bjop.12764">https://doi.org/10.1111/bjop.12764</a>.
+</div>
+<div id="ref-hillier1996" class="csl-entry" role="doc-biblioentry">
+Hillier, Bill. 1996. <em>Space Is the Machine: A Configurational Theory of Architecture</em>. Cambridge: Cambridge University Press.
+</div>
+<div id="ref-hollan2000" class="csl-entry" role="doc-biblioentry">
+Hollan, James, Edwin Hutchins, and David Kirsh. 2000. <span>“Distributed Cognition: Toward a New Foundation for Human–Computer Interaction Research.”</span> <em>ACM Transactions on Computer-Human Interaction</em> 7 (2): 174–96. <a href="https://doi.org/10.1145/353485.353487">https://doi.org/10.1145/353485.353487</a>.
+</div>
+<div id="ref-hutchins2010" class="csl-entry" role="doc-biblioentry">
+Hutchins, Edwin. 2010. <span>“Cognitive Ecology.”</span> <em>Topics in Cognitive Science</em> 2 (4): 705–15. <a href="https://doi.org/10.1111/j.1756-8765.2010.01089.x">https://doi.org/10.1111/j.1756-8765.2010.01089.x</a>.
+</div>
+<div id="ref-kirsh1996" class="csl-entry" role="doc-biblioentry">
+Kirsh, David. 1996. <span>“Adapting the Environment Instead of Oneself.”</span> <em>Adaptive Behavior</em> 4 (3–4): 415–52. <a href="https://doi.org/10.1177/105971239600400307">https://doi.org/10.1177/105971239600400307</a>.
+</div>
+<div id="ref-kleijnen1988" class="csl-entry" role="doc-biblioentry">
+Kleijnen, Jack P. C. 1988. <span>“Analyzing Simulation Experiments with Common Random Numbers.”</span> <em>Management Science</em> 34 (1): 65–74. <a href="https://doi.org/10.1287/mnsc.34.1.65">https://doi.org/10.1287/mnsc.34.1.65</a>.
+</div>
+<div id="ref-kosits2011" class="csl-entry" role="doc-biblioentry">
+Kosits, Lisa M., and Karen Jones. 2011. <span>“Interruptions Experienced by Registered Nurses Working in the Emergency Department.”</span> <em>Journal of Emergency Nursing</em> 37 (1): 3–8. <a href="https://doi.org/10.1016/j.jen.2009.12.024">https://doi.org/10.1016/j.jen.2009.12.024</a>.
+</div>
+<div id="ref-lin1991" class="csl-entry" role="doc-biblioentry">
+Lin, Jianhua. 1991. <span>“Divergence Measures Based on the Shannon Entropy.”</span> <em>IEEE Transactions on Information Theory</em> 37 (1): 145–51. <a href="https://doi.org/10.1109/18.61115">https://doi.org/10.1109/18.61115</a>.
+</div>
+<div id="ref-liu2024" class="csl-entry" role="doc-biblioentry">
+Liu, Yuanyuan, Ying Zhou, Le Yang, and Yangpeng Xin. 2024. <span>“Simulating Staff Activities in Healthcare Environments: An Empirical Multi-Agent Modeling Approach.”</span> <em>Journal of Building Engineering</em> 84: 108580. <a href="https://doi.org/10.1016/j.jobe.2024.108580">https://doi.org/10.1016/j.jobe.2024.108580</a>.
+</div>
+<div id="ref-murraysmith2022" class="csl-entry" role="doc-biblioentry">
+Murray-Smith, Roderick, Antti Oulasvirta, Andrew Howes, Jörg Müller, Aleksi Ikkala, Miroslav Bachinski, Arthur Fleig, Florian Fischer, and Markus Klar. 2022. <span>“What Simulation Can Do for HCI Research.”</span> <em>Interactions</em> 29 (6): 48–53. <a href="https://doi.org/10.1145/3564038">https://doi.org/10.1145/3564038</a>.
+</div>
+<div id="ref-naccarella2019" class="csl-entry" role="doc-biblioentry">
+Naccarella, Lucio, Michelle Raggatt, and Bernice Redley. 2019. <span>“The Influence of Spatial Design on Team Communication in Hospital Emergency Departments.”</span> <em>HERD: Health Environments Research &amp; Design Journal</em> 12 (2): 100–115. <a href="https://doi.org/10.1177/1937586718800481">https://doi.org/10.1177/1937586718800481</a>.
+</div>
+<div id="ref-pan2026" class="csl-entry" role="doc-biblioentry">
+Pan, Jiayu, Leonel Aguilar, Michal Gath-Morad, Ronita Bardhan, and Koen Steemers. 2026. <span>“Spatial and Operational Interventions for Healthy Cruise Ship Design Using Agent-Based Modelling.”</span> <em>Travel Behaviour and Society</em> 43: 101232. <a href="https://doi.org/10.1016/j.tbs.2026.101232">https://doi.org/10.1016/j.tbs.2026.101232</a>.
+</div>
+<div id="ref-park2023" class="csl-entry" role="doc-biblioentry">
+Park, Joon Sung, Joseph O’Brien, Carrie Jun Cai, Meredith Ringel Morris, Percy Liang, and Michael S. Bernstein. 2023. <span>“Generative Agents: Interactive Simulacra of Human Behavior.”</span> In <em>Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology</em>. ACM. <a href="https://doi.org/10.1145/3586183.3606763">https://doi.org/10.1145/3586183.3606763</a>.
+</div>
+<div id="ref-ransolin2026" class="csl-entry" role="doc-biblioentry">
+Ransolin, Natasha, Colleen Cheek, Anthony Dominello, Marie Goirand, Paula Viray, Kristina Mifsud, Geoffrey Mitchell, Nasser Hayba, Leanne Richardson, and Robyn Clay-Williams. 2026. <span>“Built Environment Design to Support the Emergency Department System, Staff and Patient Outcomes: A Systematic Literature Review.”</span> <em>Architectural Engineering and Design Management</em>. <a href="https://doi.org/10.1080/17452007.2026.2653137">https://doi.org/10.1080/17452007.2026.2653137</a>.
+</div>
+<div id="ref-rietveld2022" class="csl-entry" role="doc-biblioentry">
+Rietveld, Erik. 2022. <span>“Change-Ability for a World in Flux.”</span> <em>Adaptive Behavior</em>. <a href="https://doi.org/10.1177/10597123221133869">https://doi.org/10.1177/10597123221133869</a>.
+</div>
+<div id="ref-rietveld2014" class="csl-entry" role="doc-biblioentry">
+Rietveld, Erik, and Julian Kiverstein. 2014. <span>“A Rich Landscape of Affordances.”</span> <em>Ecological Psychology</em> 26 (4): 325–52. <a href="https://doi.org/10.1080/10407413.2014.958035">https://doi.org/10.1080/10407413.2014.958035</a>.
+</div>
+<div id="ref-santurkar2023" class="csl-entry" role="doc-biblioentry">
+Santurkar, Shibani, Esin Durmus, Faisal Ladhak, Cinoo Lee, Percy Liang, and Tatsunori Hashimoto. 2023. <span>“Whose Opinions Do Language Models Reflect?”</span> In <em>Proceedings of the 40th International Conference on Machine Learning</em>. Vol. 202. Proceedings of Machine Learning Research. <a href="https://proceedings.mlr.press/v202/santurkar23a.html">https://proceedings.mlr.press/v202/santurkar23a.html</a>.
+</div>
+<div id="ref-sargent2013" class="csl-entry" role="doc-biblioentry">
+Sargent, Robert G. 2013. <span>“Verification and Validation of Simulation Models.”</span> <em>Journal of Simulation</em> 7: 12–24. <a href="https://doi.org/10.1057/jos.2012.20">https://doi.org/10.1057/jos.2012.20</a>.
+</div>
+<div id="ref-schaumann2017" class="csl-entry" role="doc-biblioentry">
+Schaumann, Davide, Simon Breslav, Rhys Goldstein, Azam Khan, and Yehuda E. Kalay. 2017. <span>“Simulating Use Scenarios in Hospitals Using Multi-Agent Narratives.”</span> <em>Journal of Building Performance Simulation</em> 10 (5–6): 636–52. <a href="https://doi.org/10.1080/19401493.2017.1332687">https://doi.org/10.1080/19401493.2017.1332687</a>.
+</div>
+<div id="ref-turner2001" class="csl-entry" role="doc-biblioentry">
+Turner, Alasdair, Maria Doxa, David O’Sullivan, and Alan Penn. 2001. <span>“From Isovists to Visibility Graphs: A Methodology for the Analysis of Architectural Space.”</span> <em>Environment and Planning B: Planning and Design</em> 28: 103–21. <a href="https://doi.org/10.1068/b2684">https://doi.org/10.1068/b2684</a>.
+</div>
+<div id="ref-walter2017" class="csl-entry" role="doc-biblioentry">
+Walter, Scott R., Magdalena Z. Raban, William T. M. Dunsmuir, Heather E. Douglas, and Johanna I. Westbrook. 2017. <span>“Emergency Doctors’ Strategies to Manage Competing Workload Demands in an Interruptive Environment: An Observational Workflow Time Study.”</span> <em>Applied Ergonomics</em> 58: 454–60. <a href="https://doi.org/10.1016/j.apergo.2016.07.020">https://doi.org/10.1016/j.apergo.2016.07.020</a>.
+</div>
+<div id="ref-whyte1980" class="csl-entry" role="doc-biblioentry">
+Whyte, William H. 1980. <em>The Social Life of Small Urban Spaces</em>. Washington, DC: The Conservation Foundation.
+</div>
+<div id="ref-windrum2007" class="csl-entry" role="doc-biblioentry">
+Windrum, Paul, Giorgio Fagiolo, and Alessio Moneta. 2007. <span>“Empirical Validation of Agent-Based Models: Alternatives and Prospects.”</span> <em>Journal of Artificial Societies and Social Simulation</em> 10 (2): 8. <a href="https://www.jasss.org/10/2/8.html">https://www.jasss.org/10/2/8.html</a>.
+</div>
+<div id="ref-wu2025indoorworld" class="csl-entry" role="doc-biblioentry">
+Wu, Dekun, Frederik Brudy, Bang Liu, and Yi Wang. 2025. <span>“<span>IndoorWorld</span>: Integrating Physical Task Solving and Social Simulation in a Heterogeneous Multi-Agent Environment.”</span> <a href="https://doi.org/10.48550/arXiv.2506.12331">https://doi.org/10.48550/arXiv.2506.12331</a>.
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><a href="https://github.com/arisaanto/ed-abm">https://github.com/arisaanto/ed-abm</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><a href="https://github.com/arisaanto/ed-abm">https://github.com/arisaanto/ed-abm</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+      </div>
+    </main>
+    <footer id="site-footer" class="site-footer shell shell--article">
+      <span>© 2026 Aris Antoniadis</span>
+      <div class="site-footer__links" aria-label="Contact and profile links">
+        <button class="icon-button copy-email" type="button" data-copy-email="aris.antoniadis@student.uva.nl" aria-label="Copy email address" title="Copy email address"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#mail"></use></svg><span class="copy-email__status" aria-hidden="true">Copied</span></button>
+        <a class="icon-button" href="https://github.com/arisaanto" rel="me" aria-label="GitHub" title="GitHub"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg></a>
+        <a class="icon-button icon-button--label" href="/assets/documents/aris-antoniadis-cv.pdf" aria-label="CV" title="CV"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#cv"></use></svg><span>CV</span></a>
+      </div>
+    </footer>
+  </body>
+</html>

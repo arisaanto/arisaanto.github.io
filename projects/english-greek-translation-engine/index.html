@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An English-to-Greek neural machine translation model built with the Transformer architecture and trained on the Europarl Parallel Corpus.">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+    <title>English–Greek Translation Engine — Aris Antoniadis</title>
+    <link rel="preconnect" href="https://rsms.me">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/contact.js?v=20260810-2" defer></script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20260810-10">
+  </head>
+  <body>
+    <a class="skip-link" href="#article">Skip to project report</a>
+    <nav class="article-nav shell shell--article" aria-label="Primary navigation">
+      <a href="/">Aris Antoniadis</a>
+      <span>Project</span>
+    </nav>
+    <main id="article" class="article shell shell--article">
+      <header class="article__header">
+        <h1>English–Greek Translation Engine</h1>
+        <p class="article__lede">A translation model built with a friend to make conversation with my relatives in Greece a little easier, following the architecture introduced in <cite>Attention Is All You Need</cite>.</p>
+        <p class="article__meta"><time datetime="2024">2024</time> · 8 min read · With <a href="https://www.linkedin.com/in/williamshayden/">William Hayden</a></p>
+        <div class="article-actions">
+          <a class="icon-button" href="https://github.com/arisaanto/EnglishToGreekTranslation" aria-label="View code on GitHub" title="GitHub">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg>
+          </a>
+          <button class="icon-button icon-button--plain theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <svg class="icon theme-icon--moon" aria-hidden="true"><use href="/assets/icons.svg#moon"></use></svg>
+            <svg class="icon theme-icon--sun" aria-hidden="true"><use href="/assets/icons.svg#sun"></use></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="article__body">
+        <h2>Data Source and Research Question</h2>
+        <p>Our project aimed to build a neural machine translation (NMT) model for translating English to Greek. The motivation stemmed from a desire to tackle the academic challenge of implementing state-of-the-art machine translation techniques and a personal interest in the Greek language, given its unique alphabet and its personal significance as the native tongue of Aris’s relatives. Language translation has long been a cornerstone application of machine learning, making it an ideal domain for exploring cutting-edge neural architectures.</p>
+        <p>To train our model, we used the Europarl Parallel Corpus, a dataset of parliamentary proceedings from 1996–2011 translated into multiple languages. It provided 1,235,977 English–Greek sentence pairs: contextually consistent, high-quality material for machine translation. Achieving state-of-the-art results was beyond the scope of our computational resources, so we focused on demonstrating the principles of neural machine translation and developing a foundational understanding of the challenges involved in translating between two linguistically distinct languages.</p>
+
+        <h2>Descriptive Data Analysis</h2>
+        <p>We split the 1,235,977 sentence pairs into training (80%), validation (10%), and test (10%) sets. After preprocessing, the training set contained 366,815 sentences, while the validation and test sets each contained 45,852 sentences. Preprocessing involved converting text to lowercase, removing excess whitespace, and filtering sentences by length (3–20 tokens). We excluded 2,354 entries missing English text and 5,767 missing Greek text to create a clean and consistent dataset.</p>
+        <p>Tokenization used the SentencePiece algorithm with Byte Pair Encoding (BPE), producing a shared vocabulary of 32,000 tokens. This approach handled rare and unseen words and helped the model generalize across sentence structures. The dataset’s focus on formal parliamentary language, however, limited its ability to represent the nuances of contemporary Greek usage.</p>
+
+        <h2>Model Architecture and Implementation</h2>
+        <p>Our model was based on the Transformer architecture introduced by Vaswani et al. in <cite>Attention Is All You Need</cite> (2017). The Transformer changed machine translation by achieving strong benchmark performance while allowing substantially more parallel computation than earlier architectures. The original base model reached a BLEU score of 28.4 on the WMT 2014 English-to-German task after training for 3.5 days on eight GPUs.</p>
+        <p>Our implementation followed the TensorFlow documentation and adapted the architecture to English–Greek translation. We chose TensorFlow because it provides native deep-learning components, GPU acceleration, and ready-to-use attention mechanisms. These tools allowed us to begin developing the model despite having little prior experience with the library.</p>
+        <p>The model used six encoder and decoder layers, an embedding dimension of 256, eight attention heads, a feed-forward dimension of 1,024, and a dropout rate of 0.1. The encoder processed each input sentence through self-attention. The decoder combined self-attention with encoder–decoder attention to generate the translation. Residual connections and layer normalization followed each attention or feed-forward sublayer to support stable learning.</p>
+        <p>Our approach was also informed by the methodology established by AlexNet. Although AlexNet addressed computer vision rather than language, its demonstration of the value of large neural networks and GPU acceleration influenced our approach to the NLP task.</p>
+
+        <h2>Training and Evaluation</h2>
+        <p>We trained the model for 20 epochs using the Adam optimizer and a custom learning-rate schedule with the 4,000-step warm-up phase recommended in the original Transformer paper. Training used sparse categorical cross-entropy as the loss function. The learning-rate schedule encouraged convergence while reducing instability.</p>
+        <p>We evaluated performance using BLEU, CHRF, and Translation Edit Rate (TER). The model achieved a BLEU score of 0.23 (23.0), a CHRF score of 26.64, and a TER of 168.98. These modest results reflect the syntactic and morphological differences between English and Greek, the domain-specific dataset, and our limited computational resources. Still, the model was trained on a single Colab A100 GPU in less than a day and approached the 28.4 BLEU score reported by the original Transformer base model, which used considerably more hardware and training time.</p>
+        <p>BLEU, or Bilingual Evaluation Understudy, estimates translation quality by comparing the n-grams in a generated translation with human-written references. It also applies a brevity penalty to discourage translations that are shorter than their references. We treated BLEU as the primary metric because it remains a common machine-translation benchmark and was the central evaluation measure in <cite>Attention Is All You Need</cite>.</p>
+
+        <h2>How the Transformer Uses Attention</h2>
+        <p>The Transformer models relationships between words through attention mechanisms. In the encoder, self-attention estimates the relevance of every word to every other word in the input. In “The cat sat on the mat,” for example, it may emphasize the relationship between “cat” and “sat,” helping the model represent context and grammatical structure.</p>
+        <p>The decoder combines self-attention with encoder–decoder attention. It considers both the target sentence generated so far and the encoded representation of the source sentence, helping the output remain aligned with the input’s meaning.</p>
+
+        <h2>Improvements and Future Directions</h2>
+        <p>Several changes could improve the model. Expanding the corpus to include contemporary and colloquial language would give it a broader representation of English–Greek translation contexts. More advanced normalization and better handling of out-of-vocabulary words could improve the input data. Increasing the depth and width of the model, experimenting with other attention mechanisms, and systematically optimizing hyperparameters could increase its learning capacity.</p>
+        <p>Distributed training would make larger models and longer training runs possible. Transfer learning with models such as mBERT or multilingual translation systems could provide a substantial advantage, especially for a comparatively low-resource language pair. Ensemble methods might improve output quality by combining predictions from several models.</p>
+        <p>Domain adaptation could also produce systems tailored to legal, medical, or other specialized language. A continuous-learning mechanism could help the model remain useful as language changes over time.</p>
+
+        <h2>Conclusion</h2>
+        <p>The project demonstrated the principles of neural machine translation and exposed the difficulty of moving between linguistically distinct languages. Despite modest performance, the Transformer proved capable of learning a functional translation system within our resource constraints. With a broader corpus, greater computational resources, and more systematic optimization, the model could develop into a more robust tool for communication.</p>
+
+        <h2>Appendix: Code</h2>
+        <p>We developed the model in Google Colab to obtain consistent access to an NVIDIA A100 GPU. The TensorFlow implementation, data path, and trained weights supported running the evaluation without retraining the model. The surviving project code is available in the <a href="https://github.com/arisaanto/EnglishToGreekTranslation">EnglishToGreekTranslation repository</a>.</p>
+      </div>
+    </main>
+    <footer id="site-footer" class="site-footer shell shell--article">
+      <span>© 2026 Aris Antoniadis</span>
+      <div class="site-footer__links" aria-label="Contact and profile links">
+        <button class="icon-button copy-email" type="button" data-copy-email="aris.antoniadis@student.uva.nl" aria-label="Copy email address" title="Copy email address"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#mail"></use></svg><span class="copy-email__status" aria-hidden="true">Copied</span></button>
+        <a class="icon-button" href="https://github.com/arisaanto" rel="me" aria-label="GitHub" title="GitHub"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg></a>
+        <a class="icon-button icon-button--label" href="/assets/documents/aris-antoniadis-cv.pdf" aria-label="CV" title="CV"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#cv"></use></svg><span>CV</span></a>
+      </div>
+    </footer>
+  </body>
+</html>
