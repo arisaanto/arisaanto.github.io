@@ -680,6 +680,68 @@ body.lightbox-open {
   margin: 2.5rem 0;
 }
 
+.case-study__eyebrow {
+  margin: 0 0 1rem;
+  color: var(--quiet);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case-study__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.3rem;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.case-study__links a,
+.case-study__closing a {
+  text-underline-offset: 0.18em;
+}
+
+.case-study__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0;
+  padding-block: 1.25rem;
+  border-block: 1px solid var(--line);
+}
+
+.case-study__stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.case-study__stats strong {
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-weight: 550;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+}
+
+.case-study__stats span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.case-study__closing {
+  margin-top: 2.5rem !important;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 640px) {
+  .case-study__stats {
+    grid-template-columns: 1fr;
+  }
+}
+
 .article__body figure.article__figure--wide {
   width: min(58rem, calc(100vw - (2 * var(--gutter))));
   margin-left: 50%;
