@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="home-document">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,32 +7,34 @@
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
     <title>Aris Antoniadis</title>
-    <link rel="preconnect" href="https://rsms.me">
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;500;600;700&amp;family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap">
     <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/project-video.js?v=20261104-3" defer></script>
     <script src="/assets/js/contact.js?v=20260810-2" defer></script>
-    <link rel="stylesheet" href="/assets/css/site.css?v=20260810-10">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261104-9">
   </head>
-  <body>
+  <body class="home">
     <a class="skip-link" href="#main">Skip to content</a>
-
-    <nav class="home-nav shell" aria-label="Primary navigation">
-      <a href="/photos/">Photos</a>
-    </nav>
 
     <main id="main" class="shell">
       <header class="profile">
+        <div class="profile__media">
+          <img class="profile__portrait" src="/assets/images/portrait.jpg" width="480" height="480" alt="Portrait of Aris Antoniadis" fetchpriority="high">
+        </div>
+
         <div class="profile__content">
-          <div class="profile__identity">
-            <h1>Aris Antoniadis</h1>
-            <p class="profile__role">Master’s Student, Cognitive Science<br>University of Amsterdam</p>
-          </div>
+          <h1>Aris Antoniadis</h1>
 
           <div class="icon-links" aria-label="Contact and profile links">
             <button class="icon-button copy-email" type="button" data-copy-email="aris.antoniadis@student.uva.nl" aria-label="Copy email address" title="Copy email address">
               <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#mail"></use></svg>
               <span class="copy-email__status" aria-hidden="true">Copied</span>
             </button>
+            <a class="icon-button" href="https://www.linkedin.com/in/arisantoniadis/" rel="me" aria-label="LinkedIn" title="LinkedIn">
+              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg?v=20261104-5#linkedin"></use></svg>
+            </a>
             <a class="icon-button" href="https://github.com/arisaanto" rel="me" aria-label="GitHub" title="GitHub">
               <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg>
             </a>
@@ -46,96 +48,115 @@
             </button>
           </div>
         </div>
-
-        <div class="profile__media">
-          <img class="profile__portrait" src="/assets/images/portrait.jpg" width="480" height="480" alt="Portrait of Aris Antoniadis" fetchpriority="high">
-        </div>
       </header>
+
+      <nav class="home-nav" aria-label="Primary navigation">
+        <a href="#projects">Projects</a>
+        <a href="#writing">Writing</a>
+        <a href="/photos/">Photos</a>
+      </nav>
 
       <div class="intro">
         <p>I am a master’s student in Cognitive Science at the University of Amsterdam. I study cognition where it takes form: in the tools we handle, the spaces we move through, and the relations in between.</p>
         <p>Design, to me, is one way the mind realizes itself through its contact with the world. I am interested not only in how technologies work, but in the forms of perception, movement, and relation they make possible. My current focus is physical space as a cognitive instrument, and the technologies that might inhabit it.</p>
       </div>
 
-      <section class="section" aria-labelledby="projects-heading">
+      <section id="projects" class="section" aria-labelledby="projects-heading">
         <h2 id="projects-heading">Projects</h2>
 
         <div class="project-list">
           <article class="project">
-            <div class="entry-heading">
-              <div class="entry-heading__main">
+            <div class="project__copy">
+              <div class="entry-heading">
                 <h3>When Visibility Becomes Interaction</h3>
-                <p class="entry-authors"><strong>Aris Antoniadis</strong> · supervised by <a href="https://cog.ethz.ch/people/dr--leonel_aguilar.html">Leonel Aguilar Melgar</a> and <a href="https://cog.ethz.ch/people/prof--dr--christoph-hoelscher.html">Christoph Hölscher</a></p>
+                <time datetime="2026">2026</time>
               </div>
-              <time datetime="2026">2026</time>
+              <p class="entry-authors">
+                Supervised by <a href="https://cog.ethz.ch/people/dr--leonel_aguilar.html">Leonel&nbsp;Aguilar&nbsp;Melgar</a> &amp; <a href="https://cog.ethz.ch/people/prof--dr--christoph-hoelscher.html">Christoph&nbsp;Hölscher</a><br>
+                Chair of Cognitive Science, ETH Zurich
+              </p>
+              <p class="entry-description">A generative agent-based model of emergency department coordination. It examines how visibility, workflow, and staff priorities shape who interacts and where the coordination burden falls.</p>
+              <p class="entry-context">Research manuscript</p>
+              <div class="entry-links" aria-label="When Visibility Becomes Interaction links">
+                <a class="icon-button" href="/assets/documents/projects/when-visibility-becomes-interaction.pdf" aria-label="Read paper PDF" title="Read paper">
+                  <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#book"></use></svg>
+                </a>
+                <a class="icon-button" href="https://github.com/arisaanto/ed-abm" aria-label="View code on GitHub" title="GitHub">
+                  <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg>
+                </a>
+              </div>
             </div>
-            <p class="entry-description">A spatial agent-based model of emergency-department coordination, examining how visibility, workflow, and different cognitive orientations convert architectural possibilities into interaction, and where the resulting burdens accumulate.</p>
-            <p class="entry-context">Research manuscript</p>
-            <div class="entry-links" aria-label="When Visibility Becomes Interaction links">
-              <a class="icon-button" href="/assets/documents/projects/when-visibility-becomes-interaction.pdf" aria-label="Read paper PDF" title="Read paper">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#book"></use></svg>
-              </a>
-              <a class="icon-button" href="https://github.com/arisaanto/ed-abm" aria-label="View code on GitHub" title="GitHub">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg>
-              </a>
+            <div class="project-media" data-project-media>
+              <video class="project-media__video" width="960" height="720" muted loop playsinline controls preload="none"
+                     poster="/assets/images/ed-simulation-poster.jpg" aria-label="Emergency department agent-based simulation">
+                <source src="/assets/video/ed-simulation.mp4" type="video/mp4">
+                <a href="/assets/video/ed-simulation.mp4">Watch the simulation</a>
+              </video>
             </div>
           </article>
 
         </div>
       </section>
 
-      <section class="section" aria-labelledby="writing-heading">
+      <section id="writing" class="section" aria-labelledby="writing-heading">
         <h2 id="writing-heading">Writing</h2>
 
         <div class="writing-list">
           <article class="writing-item">
-            <div class="entry-heading">
-              <h3>From Within the Unworld</h3>
-              <time datetime="2025">2025</time>
-            </div>
-            <p class="entry-description">An inquiry into the soul as the interval between what can be reproduced and what cannot, and into the ways people, artworks, and technologies alternately reveal and conceal meaning.</p>
-            <div class="entry-links" aria-label="From Within the Unworld links">
-              <a class="icon-button" href="/writing/from-within-the-unworld/" aria-label="Read web article" title="Read article">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#book"></use></svg>
-              </a>
-              <a class="icon-button" href="/assets/documents/writing/from-within-the-unworld.pdf" aria-label="Download PDF" title="PDF">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg>
-              </a>
-            </div>
+            <a class="booklet" href="/writing/from-within-the-unworld/" aria-labelledby="title-from-within-the-unworld">
+              <div class="booklet__cover">
+                <span class="booklet__page booklet__page--back" aria-hidden="true"></span>
+                <span class="booklet__page booklet__page--middle" aria-hidden="true"></span>
+                <span class="booklet__page booklet__page--front" aria-hidden="true"></span>
+                <span class="booklet__art">
+                  <img src="/assets/images/writing/covers/unworld.jpg" width="640" height="797" alt="" loading="lazy">
+                </span>
+              </div>
+              <div class="booklet__copy">
+                <time datetime="2025">2025</time>
+                <h3 id="title-from-within-the-unworld">From Within the Unworld</h3>
+                <p class="entry-description">An inquiry into the soul as the interval between what can be reproduced and what cannot, and into the ways people, artworks, and technologies alternately reveal and conceal meaning.</p>
+              </div>
+            </a>
           </article>
 
           <article class="writing-item">
-            <div class="entry-heading">
-              <h3>Climax: Dance and Delirium</h3>
-              <time datetime="2025">2025</time>
-            </div>
-            <p class="entry-description">An account of how <cite>Climax</cite> turns camera movement, symmetry, and rhythm into instruments of cognition, until the boundary between perceiving the dance and entering its delirium begins to dissolve.</p>
-            <div class="entry-links" aria-label="Climax: Dance and Delirium links">
-              <a class="icon-button" href="/writing/climax-dance-and-delirium/" aria-label="Read web article" title="Read article">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#book"></use></svg>
-              </a>
-              <a class="icon-button" href="/assets/documents/writing/climax-dance-and-delirium.pdf" aria-label="Download PDF" title="PDF">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg>
-              </a>
-            </div>
+            <a class="booklet" href="/writing/climax-dance-and-delirium/" aria-labelledby="title-climax-dance-and-delirium">
+              <div class="booklet__cover">
+                <span class="booklet__page booklet__page--back" aria-hidden="true"></span>
+                <span class="booklet__page booklet__page--middle" aria-hidden="true"></span>
+                <span class="booklet__page booklet__page--front" aria-hidden="true"></span>
+                <span class="booklet__art">
+                  <img src="/assets/images/writing/covers/climax.jpg" width="467" height="673" alt="" loading="lazy">
+                </span>
+              </div>
+              <div class="booklet__copy">
+                <time datetime="2025">2025</time>
+                <h3 id="title-climax-dance-and-delirium">Climax: Dance and Delirium</h3>
+                <p class="entry-description"><cite>Climax</cite> uses camera movement, symmetry, and rhythm to draw the viewer into the dance until watching it starts to feel like sharing in its delirium.</p>
+              </div>
+            </a>
           </article>
 
           <article class="writing-item">
-            <div class="entry-heading">
-              <h3>Evolution and Culture: A Story of Fear</h3>
-              <time datetime="2024">2024</time>
-            </div>
-            <p class="entry-description">An inquiry into fear as more than an instinct for survival: a force that binds people together, drives curiosity, and enters into the making of culture.</p>
-            <div class="entry-links" aria-label="Evolution and Culture: A Story of Fear links">
-              <a class="icon-button" href="/writing/evolution-and-culture-a-story-of-fear/" aria-label="Read web article" title="Read article">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#book"></use></svg>
-              </a>
-              <a class="icon-button" href="/assets/documents/writing/evolution-and-culture-a-story-of-fear.pdf" aria-label="Download PDF" title="PDF">
-                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg>
-              </a>
-            </div>
+            <a class="booklet" href="/writing/evolution-and-culture-a-story-of-fear/" aria-labelledby="title-evolution-and-culture-a-story-of-fear">
+              <div class="booklet__cover">
+                <span class="booklet__page booklet__page--back" aria-hidden="true"></span>
+                <span class="booklet__page booklet__page--middle" aria-hidden="true"></span>
+                <span class="booklet__page booklet__page--front" aria-hidden="true"></span>
+                <span class="booklet__art">
+                  <img src="/assets/images/writing/covers/fear.jpg" width="452" height="673" alt="" loading="lazy">
+                </span>
+              </div>
+              <div class="booklet__copy">
+                <time datetime="2024">2024</time>
+                <h3 id="title-evolution-and-culture-a-story-of-fear">Evolution and Culture: A Story of Fear</h3>
+                <p class="entry-description">How does fear help us survive, bring us together, and fuel curiosity? This essay follows the emotion from animal behavior to human culture.</p>
+              </div>
+            </a>
           </article>
         </div>
+        <p class="writing-credit">Cover art by Gerhard Richter</p>
       </section>
 
     </main>
@@ -147,6 +168,9 @@
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#mail"></use></svg>
           <span class="copy-email__status" aria-hidden="true">Copied</span>
         </button>
+        <a class="icon-button" href="https://www.linkedin.com/in/arisantoniadis/" rel="me" aria-label="LinkedIn" title="LinkedIn">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg?v=20261104-5#linkedin"></use></svg>
+        </a>
         <a class="icon-button" href="https://github.com/arisaanto" rel="me" aria-label="GitHub" title="GitHub">
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg>
         </a>
