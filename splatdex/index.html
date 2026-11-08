@@ -1,0 +1,121 @@
+<!doctype html><html lang="en" data-demo="portfolio"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff"><title>Splatdex</title><link rel="preload" href="fonts/IBMPlexMono-Regular.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css"><style>#scanBtn,#exploreCapture,#collectionScan{display:none!important}</style></head><body class="at-home">
+<canvas id="scene" aria-label="Interactive 3D splat. Drag to rotate, scroll or pinch to zoom." tabindex="0"></canvas>
+<header><button id="home" class="dex-mark" aria-label="Explore"><svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="12" cy="13" rx="7" ry="10" transform="rotate(-35 12 13)"/><ellipse cx="21" cy="17" rx="6" ry="9" transform="rotate(35 21 17)"/><ellipse cx="14" cy="23" rx="8" ry="5" transform="rotate(-15 14 23)"/></svg></button><nav><button id="exploreBtn" class="nav-link">Explore</button><button id="collectionBtn" class="nav-link">Collection</button><button id="searchToggle" type="button" aria-label="Search splats" aria-controls="exploreSearch" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.75" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m15 15 4.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"/></svg></button><button id="theme" aria-label="Switch background" title="Switch background"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor"/><path d="M8 2a6 6 0 0 0 0 12Z" fill="currentColor"/></svg></button><button id="scanBtn" class="scan">＋ <span>Capture</span></button></nav>
+<form id="exploreSearch" role="search" hidden>
+<label for="searchInput" class="sr-only">Search shared splats</label>
+          <input id="searchInput" type="search" maxlength="120" autocomplete="off">
+<button type="submit">Search</button>
+</form>
+</header>
+
+<div id="status" role="status" aria-live="polite">Loading splat…</div>
+<main id="splatInfo"><h1 id="title">Clove</h1><p id="latin">Syzygium aromaticum</p></main>
+<section id="viewpoints" aria-label="Guided viewpoints" hidden>
+<div id="annotationNav" aria-label="Viewpoints"><div id="viewButtons"></div></div>
+<svg id="pinLeaders" aria-hidden="true"></svg><div id="viewPins"></div>
+<aside id="viewCaption" hidden aria-labelledby="viewLabel">
+<div id="viewText"><h2><span id="viewNumber" class="note-number"></span><span id="viewLabel"></span></h2><p id="viewNote"></p><a id="viewSource" target="_blank" rel="noopener" hidden>Source ↗</a></div>
+<div class="annotation-actions"><button id="askBtn" aria-expanded="false" aria-controls="askForm">Ask AI</button><button id="notesBtn">Edit notes</button></div>
+<form id="askForm" hidden>
+<div id="conversation" role="log" aria-label="Questions and answers"></div>
+<label for="askQuestion">Ask about this note</label>
+<div class="ask-controls"><input id="askQuestion" maxlength="500" placeholder="Ask a question…" required><button class="solid">Send</button></div>
+
+<p class="muted">The first question downloads the AI model (about 390 MB). Your browser runs it on this device and can reuse the download.</p>
+<p id="askStatus" class="muted" role="status"></p>
+</form>
+</aside>
+</section>
+<div id="anchorHelp" hidden><span>Tap a point on the object</span><button id="cancelAnchor">Cancel</button></div>
+<footer><div class="viewtools">
+<div class="zoom-tools" aria-label="Zoom"><button id="zoomOut" aria-label="Zoom out">−</button><input id="zoomRange" type="range" min="0" max="100" aria-label="Zoom level"><button id="zoomIn" aria-label="Zoom in">+</button></div>
+<button id="reset">Reset view</button><button id="aboutBtn">About</button><button id="infoBtn" aria-controls="viewpoints" aria-expanded="false">Learn</button></div></footer>
+<section id="explore" aria-label="Explore">
+<div class="explore-heading"><h1>Explore</h1><p>Browse splats shared by their creators</p></div>
+<section id="searchResults" aria-labelledby="searchHeading" hidden>
+<div class="search-results-heading"><h2 id="searchHeading" tabindex="-1">Search results</h2><a href="#explore" id="backToCatalogs">Back to catalogs</a></div>
+<p id="searchSummary" role="status"></p>
+<div id="searchGrid"></div>
+<button id="moreSearch" type="button" hidden>Show more</button>
+</section>
+<div id="bookShelf" tabindex="0" role="region" aria-label="Explore catalogs"></div>
+<div class="shelf-footer" id="exploreActions"><button id="exploreCapture">＋ Capture</button></div>
+</section>
+<section id="collection" aria-label="Your collection" hidden>
+<div class="collection-title"><h1 id="collectionTitle">Your collection</h1><button type="button" id="newCatalog">＋ Catalog</button></div>
+<nav id="categoryNav" class="collection-tabs" aria-label="Categories"></nav>
+<p id="collectionNotice" role="status"></p>
+<div class="selection-stage"><p id="emptyShelf" hidden>No saved splats in this catalog</p><button id="selectedPortrait"><span class="portrait"></span><h2 id="selectedName"></h2><span id="selectedSubtitle"></span><span id="selectedCreator"></span></button></div>
+<p id="rosterHelp" class="sr-only">Drag to reorder or drop on a catalog tab. Use Alt and an arrow key to reorder, or Alt, Shift and a left or right arrow to move to an adjacent catalog.</p>
+<div id="grid" aria-label="Splat roster"></div>
+<div class="shelf-footer"><button class="text-action" id="collectionScan">＋ Capture</button><button id="undoRemoval" hidden>Undo removal</button><button id="restoreHidden" hidden>Restore removed…</button></div>
+<details id="captureDrafts" hidden><summary id="draftSummary">Pending scans</summary><div id="captures"></div></details>
+</section>
+<dialog id="details"><div class="dialog-head"><h2 id="detailTitle">About</h2><button class="close" aria-label="Close panel">×</button></div>
+<div id="modelAbout"><p id="description"></p><p id="part" class="muted"></p>
+<div class="credit" id="sharedCredit"><p>Captured by <a id="creatorCredit" href="https://superspl.at/user/danylyon" target="_blank" rel="noopener">Dany Bittel</a></p><p><a id="source" target="_blank" rel="noopener">Original splat</a><br><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p><p id="modelChanges" hidden>Model simplified for the web viewer</p></div>
+<div id="personalCredit" hidden><p>Captured by Aris Antoniadis</p></div></div>
+<div class="annotation-actions"><button id="saveSplat"></button><button id="editInfo">Edit info</button><button id="editNotesFromAbout">Edit notes</button></div>
+</dialog>
+<dialog id="editDialog">
+<div class="dialog-head"><h2 id="editHeading">Edit info</h2><button class="close" aria-label="Close editor">×</button></div>
+<form id="editForm">
+<div id="editMetadata"><label>Name<input id="editName" maxlength="100"></label><label>Subtitle <span class="muted">optional</span><input id="editSubtitle" maxlength="100"></label><label>Description<textarea id="editDescription" maxlength="1200" rows="4"></textarea></label></div>
+<div id="editNotes" hidden>
+<label>Note<select id="noteList"></select></label>
+<div id="noteFields" hidden><label>Title<input id="noteName" maxlength="80"></label><label>Explanation<textarea id="noteBody" maxlength="600" rows="3"></textarea></label><p id="noteAnchorState" class="muted"></p></div>
+<div class="annotation-actions"><button type="button" id="addNote">New note</button><button type="button" id="pickAnchor">Set point on object</button><button type="button" id="deleteNote">Remove note</button></div>
+<p id="noteStatus" role="status"></p>
+</div>
+<button class="solid" type="submit">Save changes</button>
+</form>
+</dialog>
+<dialog id="catalogDialog">
+<div class="dialog-head"><h2 id="catalogDialogTitle">New catalog</h2><button class="close" aria-label="Close catalog dialog">×</button></div>
+<form id="catalogForm">
+<label id="catalogNameField">Catalog name<input id="catalogName" maxlength="60" placeholder="Red things"></label>
+<p id="catalogError" role="status" class="muted"></p>
+<button type="submit" class="solid" id="catalogSubmit">Create catalog</button>
+</form>
+</dialog>
+<dialog id="restoreDialog"><div class="dialog-head"><h2>Removed splats</h2><button class="close" aria-label="Close removed splats">×</button></div><div id="removedList"></div></dialog>
+<dialog id="capture" aria-label="Capture an object">
+  <div class="capture-head">
+    <h2 id="captureHeading" tabindex="-1" autofocus>Capture</h2>
+    <button class="close" aria-label="Close capture">×</button>
+  </div>
+  <div class="camera-wrap">
+    <video id="camera" autoplay muted playsinline role="button" tabindex="0" aria-label="Select the object in the camera"></video>
+    <div id="cameraEmpty"><button id="startCamera" hidden>Enable camera</button></div>
+    <div id="captureGuide" aria-label="Object framing guide">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="coverage-base" cx="50" cy="50" r="49"/>
+        <circle id="coverageProgress" cx="50" cy="50" r="49" pathLength="100" transform="rotate(-90 50 50)"/>
+      </svg>
+    </div>
+    <svg id="captureTilt" viewBox="0 0 100 100" aria-label="Camera height guidance" hidden>
+      <path d="M50 22v56"/><ellipse id="tiltTarget" cx="50" cy="50" rx="13" ry="4"/>
+      <circle id="tiltCurrent" cx="50" cy="50" r="3"/>
+    </svg>
+    <span id="capturePhase">Side 1</span>
+    <span id="shotCount" hidden>0 views</span>
+  </div>
+  <p id="captureStatus" role="status">Opening camera</p>
+  <div class="capture-actions">
+    <button id="otherSide" aria-label="Pause and turn the object over" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg>
+    </button>
+    <button id="captureShutter" aria-label="Start scan" disabled><span></span></button>
+    <button id="stopCamera" aria-label="Finish scan" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+    </button>
+  </div>
+  <div id="filmstrip" hidden></div>
+  <form id="saveCapture" hidden>
+    <label>Name<input id="captureName" placeholder="A stone from the trail" maxlength="100" required></label>
+    <label>Location or memory <span class="muted">optional</span><input id="captureMemory" maxlength="500" placeholder="Where did you find it?"></label>
+    <label>Catalog<select id="captureCategory"><option value="">Unsorted</option></select></label>
+    <button class="solid" type="submit">Create splat</button>
+  </form>
+</dialog>
+<script type="module" src="main.js"></script></body></html>
