@@ -9,6 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const demo = path.join(root, 'splatdex');
 const main = fs.readFileSync(path.join(demo, 'main.js'), 'utf8');
 const html = fs.readFileSync(path.join(demo, 'index.html'), 'utf8');
+const icons = fs.readFileSync(path.join(root, 'assets/icons.svg'), 'utf8');
 const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 for (const [, id] of main.matchAll(/\$\(['"]([^'"]+)['"]\)/g)) {
   assert(ids.has(id), `Missing UI element: ${id}`);
@@ -34,6 +35,9 @@ for (const relative of ['index.html', 'projects/splatdex/index.html', 'splatdex/
   const source = fs.readFileSync(path.join(root, relative), 'utf8');
   for (const [, url] of source.matchAll(/(?:src|poster|href)="([^"#]+)"/g)) {
     if (/^(?:https?:|mailto:|#)/.test(url)) continue;
+    if (url.includes('icons.svg') && url.includes('#')) {
+      assert(icons.includes(`id="${url.split('#')[1]}"`), `${relative}: missing icon ${url}`);
+    }
     let target = path.resolve(url.startsWith('/') ? root : path.dirname(path.join(root, relative)), url.replace(/^\//, '').split(/[?#]/)[0]);
     if (url.split(/[?#]/)[0].endsWith('/')) target = path.join(target, 'index.html');
     assert(fs.existsSync(target), `${relative}: missing ${url}`);

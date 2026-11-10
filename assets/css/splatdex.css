@@ -4,8 +4,12 @@
 .splatdex-story{display:grid;gap:1.8rem;line-height:1.8}
 .splatdex-story p,.splatdex-story figure{margin:0;max-width:none}
 .splatdex-story figure{min-width:0}
-.splatdex-catalog-spread{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
-.splatdex-learning{display:grid;gap:1.6rem;align-items:center}
+.splatdex-catalog-spread{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;align-items:start}
+.splatdex-catalog-spread figure+figure .splatdex-window{border-left:1px solid #d4d4d4}
+.splatdex-catalog-spread figcaption{padding-right:.75rem}
+.splatdex-catalog-spread figure+figure figcaption{padding-left:.75rem}
+.splatdex-learning{display:grid;column-gap:1.6rem;row-gap:.5rem;align-items:center}
+.splatdex-learning .splatdex-media-caption{grid-column:1/-1;color:var(--muted);font-size:.74rem;line-height:1.65}
 .splatdex-window{position:relative;overflow:hidden}
 .splatdex-story .splatdex-window img{position:absolute;display:block;max-width:none;width:var(--image-width);margin:var(--image-top) 0 0 var(--image-left)}
 .splatdex-window--explore{aspect-ratio:1.65;--image-width:124%;--image-top:-8%;--image-left:-12%}
@@ -26,5 +30,5 @@
 .splatdex-story .splatdex-capture-film video{width:100%;height:100%;object-fit:cover;aspect-ratio:588/1280}
 .splatdex-references{color:var(--muted);font-size:.75rem;line-height:1.7}
 .splatdex-references h2{margin:0 0 .6rem;font-size:1rem}.splatdex-references ol{margin:0;padding-left:1.2rem}.splatdex-references li+li{margin-top:.45rem}.splatdex-references li{scroll-margin-top:2rem}.splatdex-story .splatdex-image-credits{margin-top:1rem;font-size:.72rem}
-@media(max-width:42rem){.splatdex-learning{grid-template-columns:1fr;gap:1rem}.splatdex-story{gap:1.45rem}.splatdex-catalog-spread{gap:.6rem}.splatdex-catalog-spread figcaption{font-size:.68rem}.splatdex-rock-study figcaption strong{display:block}}
+@media(max-width:42rem){.splatdex-learning{grid-template-columns:1fr;gap:1rem}.splatdex-story{gap:1.45rem}.splatdex-catalog-spread figcaption{font-size:.68rem}.splatdex-rock-study figcaption strong{display:block}}
 @media(max-width:28rem){.splatdex-shell-sequence{grid-template-columns:.75fr 1.518987fr}.splatdex-shell-sequence .splatdex-capture-film{grid-column:1/-1;justify-self:center;width:30%;margin-bottom:.6rem}}
