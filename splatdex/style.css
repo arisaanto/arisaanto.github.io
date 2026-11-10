@@ -393,7 +393,16 @@ footer{position:fixed;right:40px;bottom:31px}
 .shelf-footer{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 #collectionScan{width:auto;border:0;padding:11px 0;margin:0}
 #emptyShelf{color:var(--muted);font-size:12px}
-#removedList{display:grid;justify-items:start}
+#restoreHidden{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:9px;color:var(--muted)}
+#restoreHidden[hidden]{display:none}
+#restoreHidden svg{width:20px;height:20px}
+#restoreDialog{position:fixed;inset:auto;margin:0;width:min(300px,calc(100vw - 24px));max-height:50dvh;overflow:auto;padding:16px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:3px;box-shadow:0 8px 28px #00000012}
+#restoreDialog::backdrop{background:transparent;backdrop-filter:none}
+#removedHeading{margin:0 0 8px;font-size:12px;font-weight:400;color:var(--muted)}
+#removedList{display:grid;gap:4px}
+.removed-splat{display:flex;align-items:center;gap:18px;width:100%;padding:8px 0;text-align:left}
+.removed-splat img{width:44px;height:44px;object-fit:contain}
+.removed-splat .restore-plus{margin-left:auto;font-size:22px;font-weight:400;padding:0 8px}
 #annotationNav{inset:auto auto 25px 50%;padding:0;border:0;border-radius:0;max-width:min(36vw,320px);overflow-x:auto;scrollbar-width:thin}
 #viewButtons{width:max-content;gap:6px}
 #annotationNav button{min-width:31px;min-height:35px;padding:0;border-radius:0}
@@ -413,7 +422,7 @@ footer{position:fixed;right:40px;bottom:31px}
 #conversation p{margin:6px 0;line-height:1.5;overflow-wrap:anywhere}
 #conversation .question{padding:6px 8px;background:color-mix(in srgb,var(--ink) 8%,var(--bg))}
 #askStatus{font-size:11px;margin:7px 0 0}
-#editDialog,#restoreDialog{width:min(580px,94vw)}
+#editDialog{width:min(580px,94vw)}
 #editForm label{display:grid;gap:4px;font-size:12px}
 #editForm input,#editForm select,#editForm textarea{display:block;width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:8px}
 #editForm textarea{resize:vertical}

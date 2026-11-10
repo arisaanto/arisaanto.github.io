@@ -5,6 +5,11 @@ try {
   if (saved && Array.isArray(saved.removed) && saved.order && saved.edits) state = { ...state, ...saved };
 } catch {}
 
+// Retire names left by the reconstruction trials; preserve deliberate edits.
+for (const [file, edit] of Object.entries(state.edits)) {
+  if (file === 'banded-rock' && ['Bandit Rock','Banded rock','Portuguese Rock','Portuguese rock'].includes(edit.name)) delete edit.name;
+}
+
 export const wasRemoved = file => state.removed.includes(file);
 const starterSplats = new Set(['clove', 'cardamom', 'pepper', 'strawberry']);
 export const isSaved = item => !wasRemoved(item.file)

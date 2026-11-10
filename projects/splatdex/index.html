@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Splatdex is a browser prototype for exploring, collecting, and annotating Gaussian splats.">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+    <title>Splatdex — Aris Antoniadis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@500;600;700&amp;family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap">
+    <script src="/assets/js/theme.js"></script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261104-9">
+    <link rel="stylesheet" href="/assets/css/splatdex.css?v=20261109">
+    <script src="/assets/js/project-video.js?v=20261109" defer></script>
+  </head>
+  <body class="book-page">
+    <a class="skip-link" href="#article">Skip to article</a>
+    <nav class="article-nav shell splatdex-shell" aria-label="Primary navigation">
+      <a href="/">Aris Antoniadis</a>
+      <a href="/#projects">Back to Projects</a>
+    </nav>
+    <main id="article" class="article shell splatdex-shell book-reader splatdex-reader">
+      <header class="article__header splatdex-intro">
+        <h1>Splatdex</h1>
+        <p class="article__lede">A Pokédex for splats.</p>
+        <p class="article__meta">Personal project, <time datetime="2026">2026</time></p>
+        <div class="article-actions">
+          <a class="icon-button" href="/splatdex/" aria-label="Try Splatdex" title="Try Splatdex">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg?v=20261105-1#globe"></use></svg>
+          </a>
+          <button class="icon-button icon-button--plain theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <svg class="icon theme-icon--moon" aria-hidden="true"><use href="/assets/icons.svg#moon"></use></svg>
+            <svg class="icon theme-icon--sun" aria-hidden="true"><use href="/assets/icons.svg#sun"></use></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="article__body splatdex-story">
+        <p class="splatdex-intro">The first Gaussian splats I encountered were Dany Bittel’s macro captures. I was drawn to the stillness of the subject and the movement available to the viewer. A fly could be approached from several directions, its hairs and wings available to an attention that would rarely be possible in passing. There was something of the natural history museum in it, the chance to linger with a form usually glimpsed in motion.<sup><a href="#note-1" aria-label="Reference 1">1</a></sup></p>
+
+        <div class="splatdex-catalogs">
+          <figure>
+            <div class="splatdex-window splatdex-window--explore">
+              <img src="/assets/images/splatdex/splatdex-explore-catalogs.jpg" width="1280" height="720" alt="Digital catalogs for flowers, fruits, and rocks, with a different splat on each page">
+            </div>
+            <figcaption>Catalogs open as books, with a different splat on each page</figcaption>
+          </figure>
+          <p>Sticker books and the Pokédex give collecting a form. Each entry belongs to a larger world, and each addition makes that world a little more familiar. Pokémon Go brought this impulse outdoors. I imagined a collection made from encounters with the world itself, where a shell, a flower, or a stone could become an entry to return to.</p>
+        </div>
+
+        <div class="splatdex-medium">
+          <p>Where a photograph fixes a view, a splat allows movement through the views that were captured. A surface passes out of sight, another comes forward, and a detail begins to suggest a question. I wanted to give this kind of image a place to be kept, arranged, and read alongside other images. Splatdex takes the scans I found through SuperSplat and brings them into catalogs, personal collections, and annotated views.</p>
+          <figure>
+            <div class="splatdex-window splatdex-window--roster">
+              <img src="/assets/images/splatdex/splatdex-fruits-catalog.jpg" width="1280" height="720" alt="Fruits catalog with Strawberry, Blueberry, and The Fruit Bowl in its roster">
+            </div>
+            <figcaption>A roster of individual captures within the Fruits catalog</figcaption>
+          </figure>
+        </div>
+
+        <div class="splatdex-detail">
+          <div>
+            <p>An illustration in a book directs attention through its framing. Here, that framing can remain open to the reader. Notes offer points of entry, bringing a feature into view and connecting it to an explanation.</p>
+            <p class="splatdex-research-note">In one VR experiment, participants recognized objects faster after learning them through active rotation. In another spatial task, seeing informative views mattered more than controlling the display. These findings give the notes a purpose beyond labeling, as a way of bringing a useful view into reach.<sup><a href="#note-2" aria-label="Reference 2">2</a> <a href="#note-3" aria-label="Reference 3">3</a></sup></p>
+          </div>
+          <figure data-project-media class="splatdex-walkthrough">
+            <video width="1120" height="760" muted loop playsinline controls preload="none" poster="/assets/images/splatdex/splatdex-anchored-note.jpg"
+                   aria-label="Walkthrough of the Fruits roster, strawberry rotation, and two notes on its surface">
+              <source src="/assets/video/splatdex-interface-loop.mp4" type="video/mp4">
+              <a href="/assets/video/splatdex-interface-loop.mp4">Watch the annotated strawberry walkthrough</a>
+            </video>
+            <figcaption>From the roster to the object, then to a particular detail. Strawberry photographs by Dany Bittel. Splat trained by Michael Moroz. <a href="https://superspl.at/scene/84df8849">Source splat</a></figcaption>
+          </figure>
+        </div>
+
+        <p class="splatdex-rock-intro">For my own collection, I began with objects that had stayed with me from different journeys: a reddish stone from the Rota Vicentina in Portugal, walked with friends during my study abroad; a green-blue stone from a little stream near Bergün, toward the end of the Kesch Trek; and a shell from Tasmania. Their places in the collection carry something of those journeys.</p>
+        <figure class="splatdex-rock-study"><div class="splatdex-rock-pair"><div class="splatdex-rock-photo"><img src="/assets/images/splatdex/portuguese-rock-photo.jpg" width="360" height="480" alt="Phone photograph of Portuguese Rock I" loading="lazy"></div><div class="splatdex-rock-video" data-project-media><video width="1200" height="800" muted loop playsinline controls preload="none" poster="/assets/images/splatdex/banded-rock-rotation.jpg" aria-label="Portuguese Rock I reconstructed as a Gaussian splat, rotating through a full turn"><source src="/assets/video/banded-rock-rotation.mp4" type="video/mp4"></video></div></div><figcaption><strong>Portuguese Rock I</strong> — Collected on the Rota Vicentina with friends during my study abroad. This first reconstruction was prepared separately on a Mac.</figcaption></figure>
+        <figure class="splatdex-rock-study"><div class="splatdex-rock-pair"><div class="splatdex-rock-photo"><img src="/assets/images/splatdex/swiss-rock-photo.jpg" width="360" height="480" alt="Phone photograph of Switzerland Rock I" loading="lazy"></div><div class="splatdex-rock-video" data-project-media><video width="1200" height="800" muted loop playsinline controls preload="none" poster="/assets/images/splatdex/switzerland-rock-rotation.jpg" aria-label="Switzerland Rock I reconstructed as a Gaussian splat, rotating through a full turn"><source src="/assets/video/switzerland-rock-rotation.mp4" type="video/mp4"></video></div></div><figcaption><strong>Switzerland Rock I</strong> — Collected beside a small stream near Bergün, toward the end of the Kesch Trek with a friend.</figcaption></figure>
+        <figure class="splatdex-rock-study"><div class="splatdex-rock-pair"><div class="splatdex-rock-photo"><img src="/assets/images/splatdex/tasmanian-shell-photo.jpg" width="360" height="480" alt="Phone photograph of Tasmanian Shell I" loading="lazy"></div><div class="splatdex-rock-video" data-project-media><video width="1200" height="800" muted loop playsinline controls preload="none" poster="/assets/images/splatdex/tasmanian-shell-rotation.jpg" aria-label="Tasmanian Shell I reconstructed as a Gaussian splat, rotating through a full turn"><source src="/assets/video/tasmanian-shell-rotation.mp4" type="video/mp4"></video></div></div><figcaption><strong>Tasmanian Shell I</strong> — A shell from Tasmania, captured on an iPhone in Splatdex and reconstructed automatically by the Mac processor.</figcaption></figure>
+        <figure class="splatdex-capture-film" data-project-media><video muted loop playsinline controls preload="none" aria-label="Sixteen seconds of automatic shell capture inside the Splatdex iPhone prototype"><source src="/assets/video/splatdex-phone-capture.mp4" type="video/mp4"></video><figcaption>Automatic capture in the iPhone prototype. The phone saves overlapping views; reconstruction runs on a connected Mac processor after upload.</figcaption></figure>
+
+        <div class="splatdex-outlook">
+          <p>A collection could hold these personal histories as easily as it holds information about an object. A shell found on a walk might become part of a journal, a shared catalog, or a study guide. Reading about its structure, one could turn to the scan and trace what the text describes. Field observation and online exchange already meet in communities such as iNaturalist. I was interested in what a collection of spatial images might bring to that exchange.<sup><a href="#note-4" aria-label="Reference 4">4</a></sup></p>
+          <p>A question can continue from a note through a small language model running in the browser. I imagine this becoming a shared practice, with contributors able to question, correct, and extend the explanations around an object. In AR, those collections could be arranged in the space around us. Research into dynamic splats also opens the possibility of returning motion to the image, so that an object might be studied through both its form and its movement.<sup><a href="#note-5" aria-label="Reference 5">5</a></sup></p>
+        </div>
+
+        <p class="splatdex-status">The prototype brings together catalogs, personal collections, anchored notes, and optional conversations with a browser-based language model. The iPhone prototype automatically captures overlapping, calibrated views. After upload, a private Mac processor estimates the camera positions and trains a Gaussian splat in Brush; the result returns to the collection. The current annotations are authored and editable. Automatic recognition, generated notes, shared study spaces, and AR remain directions for the project.</p>
+
+        <aside class="splatdex-references" aria-labelledby="references">
+          <h2 id="references">Notes</h2>
+          <ol>
+            <li id="note-1"><a href="https://danybittel.ch/macro.html">Dany Bittel, Macro Splats</a>. The macro captures that introduced me to the medium. The <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">original Gaussian Splatting paper</a> describes the underlying representation and rendering method.</li>
+            <li id="note-2">James et al. (2002), <a href="https://pubmed.ncbi.nlm.nih.gov/12395554/">“Active” and “passive” learning of three-dimensional object structure within an immersive virtual reality environment</a>. Participants recognized objects faster after learning their structure through active rotation.</li>
+            <li id="note-3">Keehner et al. (2008), <a href="https://doi.org/10.1080/03640210801898177">Spatial Reasoning With External Visualizations</a>. In their cross-section task, access to relevant views accounted for benefits that control alone did not explain.</li>
+            <li id="note-4">Herodotou et al., <a href="https://pubmed.ncbi.nlm.nih.gov/38818044/">Young people in iNaturalist</a>. Interviews with 31 young people examined how participation in the field and online supported learning.</li>
+            <li id="note-5">Tzathas et al. (2026), <a href="https://repo-sam.inria.fr/nerphys/adaptive-spatio-temporal/">Adaptive Spatio-Temporal 3D Gaussian Splatting for Scenes with Oscillatory Motion</a>. Research on reconstructing changing scenes, including leaves moving in the wind.</li>
+          </ol>
+          <p class="splatdex-image-credits">The homepage loop records sixteen splat models arranged in a 3D scene. Fly, clove, cardamom, blueberry, and strawberry photographs by <a href="https://superspl.at/user/danylyon">Dany Bittel</a>. Strawberry splat trained by Michael Moroz. <a href="https://superspl.at/scene/663d6a97">Vanadinite</a> by doudoid. Shared captures are credited under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Rock and shell captures by Aris Antoniadis. Flower captures by Vladislav (@vla_tik), credited with their source links in Splatdex. The models have been scaled and arranged for the camera orbit.</p>
+        </aside>
+      </div>
+    </main>
+    <footer class="site-footer shell splatdex-shell">
+      <span>© 2026 Aris Antoniadis</span>
+    </footer>
+  </body>
+</html>

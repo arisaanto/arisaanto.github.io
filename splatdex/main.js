@@ -31,8 +31,10 @@ const splats=[
  ,{name:'The Fruit Bowl',file:'fruit-bowl',optimized:true,category:'fruits',scene:'d8ba72a6',creator:'SuperDelphi',profile:'https://superspl.at/user/superdelphi',description:'Oranges, apples, lemons and other produce piled into a round ceramic bowl.',part:'SuperDelphi aligned 33 photographs in RealityScan and trained the original splat in LichtFeld Studio.'}
  ,{name:'Chia seeds',latin:'Salvia hispanica',file:'chia-seeds',scene:'c786e218',creator:'Dany Bittel',description:'Chia seeds seen up close. Their mottled surfaces vary from seed to seed.',part:'Bittel combined focus-stacked photographs from 106 perspectives.'}
  ,{name:'Heart Cookie',file:'heart-cookie',category:'food',scene:'bd964899',creator:'Dany Bittel',description:'A heart-shaped cookie with raspberry filling.',part:'Bittel captured the original from 145 perspectives and trained it in Brush.'}
- ,{"name": "Banded rock", "file": "banded-rock", "ext": "ply", "personal": true, "creator": "Aris Antoniadis", "category": "rocks", "description": "I picked up this reddish stone during a hike on the Rota Vicentina.", "part": "Banded rock is a descriptive name. The geological type has not been identified.", "cameraFrame": {"center": [0.41864774465560917, 0.7062936878204346, 0.9622209003567695], "front": [-0.42332350179492073, 0.19521849138186034, 0.8846959666748099], "up": [0.6496312110162784, -0.615241581241535, 0.44660618713239897], "right": [-0.6314875315488101, -0.7637850072723386, -0.13362619565184194], "radius": 1.6577885283288882, "splats": 21735}, "sourceCaptureIds": ["af2f91a8-6b70-4f91-a320-9e06d84c171e", "daac8d74-4b46-4a53-a630-505c6eb54c93", "a02a2989-7d69-4500-ba08-9cec71fb4438"]}
- ,{name:'Vanadinite',file:'vanadinite',optimized:true,category:'rocks',scene:'663d6a97',creator:'doudoid',profile:'https://superspl.at/user/doudoid',description:'A close-up mineral scan labelled vanadinite by its creator.',part:'The identification comes from the creator. The original was captured with two macro cameras and cross-polarised lighting.'}
+ ,{"name": "Portuguese Rock I", "file": "banded-rock", "ext": "ply", "personal": true, "creator": "You", "category": "rocks", "description": "I picked up this reddish stone during a hike on the Rota Vicentina.", "part": "Banded rock is a descriptive name. The geological type has not been identified.", "cameraFrame": {"center": [0.41864774465560917, 0.7062936878204346, 0.9622209003567695], "front": [-0.42332350179492073, 0.19521849138186034, 0.8846959666748099], "up": [0.6496312110162784, -0.615241581241535, 0.44660618713239897], "right": [-0.6314875315488101, -0.7637850072723386, -0.13362619565184194], "radius": 1.6577885283288882, "splats": 21735}, "sourceCaptureIds": ["af2f91a8-6b70-4f91-a320-9e06d84c171e", "daac8d74-4b46-4a53-a630-505c6eb54c93", "a02a2989-7d69-4500-ba08-9cec71fb4438"]}
+ ,{name:'Vanadinite',file:'vanadinite',optimized:true,category:'rocks',scene:'663d6a97',creator:'doudoid',profile:'https://superspl.at/user/doudoid',description:'A close-up mineral scan labelled vanadinite by its creator.',part:'The identification comes from the creator. The original was captured with two macro cameras and cross-polarised lighting.'},
+ {"name": "Tasmanian Shell I", "file": "tasmanian-shell", "ext": "ply", "category": "shells", "personal": true, "creator": "You", "description": "A shell collected in Tasmania, captured in Splatdex on an iPhone.", "part": "Its cap-like form resembles a limpet shell. Exact species has not been established.", "cameraFrame": {"center": [0.09005692601203918, 0.16138887405395508, 0.30130696296691895], "front": [0.8283204099167789, 0.25997212586759116, -0.4962859984798935], "right": [-0.5335945132447228, 0.09606658230560265, -0.840266688140883], "up": [-0.17076941749161872, 0.9608255333493205, 0.2182936107941939], "radius": 1.3126219511032104, "splats": 24302}, "sourceCaptureIds": ["9a5423b6-f87f-418c-ba5b-090ce3ed05dd"]},
+ {"name": "Switzerland Rock I", "file": "switzerland-rock", "ext": "ply", "personal": true, "category": "rocks", "creator": "You", "description": "Collected beside a small stream near Berg\u00fcn, at the end of the Kesch Trek with a friend.", "part": "The green-blue colour is visible; the geological type has not been confirmed.", "cameraFrame": {"center": [0.002645905828103423, -0.16667592525482178, 0.30734896659851074], "front": [-0.6933823400871252, 0.3281093228194297, 0.6415334774852187], "right": [0.17293240826237222, -0.7885208911471276, 0.5901941938015961], "up": [0.6995107666275614, 0.5201721604464382, 0.4900057253426806], "radius": 0.7893533110618591, "splats": 16782}, "sourceCaptureIds": ["3184b229-9b33-43ad-8b34-e68334a5d835", "dac71997-855a-4d1e-a2c3-2c21cf50bf2d"]}
 ];
 let app,camera,entity,current=0,loadToken=0,dark=false,yaw=.3,pitch=.15,distance=3,radius=1,target=new pc.Vec3(),assets=new Map(),thumbs=new Map(splats.map(item=>[item.file,`thumbs/${item.file}.png`])),selected=0,inCollection=true,screen="explore",ready=false,activeCategory="spices";
 const canvas = $('scene');
@@ -345,6 +347,7 @@ const categories = [
   { id: 'flowers', name: 'Flowers' },
   { id: 'fruits', name: 'Fruits' },
   { id: 'rocks', name: 'Rocks' },
+  { id: 'shells', name: 'Shells' },
   { id: 'food', name: 'Baked goods' }
 ];
 const entriesFor = category => splats.filter(item => categoryOf(item) === category);
@@ -710,9 +713,16 @@ $('undoRemoval').onclick = () => changeSaved(lastRemoved, true);
 function renderRemoved() {
   const buttons = splats.filter(item => wasRemoved(item.file)).map(item => {
     const button = document.createElement('button');
-    button.textContent = `Restore ${edited(item).name}`;
+    button.className = 'removed-splat';
+    button.setAttribute('aria-label', `Restore ${edited(item).name}`);
+    const image = document.createElement('img');
+    image.alt = ''; thumbnailImage(image, thumbs.get(item.file));
+    image.dataset.thumbnailFile = item.file;
+    const name = document.createElement('span'); name.textContent = edited(item).name;
+    const plus = document.createElement('span'); plus.className = 'restore-plus'; plus.textContent = '＋'; plus.setAttribute('aria-hidden', 'true');
+    button.append(image, name, plus);
     button.onclick = () => {
-      if (changeSaved(item.file, true) && !renderRemoved()) $('restoreDialog').close();
+      if (changeSaved(item.file, true) && !renderRemoved()) $('restoreDialog').hidePopover();
     };
     return button;
   });
@@ -720,8 +730,18 @@ function renderRemoved() {
   return buttons.length;
 }
 $('restoreHidden').onclick = () => {
-  if (renderRemoved()) $('restoreDialog').showModal();
+  const panel = $('restoreDialog');
+  if (panel.matches(':popover-open')) { panel.hidePopover(); return; }
+  if (!renderRemoved()) return;
+  panel.showPopover();
+  const anchor = $('restoreHidden').getBoundingClientRect(), bounds = panel.getBoundingClientRect();
+  panel.style.left = `${Math.max(12, Math.min(innerWidth - bounds.width - 12, anchor.right - bounds.width))}px`;
+  panel.style.top = `${Math.max(12, anchor.top - bounds.height - 8)}px`;
 };
+$('restoreHidden').setAttribute('aria-haspopup', 'dialog');
+$('restoreHidden').setAttribute('aria-controls', 'restoreDialog');
+$('restoreDialog').addEventListener('toggle', event => $('restoreHidden').setAttribute('aria-expanded', String(event.newState === 'open')));
+window.addEventListener('resize', () => { if ($('restoreDialog').matches(':popover-open')) $('restoreDialog').hidePopover(); });
 
 function splatView(i, push = true, shared = ['explore', 'discover', 'search'].includes(screen)) {
   viewerShared = shared && !splats[i].personal;
@@ -1439,14 +1459,28 @@ async function startCamera() {
     if (token === captureToken) $('startCamera').disabled = false;
   }
 }
-function openCapture() {
-    const dialog = document.getElementById('capturePreview');
-    if (!dialog) return;
-    dialog.showModal();
-    const video = dialog.querySelector('video');
-    void video.play().catch(() => {});
-    dialog.addEventListener('close', () => video.pause(), { once: true });
+function openCapture(record = null) {
+  if (record instanceof Event) record = null;
+  if (!record && startNativeCapture(screen === 'collection' ? activeCategory : unsorted.id)) return;
+  clearPhotos();
+  const options = personalCatalogs().filter(category => category.id !== unsorted.id);
+  $('captureCategory').replaceChildren(new Option(unsorted.name, unsorted.id), ...options.map(category => new Option(category.name, category.id)));
+  $('captureCategory').value = screen === 'collection' && options.some(category => category.id === activeCategory)
+    ? activeCategory : unsorted.id;
+  if (record) {
+    captureDraftId = record.id; captureCreated = record.created;
+    photos = record.photos ?? []; viewGroups = record.viewGroups ?? []; frameTimes = record.frameTimes ?? [];
+    capturePoses = record.poses ?? []; objectHints = record.frameHints?.length === photos.length ? record.frameHints : photos.map(() => null); captureGeometry = record.geometry ?? null; scanGroup = record.scanGroup ?? 1;
+    if (record.coverage) Object.assign(coverage, record.coverage);
+    if (record.guided) { coverage.restartPass(); motionState = 'suspended'; }
+    $('captureName').value = record.name === 'New splat' ? '' : record.name;
+    $('captureMemory').value = record.memory ?? '';
+    $('captureCategory').value = record.category ?? unsorted.id;
   }
+  navigator.storage?.persist?.().catch(() => {});
+  $('capture').showModal();
+  startCamera();
+}
 $('scanBtn').onclick = openCapture;
 $('collectionScan').onclick = openCapture;
 $('exploreCapture').onclick = openCapture;
@@ -1460,9 +1494,16 @@ async function closeCapture() {
   captureTransition = true;
   try {
     await sampler?.pause();
-    if (photos.length && !captureCommitted) await checkpointScan();
+    const draft = captureDraftId;
+    captureToken++;
+    captureCommitted = true; // Do not create another checkpoint while discarding.
+    releaseStream();
+    // Both checkpoint writers must stop before deletion, otherwise a late
+    // persistence callback can recreate the photographs after X is pressed.
+    await Promise.allSettled([checkpointPromise, readiness?.pending]);
+    if (draft) await captureStore.remove(draft);
     $('capture').close();
-  } catch (error) { captureMessage(error.message); }
+  } catch (error) { captureCommitted = false; captureMessage(error.message); }
   finally { captureTransition = false; captureControls(false); }
 }
 $('capture').querySelector('.close').onclick = closeCapture;
@@ -1605,12 +1646,224 @@ async function discardCompletedDrafts() {
 }
 const uploadStates = new Map();
 let uploadingPending = false;
-async function resumePendingUploads() {}
+async function resumePendingUploads() {
+  if (uploadingPending || navigator.onLine === false || document.hidden) return;
+  uploadingPending = true;
+  try {
+    for (const record of await captureStore.list()) {
+      if (record.state !== 'pending-upload' || deletedCaptureIds.has(record.id)) continue;
+      if (navigator.onLine === false || document.hidden) break;
+      const active = () => !deletedCaptureIds.has(record.id) && !document.hidden && navigator.onLine !== false;
+      try {
+        const job = await uploadCapture(record, (done, total) => {
+          uploadStates.set(record.id, { stage: 'Uploading', progress: Math.round(100 * done / total) });
+          const label = document.querySelector(`[data-capture-state="${CSS.escape(record.id)}"]`);
+          if (label) {
+            label.textContent = 'Uploading';
+            const bar = label.parentElement.querySelector('progress');
+            if (bar) bar.value = Math.round(100 * done / total);
+          }
+        }, active, true);
+        if (!active()) continue;
+        if (!['queued', 'processing', 'complete', 'failed'].includes(job.state)) throw Error('The scan has not been queued yet');
+        // The server acknowledged all images and the processing job; only now
+        // may the phone release its source files. Failed uploads retain them.
+        await captureStore.releaseSources(record.id);
+        uploadStates.delete(record.id);
+        void syncCaptures();
+      } catch (error) {
+        uploadStates.set(record.id, { stage: navigator.onLine === false ? 'Waiting for connection' : document.hidden ? 'Saved on this device' : 'Upload paused', error: error.message });
+      }
+    }
+  } catch (error) { console.debug('Pending upload unavailable', error.message); }
+  finally { uploadingPending = false; if (screen === 'collection') refreshCaptures(); }
+}
 window.addEventListener('online', () => { void resumePendingUploads(); void syncCaptures(); });
-async function syncCaptures() {}
+async function syncCaptures() { return; // Public portfolio: private reconstruction service is not exposed.
+
+  if (syncing) return;
+  syncing = true;
+  try {
+    try {
+      for (const record of await captureStore.list()) {
+        if (record.state === 'discarding') await discardPreflight(record.id);
+      }
+    } catch (error) { console.debug('Local capture cleanup unavailable', error.message); }
+    void resumePendingUploads();
+    const data = await captureRequest('/api/captures');
+    for (const id of data.deletedCaptureIds ?? []) deletedCaptureIds.add(id);
+    remoteCaptures = data.captures;
+    releaseNativeSources(data);
+    let added = false;
+    for (const record of remoteCaptures) {
+      if (record.state !== 'complete') continue;
+      if (splats.some(item => item.sourceCaptureIds?.includes(record.id))) continue;
+      const file = `capture-${record.id}`;
+      const existing = splats.find(item => item.file === file);
+      if (existing) {
+        prepareCaptureThumbnail(record, existing);
+        continue;
+      }
+      const known = [...categories, unsorted, ...customCatalogs()].some(category => category.id === record.category);
+      const item = {
+        name: record.id === '3184b229-9b33-43ad-8b34-e68334a5d835' ? 'Switzerland Rock I' : record.name, file, ext: 'ply', personal: true, creator: 'You',
+        category: known ? record.category : unsorted.id, description: record.memory,
+        part: 'Phone capture. Object identification has not been verified',
+        cameraFrame: record.result.cameraFrame,
+        url: `/api/captures/${record.id}/model`, sourceCaptureIds: [record.id]
+      };
+      splats.push(item);
+      thumbs.set(file, record.result.thumbnailVersion === 2
+        ? `/api/captures/${record.id}/thumbnail?v=2`
+        : 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="384" height="384"/>');
+      prepareCaptureThumbnail(record, item);
+      added = true;
+    }
+    try { await discardCompletedDrafts(); }
+    catch (error) { console.debug('Local photo cleanup unavailable', error.message); }
+    if (added && screen === 'explore' && location.hash.startsWith('#splat/capture-')) openRoute();
+    if (screen === 'collection') {
+      if (added) renderGrid();
+      await refreshCaptures();
+    }
+  } catch (error) {
+    console.debug('Capture sync unavailable', error.message);
+  } finally {
+    syncing = false;
+    clearTimeout(syncTimer);
+    if (!document.hidden) syncTimer = setTimeout(syncCaptures, 8000);
+  }
+}
 function captureExportActions(record){const actions=document.createElement('div');actions.className='capture-export-actions';const button=document.createElement('button');button.className='capture-export-button';button.textContent='Export photos';const note=document.createElement('p');note.className='capture-export-status';note.setAttribute('role','status');button.onclick=async()=>{button.disabled=true;note.textContent='';try{await exportCapture(record,(done,total)=>{button.textContent=`Preparing ZIP ${done}/${total}`;});note.textContent='ZIP download started';}catch(e){note.textContent=`Could not export: ${e.message}`;}finally{button.disabled=false;button.textContent='Export photos';}};actions.append(button,note);return actions;}
 let captureRefresh = 0;
-async function refreshCaptures() { $('captureDrafts').hidden = true; $('captures').replaceChildren(); }
+async function refreshCaptures() {
+  const request = ++captureRefresh;
+  const category = activeCategory;
+  const container = $('captures');
+  try {
+    const local = await captureStore.list();
+    const recordsById = new Map(local.map(record => [record.id, record]));
+    for (const remote of remoteCaptures) {
+      const saved = recordsById.get(remote.id);
+      recordsById.set(remote.id, saved?.state === 'pending-upload' && remote.state === 'uploading'
+        ? { ...remote, ...saved } : { ...saved, ...remote, created: new Date(remote.created).toISOString() });
+    }
+    for (const [id, state] of uploadStates) if (recordsById.get(id)?.state === 'pending-upload') Object.assign(recordsById.get(id), state);
+    const records = [...recordsById.values()];
+    if (request !== captureRefresh || screen !== 'collection') return;
+    for (const url of captureURLs) URL.revokeObjectURL(url);
+    captureURLs = [];
+    container.replaceChildren();
+
+    const reconstructedIds = reconstructedCaptureIds();
+    const pending = records.filter(record => !['complete', 'discarding'].includes(record.state) && !reconstructedIds.has(record.id) && !deletedCaptureIds.has(record.id));
+    const knownCatalogs = new Set([...categories, unsorted, ...customCatalogs()].map(item => item.id));
+    const draftCategory = record => knownCatalogs.has(record.category) ? record.category : unsorted.id;
+    draftCatalogs = new Set(pending.map(draftCategory));
+    const available = personalCatalogs();
+    if (!available.some(item => item.id === category) && available.length) {
+      collectionView(available[0].id, false);
+      history.replaceState({}, '', `#collection/${available[0].id}`);
+      return;
+    }
+    renderCatalogTabs(false);
+    const drafts = pending.filter(record => draftCategory(record) === category).sort((a, b) => String(b.created).localeCompare(String(a.created)));
+    $('captureDrafts').hidden = drafts.length === 0;
+    $('draftSummary').textContent = String(drafts.length);
+    for (const record of drafts) {
+      const card = document.createElement('div');
+      card.className = 'capture-card';
+      const photo = new Image();
+      if (record.photos?.length) {
+        photo.src = URL.createObjectURL(record.photos[0]);
+        captureURLs.push(photo.src);
+      }
+      photo.alt = '';
+      const body = document.createElement('div');
+      body.className = 'capture-item-body';
+      const title = document.createElement('h4');
+      title.textContent = record.name;
+      const memory = document.createElement('p');
+      memory.textContent = record.memory;
+      const state = document.createElement('p');
+      state.dataset.captureState = record.id;
+      state.textContent = record.stage ?? (record.state === 'draft' ? 'Scan paused' : record.state === 'pending-upload' ? 'Saved on this device' : 'Waiting to upload');
+      body.append(title, memory, state);
+      card.append(photo, body);
+      if (['queued', 'processing', 'pending-upload'].includes(record.state)) {
+        const progress = document.createElement('progress');
+        progress.max = 100; progress.value = record.progress ?? 0;
+        progress.setAttribute('aria-label', record.stage ?? 'Upload progress');
+        body.append(progress);
+      }
+      if (record.error) {
+        const error = document.createElement('p');
+        error.textContent = record.error;
+        body.append(error);
+      }
+      if (record.photos?.length && ['draft', 'awaiting-reconstruction'].includes(record.state)) {
+        const resume = document.createElement('button');
+        resume.textContent = 'Resume scan'; resume.onclick = () => openCapture(record); body.append(resume);
+      }
+      if (record.state === 'pending-upload') {
+        const note = document.createElement('p');
+        note.textContent = navigator.onLine === false ? 'Reopen Splatdex on this phone when connected to upload' : 'Keep Splatdex open to upload; you can return later';
+        body.append(note);
+        if (!uploadingPending) {
+          const retry = document.createElement('button'); retry.textContent = 'Resume upload';
+          retry.onclick = () => { uploadStates.delete(record.id); void resumePendingUploads(); }; body.append(retry);
+        }
+      }
+      if (record.state === 'failed' || record.state === 'checked') {
+        const retry = document.createElement('button');
+        retry.textContent = record.state === 'checked' ? 'Create splat' : 'Retry reconstruction';
+        retry.onclick = async () => {
+          retry.disabled = true;
+          const action = record.state === 'checked' ? 'reconstruct' : 'retry';
+          try { await captureRequest(`/api/captures/${record.id}/${action}`, { method: 'POST' }); await syncCaptures(); }
+          catch (error) { state.textContent = error.message; retry.disabled = false; }
+        };
+        body.append(retry);
+      }
+      if (!['complete', 'discarding'].includes(record.state)) {
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.setAttribute('aria-label', 'Delete capture');
+        remove.title = 'Delete capture';
+        remove.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></svg>'; 
+        remove.disabled = deletingCaptureIds.has(record.id);
+        remove.onclick = async () => {
+          if (!confirm(`Delete “${record.name}” and its source photos?`)) return;
+          deletingCaptureIds.add(record.id);
+          for (const button of body.querySelectorAll('button')) button.disabled = true;
+          try {
+            if (['draft', 'awaiting-reconstruction'].includes(record.state)) {
+              deletedCaptureIds.add(record.id); await captureStore.remove(record.id);
+            } else await discardPreflight(record.id);
+            try { await discardCompletedDrafts(); }
+            catch (error) { console.debug('Local photo cleanup unavailable', error.message); }
+            await refreshCaptures();
+            await syncCaptures();
+          } catch (error) {
+            state.textContent = error.message;
+            for (const button of body.querySelectorAll('button')) button.disabled = false;
+          } finally {
+            deletingCaptureIds.delete(record.id);
+          }
+        };
+        body.append(remove);
+      }
+      if (record.photos?.length && record.state !== 'deleting') card.append(captureExportActions(record));
+      container.append(card);
+    }
+  } catch (error) {
+    if (request !== captureRefresh || screen !== 'collection') return;
+    console.error(error);
+    $('captureDrafts').hidden = false;
+    $('draftSummary').textContent = '';
+    container.textContent = 'Local capture storage is unavailable in this browser';
+  }
+}
 window.addEventListener('pagehide', () => { void checkpointScan().catch(() => {}); releaseStream(); });
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden || !stream) return;
@@ -1637,3 +1890,6 @@ document.addEventListener('visibilitychange', () => {
 syncCaptures();
 
 wireNativeCapture(syncCaptures);
+
+// Capture remains private in this public portfolio viewer.
+for (const id of ["scanBtn","collectionScan","exploreCapture"]) { const button=document.getElementById(id); if(button) button.hidden=true; }
