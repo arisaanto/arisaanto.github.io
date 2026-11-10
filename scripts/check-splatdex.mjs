@@ -11,15 +11,15 @@ const main = fs.readFileSync(path.join(demo, 'main.js'), 'utf8');
 const html = fs.readFileSync(path.join(demo, 'index.html'), 'utf8');
 const icons = fs.readFileSync(path.join(root, 'assets/icons.svg'), 'utf8');
 const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
-for (const [, id] of main.matchAll(/\$\(['"]([^'"]+)['"]\)/g)) {
-  assert(ids.has(id), `Missing UI element: ${id}`);
-}
 for (const file of fs.readdirSync(demo).filter(name => name.endsWith('.js'))) {
   const source = fs.readFileSync(path.join(demo, file), 'utf8');
   execFileSync(process.execPath, ['--check', path.join(demo, file)]);
+  for (const [, id] of source.matchAll(/(?<![\w$.])(?:\$|get|document\.getElementById)\(['"]([^'"]+)['"]\)/g)) {
+    assert(ids.has(id), `${file}: missing UI element ${id}`);
+  }
   assert(!/\/api\/captures|127\.0\.0\.1|localhost|chatgpt\.site/.test(source), `${file} contains a private-service dependency`);
   for (const [, relative] of source.matchAll(/(?:from\s+|import\s*\()\s*['"](\.\/[^'"]+)['"]/g)) {
-    assert(fs.existsSync(path.join(demo, relative)), `${file}: missing ${relative}`);
+    assert(fs.existsSync(path.join(demo, relative.split(/[?#]/)[0])), `${file}: missing ${relative}`);
   }
 }
 assert(!/getUserMedia|id="capture"|id="scanBtn"/.test(html + main), 'Public capture must remain unavailable');

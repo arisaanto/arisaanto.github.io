@@ -2,7 +2,7 @@ import * as pc from './vendor/playcanvas.mjs';
 import { viewpointsFor } from './viewpoints.js';
 import { thumbnailImage } from './thumbnails.js';
 import { askBrowser } from './browser-guide.js';
-import { wireExploreSearch } from './explore-search.js';
+import { wireExploreSearch } from './explore-search.js?v=20261110-nav1';
 import { enableCatalogScroll, enableBookPaging, enableRosterDrag } from './shelf-interactions.js';
 import { assignCatalog, createCatalog, customCatalogs, personalCategory, collectionOrder, edited, isSaved, moveEntry, saveEdits, setSaved, wasRemoved } from './collection-state.js';
 const $=id=>document.getElementById(id);

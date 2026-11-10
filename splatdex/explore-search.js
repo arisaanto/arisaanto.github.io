@@ -98,7 +98,6 @@ export function wireExploreSearch({ splats, categoryName, thumbnail, openSplat, 
       close();
       input.value = query;
       get('bookShelf').hidden = !!query;
-      get('exploreActions').hidden = !!query;
       results.hidden = !query;
       if (!query) return;
       matches = search(query);
