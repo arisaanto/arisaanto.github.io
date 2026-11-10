@@ -1,8 +1,5 @@
-import * as pc from './vendor/playcanvas.mjs';
-
 const size = 384;
 const normalized = new Map();
-let renderQueue = Promise.resolve();
 
 function normalizeCanvas(source) {
   const input = document.createElement('canvas');
@@ -41,62 +38,4 @@ export function thumbnailImage(image, source) {
   }).catch(() => {
     if (image.dataset.thumbnailSource === source) image.src = source;
   });
-}
-
-async function renderThumbnail(item) {
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = 512;
-  canvas.style.cssText = 'position:fixed;left:-1024px;top:0;width:512px;height:512px;pointer-events:none';
-  canvas.setAttribute('aria-hidden', 'true');
-  document.body.append(canvas);
-  let renderer, asset;
-  try {
-    renderer = new pc.Application(canvas, {
-      graphicsDeviceOptions: { alpha: true, antialias: false, preserveDrawingBuffer: true }
-    });
-    renderer.graphicsDevice.maxPixelRatio = 1;
-    renderer.resizeCanvas(512, 512);
-    const frame = item.cameraFrame;
-    const center = new pc.Vec3(...frame.center);
-    const camera = new pc.Entity('Thumbnail camera', renderer);
-    camera.addComponent('camera', {
-      clearColor: new pc.Color(0, 0, 0, 0), fov: 45,
-      nearClip: frame.radius * .005, farClip: frame.radius * 100
-    });
-    camera.setPosition(center.clone().add(new pc.Vec3(...frame.front).mulScalar(frame.radius * 3.8)));
-    camera.lookAt(center, new pc.Vec3(...frame.up));
-    renderer.root.addChild(camera);
-    asset = new pc.Asset('Capture thumbnail', 'gsplat', { url: item.url, filename: 'model.ply' });
-    await new Promise((resolve, reject) => {
-      asset.once('load', resolve);
-      asset.once('error', reject);
-      renderer.assets.add(asset);
-      renderer.assets.load(asset);
-    });
-    const object = new pc.Entity('Captured object', renderer);
-    object.addComponent('gsplat', { asset });
-    renderer.root.addChild(object);
-    renderer.start();
-    // Gaussian sorting runs asynchronously. Wait for a populated frame.
-    let thumbnail;
-    for (let attempt = 0; attempt < 12; attempt++) {
-      for (let frameIndex = 0; frameIndex < 4; frameIndex++) {
-        await new Promise(resolve => renderer.once('postrender', resolve));
-      }
-      try { thumbnail = normalizeCanvas(canvas); break; }
-      catch { /* The first frames may precede the sorter response. */ }
-    }
-    if (!thumbnail) throw Error('The splat thumbnail could not render');
-    return await new Promise((resolve, reject) => thumbnail.toBlob(
-      blob => blob ? resolve(blob) : reject(Error('The thumbnail could not be saved')), 'image/png'));
-  } finally {
-    renderer?.destroy();
-    canvas.remove();
-  }
-}
-
-export function renderCaptureThumbnail(item) {
-  const result = renderQueue.then(() => renderThumbnail(item));
-  renderQueue = result.catch(() => {});
-  return result;
 }

@@ -1,4 +1,0 @@
-@mediapipe/tasks-vision 1.2.2
-MagicTouch float32 model version 1
-Source: https://github.com/google-ai-edge/mediapipe
-Model: https://storage.googleapis.com/mediapipe-models/interactive_segmenter/magic_touch/float32/1/magic_touch.tflite
