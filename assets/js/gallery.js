@@ -22,6 +22,7 @@
 
     let current = 0;
     let opener = null;
+    let openedWithKeyboard = false;
 
     function show(index) {
       current = (index + photos.length) % photos.length;
@@ -32,6 +33,7 @@
 
     function open(index, source) {
       opener = source;
+      openedWithKeyboard = source.matches(":focus-visible");
       show(index);
       dialog.showModal();
       document.body.classList.add("lightbox-open");
@@ -74,7 +76,9 @@
 
     dialog.addEventListener("close", function () {
       document.body.classList.remove("lightbox-open");
-      if (opener) opener.focus();
+      if (!opener) return;
+      if (openedWithKeyboard) opener.focus();
+      else opener.blur();
     });
   });
 })();
